@@ -71,19 +71,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath)\src;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(VC_SourcePath)\src;</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath)\src;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(VC_SourcePath)\src;</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath)\src;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(VC_SourcePath)\src;</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(VC_IncludePath)\src;$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <SourcePath>$(VC_SourcePath)\src;</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -164,69 +168,69 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AnimationHandler.h" />
-    <ClInclude Include="AStarSearch.h" />
-    <ClInclude Include="Bullet.h" />
-    <ClInclude Include="Enemies.h" />
-    <ClInclude Include="Node.h" />
-    <ClInclude Include="V2Tools.h" />
-    <ClInclude Include="NPC.h" />
-    <ClInclude Include="SAT.h" />
-    <ClInclude Include="Cursor.h" />
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="GameObjectManager.h" />
-    <ClInclude Include="GameSettingConstants.h" />
-    <ClInclude Include="GameStateEditor.h" />
-    <ClInclude Include="GameStatePlaying.h" />
-    <ClInclude Include="GameStateStart.h" />
-    <ClInclude Include="GUI.h" />
-    <ClInclude Include="IGameEntity.h" />
-    <ClInclude Include="IGameState.h" />
-    <ClInclude Include="IPlayerInput.h" />
-    <ClInclude Include="MainMenu.h" />
-    <ClInclude Include="Map.h" />
-    <ClInclude Include="MapTools.h" />
-    <ClInclude Include="Player.h" />
-    <ClInclude Include="MKInput.h" />
-    <ClInclude Include="stdafx.h" />
-    <ClInclude Include="TextureManager.h" />
-    <ClInclude Include="Tile.h" />
-    <ClInclude Include="UniformGrid.h" />
-    <ClInclude Include="VisibleGameObject.h" />
-    <ClInclude Include="MapHitbox.h" />
-    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="src\AnimationHandler.h" />
+    <ClInclude Include="src\AStarSearch.h" />
+    <ClInclude Include="src\Bullet.h" />
+    <ClInclude Include="src\Enemies.h" />
+    <ClInclude Include="src\Node.h" />
+    <ClInclude Include="src\V2Tools.h" />
+    <ClInclude Include="src\NPC.h" />
+    <ClInclude Include="src\SAT.h" />
+    <ClInclude Include="src\Cursor.h" />
+    <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameObjectManager.h" />
+    <ClInclude Include="src\GameSettingConstants.h" />
+    <ClInclude Include="src\GameStateEditor.h" />
+    <ClInclude Include="src\GameStatePlaying.h" />
+    <ClInclude Include="src\GameStateStart.h" />
+    <ClInclude Include="src\GUI.h" />
+    <ClInclude Include="src\IGameEntity.h" />
+    <ClInclude Include="src\IGameState.h" />
+    <ClInclude Include="src\IPlayerInput.h" />
+    <ClInclude Include="src\MainMenu.h" />
+    <ClInclude Include="src\Map.h" />
+    <ClInclude Include="src\MapTools.h" />
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\MKInput.h" />
+    <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\TextureManager.h" />
+    <ClInclude Include="src\Tile.h" />
+    <ClInclude Include="src\UniformGrid.h" />
+    <ClInclude Include="src\VisibleGameObject.h" />
+    <ClInclude Include="src\MapHitbox.h" />
+    <ClInclude Include="src\Weapon.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AnimationHandler.cpp" />
-    <ClCompile Include="AStarSearch.cpp" />
-    <ClCompile Include="Bullet.cpp" />
-    <ClCompile Include="Enemies.cpp" />
-    <ClCompile Include="NPC.cpp" />
-    <ClCompile Include="SAT.cpp" />
-    <ClCompile Include="Cursor.cpp" />
-    <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GameObjectManager.cpp" />
-    <ClCompile Include="GameStateEditor.cpp" />
-    <ClCompile Include="GameStatePlaying.cpp" />
-    <ClCompile Include="GameStateStart.cpp" />
-    <ClCompile Include="GUI.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Map.cpp" />
-    <ClCompile Include="MapTools.cpp" />
-    <ClCompile Include="Player.cpp" />
-    <ClCompile Include="MKInput.cpp" />
-    <ClCompile Include="stdafx.cpp">
+    <ClCompile Include="src\AnimationHandler.cpp" />
+    <ClCompile Include="src\AStarSearch.cpp" />
+    <ClCompile Include="src\Bullet.cpp" />
+    <ClCompile Include="src\Enemies.cpp" />
+    <ClCompile Include="src\NPC.cpp" />
+    <ClCompile Include="src\SAT.cpp" />
+    <ClCompile Include="src\Cursor.cpp" />
+    <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameObjectManager.cpp" />
+    <ClCompile Include="src\GameStateEditor.cpp" />
+    <ClCompile Include="src\GameStatePlaying.cpp" />
+    <ClCompile Include="src\GameStateStart.cpp" />
+    <ClCompile Include="src\GUI.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Map.cpp" />
+    <ClCompile Include="src\MapTools.cpp" />
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\MKInput.cpp" />
+    <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TextureManager.cpp" />
-    <ClCompile Include="Tile.cpp" />
-    <ClCompile Include="V2Tools.cpp" />
-    <ClCompile Include="VisibleGameObject.cpp" />
-    <ClCompile Include="MapHitbox.cpp" />
-    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Tile.cpp" />
+    <ClCompile Include="src\V2Tools.cpp" />
+    <ClCompile Include="src\VisibleGameObject.cpp" />
+    <ClCompile Include="src\MapHitbox.cpp" />
+    <ClCompile Include="src\Weapon.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
