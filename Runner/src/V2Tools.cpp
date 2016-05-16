@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "V2Tools.h"
 
+#include <cmath>
+
 
 namespace V2Tools
 {
@@ -17,7 +19,7 @@ namespace V2Tools
 	//	return true;
 	//}
 
-	bool V2Tools::inLineOfSight_againstConvexHull(std::vector<std::pair<std::vector<sf::Vector2f>, std::vector<sf::Vector2f>>>& polygons, const sf::Vector2f& a, const sf::Vector2f& b)
+	bool inLineOfSight_againstConvexHull(std::vector<std::pair<std::vector<sf::Vector2f>, std::vector<sf::Vector2f>>>& polygons, const sf::Vector2f& a, const sf::Vector2f& b)
 	{
 		for (auto& polygon : polygons)
 		{
@@ -30,7 +32,7 @@ namespace V2Tools
 		return true;
 	}
 
-	bool V2Tools::inLineOfSight_againstPolygon(std::vector<std::pair<std::vector<sf::Vector2f>, std::vector<sf::Vector2f>>>& polygons, const sf::Vector2f& a, const sf::Vector2f& b)
+	bool inLineOfSight_againstPolygon(std::vector<std::pair<std::vector<sf::Vector2f>, std::vector<sf::Vector2f>>>& polygons, const sf::Vector2f& a, const sf::Vector2f& b)
 	{
 		for (auto& polygon : polygons)
 		{
@@ -43,17 +45,17 @@ namespace V2Tools
 		return true;
 	}
 
-	float V2Tools::length(const sf::Vector2f& v)
+	float length(const sf::Vector2f& v)
 	{
 		return sqrt(v.x * v.x + v.y * v.y);
 	}
 
-	int V2Tools::length(const sf::Vector2i& v)
+	int length(const sf::Vector2i& v)
 	{
 		return sqrt(v.x * v.x + v.y * v.y);
 	}
 
-	sf::Vector2f V2Tools::normalize(const sf::Vector2f& v)
+	sf::Vector2f normalize(const sf::Vector2f& v)
 	{
 		sf::Vector2f result = v;
 		if (v != sf::Vector2f(0, 0)) {
@@ -64,28 +66,28 @@ namespace V2Tools
 			return result;
 	}
 
-	float V2Tools::distance(const sf::Vector2f& a, const sf::Vector2f& b)
+	float distance(const sf::Vector2f& a, const sf::Vector2f& b)
 	{
 		return length(a - b);
 	}
 
-	int V2Tools::distance(const sf::Vector2i& a, const sf::Vector2i& b)
+	int distance(const sf::Vector2i& a, const sf::Vector2i& b)
 	{
 		return length(a - b);
 	}
 
 
-	float V2Tools::dotProduct(const sf::Vector2f& a, const sf::Vector2f& b)
+	float dotProduct(const sf::Vector2f& a, const sf::Vector2f& b)
 	{
 		return a.x*b.x + a.y*b.y;
 	}
 
-	float V2Tools::crossProduct(const sf::Vector2f& a, const sf::Vector2f& b)
+	float crossProduct(const sf::Vector2f& a, const sf::Vector2f& b)
 	{
 		return a.x * b.y - a.y * b.x;
 	}
 
-	bool V2Tools::isPointOnLine(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f a)
+	bool isPointOnLine(sf::Vector2f p1, sf::Vector2f p2, sf::Vector2f a)
 	{
 		sf::Vector2f vec1 = p2 - p1;
 		sf::Vector2f vec2 = a - p1;
@@ -95,7 +97,7 @@ namespace V2Tools
 			return false;
 	}
 
-	bool V2Tools::doLineSegmentsCross(const sf::Vector2f& p, const sf::Vector2f& p2, const sf::Vector2f& q, const sf::Vector2f& q2,
+	bool doLineSegmentsCross(const sf::Vector2f& p, const sf::Vector2f& p2, const sf::Vector2f& q, const sf::Vector2f& q2,
 		bool considerConnectingPointsAsIntersect, bool considerCollinearOverlapAsIntersect)
 		//bool LineSegementsIntersect(Vector p, Vector p2, Vector q, Vector q2,
 		//	out Vector intersection, bool considerCollinearOverlapAsIntersect = false)
@@ -164,12 +166,12 @@ namespace V2Tools
 		return false;
 	}
 
-	bool V2Tools::isPointOnLineSegment(const sf::Vector2f& lineA, const sf::Vector2f& lineB, const sf::Vector2f& point)
+	bool isPointOnLineSegment(const sf::Vector2f& lineA, const sf::Vector2f& lineB, const sf::Vector2f& point)
 	{
 		return abs(distance(lineA, point) + distance(lineB, point) - distance(lineA, lineB)) < 0.5f;
 	}
 
-	float V2Tools::det(const sf::Vector2f& a, const sf::Vector2f& b, const sf::Vector2f& center)
+	float det(const sf::Vector2f& a, const sf::Vector2f& b, const sf::Vector2f& center)
 	{
 		return (a.x - center.x) * (b.y - center.y) - (b.x - center.x) * (a.y - center.y);
 	}

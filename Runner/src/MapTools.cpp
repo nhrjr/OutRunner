@@ -205,7 +205,7 @@ void MapTools::createMapHitBoxes(std::vector<std::vector<sf::Vector2i>>& regCoor
 
 
 
-void MapTools::constructMapObjects(std::vector<std::vector<sf::Vector2i>>& regCoord)
+void MapTools::constructMapObjects(std::vector<std::vector<sf::Vector2i>> regCoord)
 {
 	createPolygons(regCoord);
 
@@ -313,9 +313,9 @@ void MapTools::orderHullPolygons()
 		int i = 0;
 		int labelSum = 0;
 		int label = 0;
-		for (auto or : orientation)
+		for (auto ori : orientation)
 		{
-			Vector tileVector = startCorner + or;
+			Vector tileVector = startCorner + ori;
 			auto tmp = map->getCurrentTile(tileVector);
 			labels[i] = tmp->region[0];
 			if (labels[i] != 0) label = labels[i];

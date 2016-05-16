@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "MKInput.h"
 
+#include <cmath>
+
 
 MKInput::MKInput(Game* game)
 {

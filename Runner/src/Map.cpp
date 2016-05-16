@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <array>
+#include <cmath>
 
 
 Map::~Map()
@@ -244,8 +245,8 @@ void Map::setDrawableHitboxes(std::unordered_set<unsigned int>& set)
 
 Tile* Map::getCurrentTile(sf::Vector2f pos)
 {
-	int x = std::floorf(pos.x / this->tileSize);
-	int y = std::floorf(pos.y / this->tileSize);
+	int x = std::floor(pos.x / this->tileSize);
+	int y = std::floor(pos.y / this->tileSize);
 	if (x >= 0 && y >= 0 && x < this->width && y < this->height)
 		return &tiles[y*this->width + x];
 	else

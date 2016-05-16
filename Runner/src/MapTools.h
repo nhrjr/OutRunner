@@ -44,7 +44,7 @@ public:
 		return polygons;
 	};
 
-	void constructMapObjects(std::vector<std::vector<sf::Vector2i>>& regCoord);
+	void constructMapObjects(std::vector<std::vector<sf::Vector2i>> regCoord);
 
 	void createPolygons(std::vector<std::vector<sf::Vector2i>>& regCoord);
 	void createMapHitBoxes(std::vector<std::vector<sf::Vector2i>>& regCoord);

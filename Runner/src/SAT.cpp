@@ -10,7 +10,7 @@
 
 
 
-float projectionsOverlap(ProjectionRange& d1range, ProjectionRange& d2range)
+float projectionsOverlap(const ProjectionRange& d1range, const ProjectionRange& d2range)
 {
 	return std::min(d1range.max, d2range.max) - std::max(d1range.min, d2range.min);
 }
@@ -31,7 +31,7 @@ ProjectionRange generateProjectionRangeOnAxis(const std::vector<sf::Vector2f>& p
 	return result;
 }
 
-sf::Vector2f shortestAxis(sf::Vector2f& point, std::vector<sf::Vector2f>& points)
+sf::Vector2f shortestAxis(const sf::Vector2f& point, const std::vector<sf::Vector2f>& points)
 {
 	std::map<float, sf::Vector2f> result;
 	for (auto p : points)
@@ -41,7 +41,7 @@ sf::Vector2f shortestAxis(sf::Vector2f& point, std::vector<sf::Vector2f>& points
 	return V2Tools::normalize(result.begin()->second);
 }
 
-sf::Vector2f nearestEdgeNormal(sf::Vector2f& point, std::vector<sf::Vector2f>& points)
+sf::Vector2f nearestEdgeNormal(const sf::Vector2f& point, const std::vector<sf::Vector2f>& points)
 {
 	std::map<float, sf::Vector2f> result;
 	for (auto p : points)

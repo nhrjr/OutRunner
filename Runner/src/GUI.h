@@ -79,7 +79,7 @@ public:
 			text.setString(entry.first);
 			text.setFont(*style.font);
 			text.setColor(style.textColor);
-			text.setCharacterSize(unsigned int (dimensions.y - 2 *style.borderSize - 2* padding));
+			text.setCharacterSize((unsigned int)(dimensions.y - 2 *style.borderSize - 2* padding));
 
 			this->entries.push_back(GuiEntry(entry.second, shape, text));
 		}

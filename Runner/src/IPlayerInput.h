@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 class IPlayerInput {
 public:
 	virtual float getAngle() = 0;

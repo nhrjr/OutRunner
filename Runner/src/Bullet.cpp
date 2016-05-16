@@ -2,6 +2,7 @@
 #include "Bullet.h"
 #include <memory>
 #include "SAT.h"
+#include <cmath>
 
 
 Bullet::Bullet(Game* game,float angle, sf::Vector2f pos) : game(game), bulletModel(4), lifeTime(0.0f)

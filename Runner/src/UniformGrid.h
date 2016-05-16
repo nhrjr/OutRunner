@@ -142,7 +142,7 @@ void UniformGrid<T>::constructArrays(int w, int h, std::vector<T>* o)
 }
 
 template<typename T>
-std::unordered_set<unsigned int> UniformGrid<T>::getCollisionObjects(sf::Vector2f coord, int radius=1)
+std::unordered_set<unsigned int> UniformGrid<T>::getCollisionObjects(sf::Vector2f coord, int radius)
 {
 	int x = coord.x * conversion;
 	int y = coord.y * conversion;
