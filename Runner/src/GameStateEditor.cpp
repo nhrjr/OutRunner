@@ -1,15 +1,16 @@
 #include "stdafx.h"
 #include "GameStateEditor.h"
+#include "Console.h"
 
-#include <type_traits> //for std::underlying_type
-template<typename E>
-constexpr auto to_integral(E e) -> typename std::underlying_type<E>::type
-{
-	return static_cast<typename std::underlying_type<E>::type>(e);
-}
+//#include <type_traits> //for std::underlying_type
+//template<typename E>
+//constexpr auto to_integral(E e) -> typename std::underlying_type<E>::type
+//{
+//	return static_cast<typename std::underlying_type<E>::type>(e);
+//}
+//
 
-
-GameStateEditor::GameStateEditor(Game* game) : map(game), zoomLevel(1.0f), actionState(ActionState::NONE), editingState(EditionState::NONE), shouldEnd(false), editingTileType(TileType::VOID), currentTile(nullptr)
+GameStateEditor::GameStateEditor(Game* game) : map(game), zoomLevel(1.0f), actionState(ActionState::NONE), editingState(EditionState::NONE), isDeletable(false), editingTileType(TileType::VOID), currentTile(nullptr)
 {
 	this->game = game;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
@@ -111,10 +112,12 @@ void GameStateEditor::draw(float dt) {
 
 	this->game->window.setView(this->guiView);
 	for (auto gui : guiSystem) this->game->window.draw(gui.second);
+
+	this->game->window.draw(Console::Instance());
 }
 
 bool GameStateEditor::end() {
-	return this->shouldEnd;
+	return this->isDeletable;
 }
 
 void GameStateEditor::update(float dt) {
@@ -148,6 +151,11 @@ void GameStateEditor::handleInput()
 
 	while (this->game->window.pollEvent(event))
 	{
+		if (event.type == sf::Event::LostFocus) hasFocus = false;
+		if (event.type == sf::Event::GainedFocus) hasFocus = true;
+
+		if (!hasFocus) continue;
+
 		switch (event.type)
 		{
 		default:
@@ -292,11 +300,11 @@ void GameStateEditor::handleInput()
 					else if (msg == "save_quit")
 					{
 						this->map.saveToDisk("data/map.dat");
-						this->shouldEnd = true;
+						this->isDeletable = true;
 					}
 					else if (msg == "quit_to_menu")
 					{
-						this->shouldEnd = true;
+						this->isDeletable = true;
 					}
 					else if (msg == "exit_game")
 					{
@@ -377,7 +385,12 @@ void GameStateEditor::handleInput()
 		}
 		}
 
+		Console::Instance().HandleEvent(event);
+
 	}
+	//if (!hasFocus) return;
+	//if (Console::Instance().getShow())
+	//	return;
 }
 
 void GameStateEditor::editSelectedTiles()

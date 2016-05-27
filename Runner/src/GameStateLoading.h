@@ -1,13 +1,11 @@
 #pragma once
-#include "stdafx.h"
 #include "IGameState.h"
-#include "GUI.h"
-class GameStateStart :
+class GameStateLoading :
 	public IGameState
 {
 public:
-	GameStateStart(Game* game);
-	~GameStateStart();
+	GameStateLoading(Game* game);
+	~GameStateLoading();
 
 	virtual void update(float dt);
 	virtual void draw(float dt);
@@ -17,14 +15,11 @@ public:
 	void setGuiSystem();
 	void resize(sf::Event& event);
 
-private: 
+private:
 	bool isDeletable;
-	bool hasFocus = true;
 	sf::View view;
 	std::map<std::string, GUI> guiSystem;
-	void loadEditor();
-	void playGameSingle();
-	void playGameServer();
-	void playGameClient();
+
+	float temp_FindServerTimer = 1000;
 };
 

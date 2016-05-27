@@ -11,16 +11,11 @@ MKInput::MKInput(Game* game)
 	this->down = sf::Vector2f(0, 1);
 	this->right = sf::Vector2f(1, 0);
 	this->left = sf::Vector2f(-1, 0);
-	
+}
 
-	//sf::Vector2f forward;
-
-	//forward.x = cos(shape.getRotation() * M_PI / 180);
-	//forward.y = sin(shape.getRotation() * M_PI / 180);
-
-	//sf::Vector2f back = -forward;
-	//sf::Vector2f right = sf::Vector2f(-forward.y, forward.x);
-	//sf::Vector2f left = sf::Vector2f(forward.y, - forward.x);
+void MKInput::getInput(float dt)
+{
+	this->dt = dt;
 }
 
 float MKInput::getAngle()
@@ -31,30 +26,35 @@ float MKInput::getAngle()
 	return angleOffset = fmod(angleOffset, 360);
 }
 
-sf::Vector2f MKInput::getOffset() {
-	sf::Vector2f directionOffset = sf::Vector2f(0, 0);
-
+void MKInput::handleInput()
+{
+	this->directionOffset = sf::Vector2f(0, 0);
 	int count = 1;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		directionOffset += up;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+		this->directionOffset += up;
 		count++;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		directionOffset += down;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+		this->directionOffset += down;
 		count++;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		directionOffset += left;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+		this->directionOffset += left;
 		count++;
 	}
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		directionOffset += right;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+		this->directionOffset += right;
 		count++;
 	}
 	if (count >= 2) {
-		directionOffset /= sqrtf(2);
+		this->directionOffset /= sqrtf(2);
 	}
-	return directionOffset;
+}
+
+sf::Vector2f MKInput::getPosition(sf::Vector2f lastPos) {
+	
+	float moveBy = PLAYER_SPEED * dt;
+	return lastPos + directionOffset * moveBy;
 }
 
 int MKInput::getAction()

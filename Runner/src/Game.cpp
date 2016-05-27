@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Game.h"
+#include "Console.h"
 
 #include "GameStateStart.h"
 #include "GameStateEditor.h"
@@ -11,13 +12,41 @@ Game::Game()
 	this->loadFonts();
 	this->loadStyleSheets();
 	
-
 	this->window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), GAME_NAME);
 
 	this->background.setTexture(this->texmgr.getRef("background"));
 
-}
+	Command c = [this](std::vector<std::string> str) -> std::string {
+		this->switches.showPath = (this->switches.showPath == true) ? false : true;
+		return std::string("Set showPath to " + std::to_string(this->switches.showPath));
+	};
+	Console::Instance().Add("togglePath", c);
 
+	c = [this](std::vector<std::string> str) -> std::string {
+		this->switches.showPathfinder = (this->switches.showPathfinder == true) ? false : true;
+		return std::string("Set showPathfinder to " + std::to_string(this->switches.showPathfinder));
+	};
+	Console::Instance().Add("togglePathfinder", c);
+
+	c = [this](std::vector<std::string> str) -> std::string {
+		this->switches.showHitboxHighlights = (this->switches.showHitboxHighlights == true) ? false : true;
+		return std::string("Set showHitboxHighlights to " + std::to_string(this->switches.showHitboxHighlights));
+	};
+	Console::Instance().Add("toggleHitBoxes", c);
+
+	c = [this](std::vector<std::string> str) -> std::string {
+		this->switches.showPolygon = (this->switches.showPolygon == true) ? false : true;
+		return std::string("Set showPolygon to " + std::to_string(this->switches.showPolygon));
+	};
+	Console::Instance().Add("togglePolygon", c);
+
+	c = [this](std::vector<std::string> str) -> std::string {
+		this->window.close();
+		return std::string("Exit");
+	};
+	Console::Instance().Add("exit", c);
+
+}
 
 Game::~Game()
 {
@@ -29,7 +58,6 @@ void Game::pushState(IGameState* state) {
 }
 
 void Game::popState() {
-	//delete this->states.top();
 	delete this->states.front();
 	this->states.pop();
 }
@@ -50,6 +78,7 @@ IGameState* Game::peekState() {
 
 void Game::start() {
 
+
 	pushState(new GameStateStart(this));
 
 	sf::Clock clock;
@@ -67,15 +96,22 @@ void Game::gameLoop(sf::Clock& clock) {
 		float dt = clock.restart().asSeconds();
 		if (this->peekState() == nullptr) continue;
 
+		networkmgr.processSocket(dt);
 		peekState()->handleInput();
 		peekState()->update(dt);
+		networkmgr.sendEvents();
+
 		peekState()->draw(dt);		
 		this->window.display();
 		if (peekState()->end())
 		{
 			popState();
 			if (this->states.empty())
+			{
+				networkmgr.reset();
 				pushState(new GameStateStart(this));
+			}
+				
 		}
 			
 		//std::cout << "Framerate: " << 1 / dt << std::endl;

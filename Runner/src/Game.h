@@ -2,12 +2,12 @@
 #include "stdafx.h"
 #include "IGameState.h"
 
-#include "MainMenu.h"
-#include "GameObjectManager.h"
+//#include "GameObjectManager.h"
 #include "GameSettingConstants.h"
 #include "Tile.h"
 #include "TextureManager.h"
 #include "GUI.h"
+#include "NetworkManager.h"
 
 #include <string>
 #include <stack>
@@ -18,7 +18,7 @@ class IGameState;
 struct Switches {
 	bool showPolygon = false;
 	bool showPathfinder = false;
-	bool showPath = true;
+	bool showPath = false;
 	bool showHitboxHighlights = false;
 };
 
@@ -41,6 +41,7 @@ public:
 	//GameObjectManager objmgr;
 	TextureManager texmgr;
 	Switches switches;
+	NetworkManager networkmgr;
 
 	
 	std::map<std::string, Tile> tileAtlas;

@@ -9,7 +9,7 @@ public:
 	Cursor(Game* game, IPlayerInput* playerInput);
 	~Cursor();
 
-	virtual void draw(sf::RenderWindow& window, float dt);
+	virtual void draw(sf::RenderWindow& window);
 	virtual void setPosition(sf::Vector2f pos);
 	virtual sf::Vector2f getPosition() const;
 

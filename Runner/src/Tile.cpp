@@ -40,7 +40,7 @@ void Tile::initialize()
 	animHandler.setAnimVariant(numberOfVariants);
 }
 
-void Tile::draw(sf::RenderWindow& window, float dt)
+void Tile::draw(sf::RenderWindow& window)
 {
 	window.draw(sprite);
 }

@@ -32,7 +32,7 @@ public:
 
 	unsigned int region[1];
 
-	void draw(sf::RenderWindow& window, float dt);
+	void draw(sf::RenderWindow& window);
 	void update(float dt);
 	void initialize();
 	//virtual void setPosition(sf::Vector2f position);

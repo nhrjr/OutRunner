@@ -22,7 +22,7 @@
     <ProjectGuid>{6411734B-DED4-4179-8960-4A4A1168179A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Runner</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.10586.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -98,12 +98,13 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Tools\SFML-2.3.2\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-d.lib; sfml-window-d.lib;sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-network-d.lib;sfml-graphics-d.lib; sfml-window-d.lib;sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -115,12 +116,13 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
+      <ShowIncludes>true</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Tools\SFML-2.3.2\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-main-d.lib;sfml-graphics-d.lib; sfml-window-d.lib;sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-network-d.lib;sfml-graphics-d.lib; sfml-window-d.lib;sfml-system-d.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -142,7 +144,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Tools\SFML-2.3.2\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-main.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,15 +166,24 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\Tools\SFML-2.3.2\lib</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sfml-main.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-network.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\AnimationHandler.h" />
     <ClInclude Include="src\AStarSearch.h" />
     <ClInclude Include="src\Bullet.h" />
+    <ClInclude Include="src\CollisionManager.h" />
+    <ClInclude Include="src\Console.h" />
     <ClInclude Include="src\Enemies.h" />
+    <ClInclude Include="src\GameLogicManager.h" />
+    <ClInclude Include="src\GameStateLoading.h" />
+    <ClInclude Include="src\guid.h" />
+    <ClInclude Include="src\NetworkInput.h" />
+    <ClInclude Include="src\NetworkManager.h" />
+    <ClInclude Include="src\NetworkPacket.h" />
     <ClInclude Include="src\Node.h" />
+    <ClInclude Include="src\SendBinary.h" />
     <ClInclude Include="src\V2Tools.h" />
     <ClInclude Include="src\NPC.h" />
     <ClInclude Include="src\SAT.h" />
@@ -187,7 +198,6 @@
     <ClInclude Include="src\IGameEntity.h" />
     <ClInclude Include="src\IGameState.h" />
     <ClInclude Include="src\IPlayerInput.h" />
-    <ClInclude Include="src\MainMenu.h" />
     <ClInclude Include="src\Map.h" />
     <ClInclude Include="src\MapTools.h" />
     <ClInclude Include="src\Player.h" />
@@ -196,7 +206,6 @@
     <ClInclude Include="src\TextureManager.h" />
     <ClInclude Include="src\Tile.h" />
     <ClInclude Include="src\UniformGrid.h" />
-    <ClInclude Include="src\VisibleGameObject.h" />
     <ClInclude Include="src\MapHitbox.h" />
     <ClInclude Include="src\Weapon.h" />
   </ItemGroup>
@@ -204,7 +213,14 @@
     <ClCompile Include="src\AnimationHandler.cpp" />
     <ClCompile Include="src\AStarSearch.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
+    <ClCompile Include="src\CollisionManager.cpp" />
+    <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\Enemies.cpp" />
+    <ClCompile Include="src\GameLogicManager.cpp" />
+    <ClCompile Include="src\GameStateLoading.cpp" />
+    <ClCompile Include="src\guid.cpp" />
+    <ClCompile Include="src\NetworkInput.cpp" />
+    <ClCompile Include="src\NetworkManager.cpp" />
     <ClCompile Include="src\NPC.cpp" />
     <ClCompile Include="src\SAT.cpp" />
     <ClCompile Include="src\Cursor.cpp" />
@@ -219,6 +235,7 @@
     <ClCompile Include="src\MapTools.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\MKInput.cpp" />
+    <ClCompile Include="src\SendBinary.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -228,7 +245,6 @@
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Tile.cpp" />
     <ClCompile Include="src\V2Tools.cpp" />
-    <ClCompile Include="src\VisibleGameObject.cpp" />
     <ClCompile Include="src\MapHitbox.cpp" />
     <ClCompile Include="src\Weapon.cpp" />
   </ItemGroup>

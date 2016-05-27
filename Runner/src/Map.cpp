@@ -55,6 +55,7 @@ void Map::loadFromDiskEditor(const std::string& filename, std::map<std::string, 
 }
 
 void Map::loadFromDiskPlaying(const std::string& filename, std::map<std::string, Tile>& tileAtlas) {
+
 	std::ifstream inputFile;
 	inputFile.open(filename, std::ios::in | std::ios::binary);
 
@@ -165,7 +166,7 @@ void Map::draw(sf::RenderWindow& window, float dt) {
 			pos.y = y * this->tileSize;
 			this->tiles[y*this->width + x].sprite.setPosition(pos);
 			this->tiles[y*this->width + x].update(dt);
-			this->tiles[y*this->width + x].draw(window, dt);
+			this->tiles[y*this->width + x].draw(window);
 		}
 	}
 
@@ -176,7 +177,7 @@ void Map::draw(sf::RenderWindow& window, float dt) {
 	{
 		for (std::unordered_set<unsigned int>::const_iterator it = set.begin(); it != set.end(); ++it)
 		{
-			hitboxes[*it].draw(window, dt);
+			hitboxes[*it].draw(window);
 		}
 	}
 

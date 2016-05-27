@@ -5,7 +5,7 @@
 #include <cmath>
 
 
-Bullet::Bullet(Game* game,float angle, sf::Vector2f pos) : game(game), bulletModel(4), lifeTime(0.0f)
+Bullet::Bullet(float angle, sf::Vector2f pos) : bulletModel(4), lifeTime(0.0f), damage(5)
 {
 	hitbox = sf::ConvexShape(2);
 	hitbox.setPoint(0, sf::Vector2f(8, 2));
@@ -31,13 +31,11 @@ Bullet::Bullet(Game* game,float angle, sf::Vector2f pos) : game(game), bulletMod
 	bulletModel.setPosition(pos + sf::Vector2f(-direction.y, direction.x) + PLAYER_RADIUS * direction);
 }
 
-
 Bullet::~Bullet()
 {
 }
 
-
-void Bullet::draw(sf::RenderWindow& window, float dt)
+void Bullet::draw(sf::RenderWindow& window)
 {
 	//window.draw(hitbox);
 	window.draw(bulletModel);
@@ -57,32 +55,16 @@ sf::Vector2f Bullet::getPosition() const
 
 void Bullet::update(float dt)
 {
-	if (this->shouldEnd == false)
+	if (this->isDeletable == false)
 	{
 		sf::Vector2f forward = direction * BULLET_SPEED * dt;
 		bulletModel.move(forward);
 		hitbox.move(forward);
 		lifeTime += dt;
-		if (lifeTime > 1.0f)
-			this->shouldEnd = true;
+		if (lifeTime > 0.5f)
+			this->isDeletable = true;
 	}
 }
-
-//void Bullet::updateCollision(sf::Vector2f displace, float dt)
-//{
-//	if (displace != sf::Vector2f(0, 0))
-//		//this->shouldEnd = true;
-//		this->direction = sf::Vector2f(0, 0);
-//		//this->lifeTime = 0.96f;
-//		//this->direction += displace;
-//	//{
-//	//	float moveBy = BULLET_SPEED * dt;
-//
-//	//	this->hitbox->move(displace * moveBy);
-//	//	this->bulletModel.move(displace * moveBy);
-//	//}
-//	
-//}
 
 void Bullet::collide(IGameEntity& other, unsigned int type, float dt)
 {

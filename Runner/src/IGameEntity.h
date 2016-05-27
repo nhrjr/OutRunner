@@ -1,21 +1,24 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include "guid.h"
 
 class IGameEntity 
 {
 public:
 		
 	sf::Vector2f position;
-	bool shouldEnd = false;
+	bool isDeletable = false;
 	sf::ConvexShape hitbox;
 	int hitpoints;
+
+	Guid entityID;
 
 	virtual ~IGameEntity() {};
 
 	virtual void collide(IGameEntity& other, unsigned int type, float dt) {};
 
-	virtual void draw(sf::RenderWindow& window, float dt) = 0;
+	virtual void draw(sf::RenderWindow& window) = 0;
 	virtual void setPosition(sf::Vector2f pos) = 0;
 	virtual sf::Vector2f getPosition() const = 0 ;
 	virtual void update(float dt) = 0;

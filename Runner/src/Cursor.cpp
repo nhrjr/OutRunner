@@ -25,7 +25,7 @@ void Cursor::setPosition(sf::Vector2f pos)
 	cursorModel.setPosition(pos);
 }
 
-void Cursor::draw(sf::RenderWindow& window, float dt)
+void Cursor::draw(sf::RenderWindow& window)
 {
 	window.draw(cursorModel);
 }

@@ -25,7 +25,7 @@ MapHitbox::~MapHitbox()
 {
 }
 
-void MapHitbox::draw(sf::RenderWindow& window, float dt)
+void MapHitbox::draw(sf::RenderWindow& window)
 {
 	window.draw(hitbox);
 }

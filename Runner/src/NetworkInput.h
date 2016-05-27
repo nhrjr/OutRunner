@@ -2,13 +2,13 @@
 #include "Game.h"
 #include "IPlayerInput.h"
 
-class MKInput : public IPlayerInput
+class NetworkInput : public IPlayerInput
 {
 public:
-	MKInput(Game* game);
-	~MKInput();
+	NetworkInput(Game* game);
+	~NetworkInput();
 
-	virtual void getInput(float dt);
+	virtual void getInput(float dt, const std::stack<NetworkPlayerEvent>& events);
 
 	virtual float getAngle();
 	virtual sf::Vector2f getPosition(sf::Vector2f lastPos);
@@ -23,7 +23,9 @@ private:
 	sf::Vector2f down;
 	sf::Vector2f left;
 	sf::Vector2f right;
-	sf::Vector2f directionOffset;
-	float dt;
-};
 
+	sf::Vector2f networkPos;
+	float networkAngle;
+	int action;
+	int alternateAction;
+};

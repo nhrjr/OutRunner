@@ -5,10 +5,10 @@ class Bullet :
 	public IGameEntity
 {
 public:
-	Bullet(Game* game, float angle, sf::Vector2f pos);
+	Bullet(float angle, sf::Vector2f pos);
 	~Bullet();
 
-	virtual void draw(sf::RenderWindow& window, float dt);
+	virtual void draw(sf::RenderWindow& window);
 	virtual void setPosition(sf::Vector2f pos);
 	virtual sf::Vector2f getPosition() const ;
 	virtual void update(float dt);
@@ -17,10 +17,10 @@ public:
 	//void updateCollision(sf::Vector2f displace, float dt);
 
 private:
-	Game* game;
 	sf::CircleShape bulletModel;
 	sf::Vector2f direction;
 	float lifeTime;
+	float damage;
 
 	virtual sf::Vector2f getPoint(int i) const;
 	virtual int getPointCount() const;

@@ -6,10 +6,14 @@
 #include "Enemies.h"
 #include "Cursor.h"
 #include "IPlayerInput.h"
+#include "GameLogicManager.h"
+#include "CollisionManager.h"
 #include "SAT.h"
 #include "MapHitbox.h"
+#include "Console.h"
 
 #include <vector>
+#include <string>
 
 
 
@@ -29,22 +33,18 @@ public:
 	void setGuiSystem();
 	void resize(sf::Event& event);
 
-	//void testPathfinder();
-	void drawTestPath();
-	std::deque<sf::Vector2f> testPath;
 	bool moveNPC = false;
 
-
 private:
-	bool shouldEnd;
+	bool isDeletable;
+	bool hasFocus = true;
 
 	ActionState actionState;
-	Player player;
-	//NPC npc;
+	std::shared_ptr<Player> player;
 	Cursor cursor;
 	IPlayerInput* playerInput;
 
-	colDrawHelper helper;
+	//colDrawHelper helper;
 
 	sf::View gameView;
 	sf::View guiView;
@@ -54,9 +54,10 @@ private:
 
 	std::map<std::string, GUI> guiSystem;
 
-	std::vector<Bullet> bullets;
-	std::vector<Enemies> enemies;
+	GameLogicManager gameLogicManager;
 
 	Map map;
+
+	float aliveTimer = 0;
 };
 

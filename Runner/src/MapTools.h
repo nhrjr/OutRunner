@@ -1,8 +1,7 @@
 #pragma once
-#include "MapHitbox.h"
-
 #include "Map.h"
 #include "AStarSearch.h"
+#include "MapHitbox.h"
 
 #include <unordered_set>
 #include <unordered_map>
@@ -32,12 +31,8 @@ class MapTools
 	Map* map;
 	
 public:
-	MapTools(Map* map) : map(map) {
-
-	};
-	~MapTools() {
-
-	};
+	MapTools(Map* map) : map(map) {}
+	~MapTools() {}
 	std::vector<MapHitbox> getHitboxes() { return hitboxes; };
 	NodeHashMap getNodes() { return nodes; };
 	std::vector<std::pair<std::vector<sf::Vector2f>, std::vector<sf::Vector2f>>> getPolygons() {

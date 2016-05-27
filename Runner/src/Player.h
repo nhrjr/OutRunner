@@ -3,6 +3,7 @@
 #include "GameSettingConstants.h"
 #include "Game.h"
 #include "MKInput.h"
+#include "NetworkInput.h"
 #include "Weapon.h"
 #include "Bullet.h"
 
@@ -18,15 +19,19 @@ class Player :
 	sf::RectangleShape healthBarFull;
 	sf::RectangleShape healthBarEmpty;
 
-	Weapon weapon;
+	
 
 	float healingTimer;
+	bool remote;
+	//float aliveTimer;
 
 public:
+	Player();
 	Player(Game* game, IPlayerInput* playerInput);
+	Player(Game* game, IPlayerInput* playerInput,const Guid& guid);
 	~Player();
 	
-	virtual void draw(sf::RenderWindow& window, float dt);
+	virtual void draw(sf::RenderWindow& window);
 	virtual void setPosition(sf::Vector2f pos);
 	virtual sf::Vector2f getPosition() const;
 	virtual void update(float dt);
@@ -34,14 +39,15 @@ public:
 
 	//void updateCollision(sf::Vector2f displace, float dt);
 
-	bool isAttacking = false;
-	bool isShooting = false;
+	Weapon weapon;
+
+	//bool isAttacking = false;
+	//bool isShooting = false;
+	bool isDead = false;
 	float hitboxRadius;
 	float attackingAngle;
+
 private:
-
-
-
 	virtual sf::Vector2f getPoint(int i) const;
 	virtual int getPointCount() const;
 	virtual sf::Transform getTransform() const;

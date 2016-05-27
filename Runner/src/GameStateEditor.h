@@ -8,7 +8,8 @@ enum class EditionState { NONE, EDITING, PAINTING, SELECTING };
 class GameStateEditor :
 	public IGameState
 {
-	bool shouldEnd;
+	bool isDeletable;
+	bool hasFocus = true;
 
 	ActionState actionState;
 	EditionState editingState;

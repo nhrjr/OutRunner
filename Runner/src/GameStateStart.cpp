@@ -2,12 +2,13 @@
 #include "GameStateStart.h"
 #include "GameStateEditor.h"
 #include "GameStatePlaying.h"
+#include "GameStateLoading.h"
 
 #include <utility>
 
 
 
-GameStateStart::GameStateStart(Game* game) : shouldEnd(false)
+GameStateStart::GameStateStart(Game* game) : isDeletable(false)
 {
 	this->game = game;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
@@ -27,7 +28,7 @@ void GameStateStart::setGuiSystem()
 		float(this->game->window.getSize().x) / float(this->game->background.getTexture()->getSize().x),
 		float(this->game->window.getSize().y) / float(this->game->background.getTexture()->getSize().y));
 
-	this->guiSystem.emplace("menu", GUI(sf::Vector2f(GAME_MENU_BUTTON_WIDTH, GAME_MENU_BUTTON_HEIGHT), 4, false, game->styleSheets.at("button"), { std::make_pair("Play","play_game"), std::make_pair("Load Editor", "load_game"), std::make_pair("Exit Game", "exit_game") }));
+	this->guiSystem.emplace("menu", GUI(sf::Vector2f(GAME_MENU_BUTTON_WIDTH, GAME_MENU_BUTTON_HEIGHT), 4, false, game->styleSheets.at("button"), { std::make_pair("Singleplayer","play_game_single"),std::make_pair("Host Multiplayer","play_game_server"), std::make_pair("Join Multiplayer","play_game_client"), std::make_pair("Load Editor", "load_game"), std::make_pair("Exit Game", "exit_game") }));
 	this->guiSystem.at("menu").setOrigin(GAME_MENU_BUTTON_WIDTH / 2, GAME_MENU_BUTTON_HEIGHT / 2);
 	this->guiSystem.at("menu").setPosition(sf::Vector2f(this->game->window.getSize().x, this->game->window.getSize().y) * 0.5f);
 	this->guiSystem.at("menu").show();
@@ -62,6 +63,8 @@ void GameStateStart::draw(float dt) {
 	this->game->window.draw(this->game->background);
 
 	for (auto gui : guiSystem) this->game->window.draw(gui.second);
+
+	this->game->window.draw(Console::Instance());
 }
 
 void GameStateStart::update(float dt) {
@@ -75,6 +78,11 @@ void GameStateStart::handleInput() {
 	sf::Vector2f mousePos = this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->view);
 
 	while (this->game->window.pollEvent(event)) {
+		if (event.type == sf::Event::LostFocus) hasFocus = false;
+		if (event.type == sf::Event::GainedFocus) hasFocus = true;
+
+		if (!hasFocus) continue;
+
 		switch (event.type)
 		{
 		case sf::Event::Closed:
@@ -102,9 +110,17 @@ void GameStateStart::handleInput() {
 			{
 				std::string msg = this->guiSystem.at("menu").activate(mousePos);
 
-				if (msg == "play_game")
+				if (msg == "play_game_single")
 				{
-					this->playGame();
+					this->playGameSingle();
+				}
+				if (msg == "play_game_server")
+				{
+					this->playGameServer();
+				}
+				if (msg == "play_game_client")
+				{
+					this->playGameClient();
 				}
 				if (msg == "load_game")
 				{
@@ -125,22 +141,39 @@ void GameStateStart::handleInput() {
 		default:
 			break;
 		}
+		Console::Instance().HandleEvent(event);
 	}
 }
 
 bool GameStateStart::end() 
 {
-	return this->shouldEnd;
+	return this->isDeletable;
 }
 
 void GameStateStart::loadEditor() 
 {
 	this->game->pushState(new GameStateEditor(this->game));
-	this->shouldEnd = true;
+	this->isDeletable = true;
 }
 
-void GameStateStart::playGame()
+void GameStateStart::playGameSingle()
 {
-	this->game->pushState(new GameStatePlaying(this->game,new MKInput(this->game)));
-	this->shouldEnd = true;
+	this->game->networkmgr.setType("single");
+	this->game->pushState(new GameStatePlaying(this->game, new MKInput(this->game)));
+	this->isDeletable = true;
+}
+
+void GameStateStart::playGameServer()
+{
+	this->game->networkmgr.setType("server");	
+	this->game->pushState(new GameStatePlaying(this->game, new MKInput(this->game)));
+	this->isDeletable = true;
+}
+
+void GameStateStart::playGameClient()
+{
+	this->game->networkmgr.setType("client");
+	this->game->pushState(new GameStateLoading(this->game));
+	//this->game->pushState(new GameStatePlaying(this->game, new MKInput(this->game)));
+	this->isDeletable = true;
 }

@@ -24,9 +24,10 @@ sf::Vector2f Weapon::getPosition() const
 	return weaponModel.getPosition();
 }
 
-void Weapon::draw(sf::RenderWindow& window, float dt)
+void Weapon::draw(sf::RenderWindow& window)
 {
-	window.draw(weaponModel);
+	if(this->triggered)
+		window.draw(weaponModel);
 }
 
 void Weapon::attachedMove(sf::Vector2f directionOffset, float angleOffset)
@@ -35,7 +36,35 @@ void Weapon::attachedMove(sf::Vector2f directionOffset, float angleOffset)
 	this->weaponModel.move(directionOffset);
 }
 
+void Weapon::attachedSetPosition(sf::Vector2f newPos, float angleOffset)
+{
+	this->weaponModel.setRotation(angleOffset);
+	this->weaponModel.setPosition(newPos);
+}
+
 void Weapon::update(float dt)
 {
 	
+	if (reloadTimer > reloadTime)
+	{
+		ready = true;
+	}
+	else
+	{
+		this->reloadTimer += dt;
+	}
+}
+
+std::shared_ptr<Bullet> Weapon::shoot()
+{
+	this->reloadTimer = 0.0;
+	this->triggered = false;
+	this->ready = false;
+	return std::make_shared<Bullet>(weaponModel.getRotation(), getPosition());
+}
+
+void Weapon::trigger()
+{
+	if(this->ready)
+		this->triggered = true;
 }

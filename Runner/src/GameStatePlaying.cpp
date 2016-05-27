@@ -3,29 +3,44 @@
 #include "MapHitbox.h"
 
 #include <algorithm>
+#include <memory>
 #include <unordered_set>
 #include <omp.h>
 
-GameStatePlaying::GameStatePlaying(Game* game,IPlayerInput* playerInput) : map(game), zoomLevel(1.0f), actionState(ActionState::NONE), shouldEnd(false), player(game,playerInput), cursor(game,playerInput)
+GameStatePlaying::GameStatePlaying(Game* game, IPlayerInput* playerInput) : map(game), zoomLevel(1.0f), actionState(ActionState::NONE), isDeletable(false), cursor(game, playerInput), gameLogicManager(game)
 {
 	this->game = game;
 	this->playerInput = playerInput;
+
+	this->player = std::make_shared<Player>(game, playerInput);
+
+	if (this->game->networkmgr.type == "client")
+	{
+		this->map.loadFromDiskPlaying(GAME_MAP_NAME_REMOTE, this->game->tileAtlas);
+	}
+	else
+	{
+		this->map.loadFromDiskPlaying(GAME_MAP_NAME, this->game->tileAtlas);
+	}
+
+	this->gameLogicManager.Init(player, &map);
+	this->gameLogicManager.players.Add(player->entityID, player);
+	
+	this->game->networkmgr.AddGameEntity(player->entityID);
+	
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
 	sf::FloatRect viewRect(0, 0, this->game->window.getSize().x, this->game->window.getSize().y);
 	this->guiView.reset(viewRect);
 	this->gameView.reset(viewRect);
 	pos *= 0.5f;
-	this->guiView.setCenter(pos);
-
-	this->map.loadFromDiskPlaying("data/map.dat", this->game->tileAtlas);
+	this->guiView.setCenter(pos);	
 
 	this->setGuiSystem();
 
 	sf::Vector2f center(this->map.width * 0.5, this->map.height * 0.5);
 	center *= float(this->map.tileSize);
 	gameView.setCenter(center);
-	player.setPosition(center);
-	//npc.setPosition(center - sf::Vector2f(2 * PLAYER_RADIUS, 0));
+	player->setPosition(center);
 
 	this->game->window.setMouseCursorVisible(false);
 }
@@ -84,134 +99,57 @@ GameStatePlaying::~GameStatePlaying()
 }
 
 void GameStatePlaying::draw(float dt) {
-
 	this->game->window.clear(sf::Color::Black);
 
 	this->game->window.setView(this->guiView);
 	this->game->window.draw(this->game->background);
 
 	this->game->window.setView(this->gameView);
-	this->map.draw(this->game->window, dt);
-	this->player.draw(this->game->window, dt);
-	//this->npc.draw(this->game->window, dt);
 
-	if (this->game->switches.showPath)
-	{
-		this->drawTestPath();
-	}
-	for (auto& obj : enemies) obj.draw(this->game->window, dt);
-	for (auto& obj : bullets) obj.draw(this->game->window, dt);
-	
+	this->map.draw(this->game->window, dt);
+	this->gameLogicManager.draw(this->game->window);
 
 	this->game->window.setView(this->guiView);
 	for (auto& gui : guiSystem) this->game->window.draw(gui.second);
-	this->cursor.draw(this->game->window, dt);
+	this->cursor.draw(this->game->window);
 
-	
+	this->game->window.draw(Console::Instance());
 }
 
 bool GameStatePlaying::end() {
-	return this->shouldEnd;
+	return this->isDeletable;
 }
 
 void GameStatePlaying::update(float dt) {
-	// CURSOR
-	this->cursor.update(dt);
+	this->cursor.update(dt);	
 
-	// COLLISION PLAYER WITH MAP
-	this->player.update(dt);
-	std::unordered_set<unsigned int> indices = map.grid.getCollisionObjects(this->player.getPosition());
-	//map.setDrawableHitboxes(indices);
-	std::unordered_set<unsigned int>::const_iterator it;
-	for(it = indices.begin(); it != indices.end(); ++it)
-	{
-		this->player.collide(map.hitboxes[*it], 0, dt);
-	}
-	for (auto& bullet : bullets) {
-		player.collide(bullet, 1, dt);
-	}
-	if (this->player.isShooting) bullets.emplace_back(Bullet(this->game, this->player.attackingAngle, this->player.getPosition()));
-
-	// COLLISION NPC WITH MAP
-	//if (this->player.isAttacking)
-	//{
-	//	sf::Vector2f mousePos = sf::Vector2f(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->gameView));
-	//	npc.shootAtTarget(mousePos);
-	//}
-	//else
-	//{
-	//	this->npc.isAttacking = false;
-	//}
-	//this->npc.update(dt);
-	//indices = map.grid.getCollisionObjects(this->npc.getPosition());
-	//map.setDrawableHitboxes(indices);
-	//for (it = indices.begin(); it != indices.end(); ++it)
-	//{
-	//	this->npc.collide(map.hitboxes[*it], 0, dt);
-	//}
-
-	for (auto& enemy : enemies)
-	{
-		if (enemy.targetList.empty())
-		{
-			this->testPath = this->map.pathfinder.searchPath(enemy.getPosition(), player.getPosition());
-			enemy.moveToTarget(this->testPath);
-		}
-		enemy.update(dt);
-		for (auto& bullet : bullets) {
-			enemy.collide(bullet, 1, dt);
-		}
-
-		indices = map.grid.getCollisionObjects(enemy.getPosition());
-		for (it = indices.begin(); it != indices.end(); ++it)
-		{
-			enemy.collide(map.hitboxes[*it], 0, dt);
-		}
-		
-		if (V2Tools::inLineOfSight_againstPolygon(this->map.polygons, enemy.getPosition(), player.getPosition()))
-		{
-			enemy.shootAtTarget(player.getPosition());
-		}
-		else
-		{
-			enemy.isAttacking = false;
-		}
-		if (enemy.isShooting) bullets.emplace_back(Bullet(this->game, enemy.attackingAngle, enemy.getPosition()));
-	}
-	enemies.erase(std::remove_if(enemies.begin(), enemies.end(), [](const IGameEntity& obj) {return obj.shouldEnd; }), enemies.end());
-
-	// COLLISION BULLETS WITH MAP
+	this->gameLogicManager.update(dt);
 	
-	//if (this->npc.isShooting) bullets.emplace_back(Bullet(this->game, this->npc.attackingAngle, this->npc.getPosition()));
-	for (auto& bullet : bullets)
-	{
-		bullet.update(dt);
-
-		//this->player.collide(bullet, 1, dt);
-		//this->npc.collide(bullet, 1, dt);
-
-		indices = map.grid.getCollisionObjects(bullet.getPosition());
-		for (it = indices.begin(); it != indices.end(); ++it)
-		{
-			bullet.collide(map.hitboxes[*it], 0, dt);
-		}
-	}
-	bullets.erase(std::remove_if(bullets.begin(), bullets.end(), [](const IGameEntity& obj) {return obj.shouldEnd; }), bullets.end());
-
-
-
 	// UPDATE VIEW
-	this->gameView.setCenter(this->player.getPosition());
+	this->gameView.setCenter(this->player->getPosition());
 	
 	this->guiSystem.at("settings").highlight(this->guiSystem.at("settings").getEntry(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->guiView)));
 	this->guiSystem.at("F10").highlight(this->guiSystem.at("F10").getEntry(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->guiView)));
 
-	// FINAL ACTIONS
-	if (this->player.shouldEnd == true)
+	if (aliveTimer > 0)
 	{
-		this->shouldEnd = true;
+		aliveTimer -= dt;
 	}
-		
+	else
+	{
+		this->game->networkmgr.broadcastAlive();
+		aliveTimer = 5;
+	}
+
+	// FINAL ACTIONS
+	if (this->player->isDead == true)
+	{
+		sf::Vector2f center(this->map.width * 0.5, this->map.height * 0.5);
+		center *= float(this->map.tileSize);
+		this->player->isDead = false;
+		this->player->setPosition(center);
+		this->player->hitpoints = 100;
+	}
 }
 
 
@@ -226,10 +164,13 @@ void GameStatePlaying::handleInput()
 
 	while (this->game->window.pollEvent(event))
 	{
+		if (event.type == sf::Event::LostFocus) hasFocus = false;
+		if (event.type == sf::Event::GainedFocus) hasFocus = true;
+
+		if (!hasFocus) continue;
 		switch (event.type)
 		{
-		default:
-			break;
+
 		case sf::Event::Closed:
 		{
 			game->window.close();
@@ -241,27 +182,8 @@ void GameStatePlaying::handleInput()
 			this->resize(event);
 			break;
 		}
-		//case sf::Event::MouseMoved:
-		//{
-
-		//	if (this->actionState == ActionState::PANNING)
-		//	{
-		//		sf::Vector2f position = sf::Vector2f(sf::Mouse::getPosition(this->game->window) - this->panningAnchor);
-		//		gameView.move(-1.0f * position * this->zoomLevel);
-		//		panningAnchor = sf::Mouse::getPosition(this->game->window);
-		//	}
-		//	break;
-		//}
 		case sf::Event::MouseButtonPressed:
 		{
-			//if (event.mouseButton.button == sf::Mouse::Middle)
-			//{
-			//	if (this->actionState != ActionState::PANNING)
-			//	{
-			//		this->actionState = ActionState::PANNING;
-			//		this->panningAnchor = sf::Mouse::getPosition(this->game->window);
-			//	}
-			//}
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
 				if (this->actionState == ActionState::NONE)
@@ -282,16 +204,9 @@ void GameStatePlaying::handleInput()
 						this->guiSystem.at("settings").hide();
 						this->guiSystem.at("F10").show();
 					}
-					//else if (msg == "save_map")
-					//{
-					//	this->actionState = ActionState::NONE;
-					//	//this->map.saveToDisk("data/map.dat");
-					//	this->guiSystem.at("settings").hide();
-					//	this->guiSystem.at("F10").show();
-					//}
 					else if (msg == "quit_to_menu")
 					{
-						this->shouldEnd = true;
+						this->isDeletable = true;
 					}
 					else if (msg == "exit_game")
 					{
@@ -300,21 +215,8 @@ void GameStatePlaying::handleInput()
 				}
 
 			}
-			//if (event.mouseButton.button == sf::Mouse::Right)
-			//{
-			//	testPathfinder();
-			//	this->npc.moveToTarget(testPath);
-			//}
 			break;
 		}
-		//case sf::Event::MouseButtonReleased:
-		//{
-		//	if (event.mouseButton.button == sf::Mouse::Middle)
-		//	{
-		//		this->actionState = ActionState::NONE;
-		//	}
-		//	break;
-		//}
 		case sf::Event::MouseWheelScrolled:
 		{
 			if (event.mouseWheelScroll.delta < 0)
@@ -345,65 +247,36 @@ void GameStatePlaying::handleInput()
 					this->guiSystem.at("settings").hide();
 					this->guiSystem.at("F10").show();
 				}
+			}
+			if (event.key.code == sf::Keyboard::F4)
+			{
+				sf::Vector2f mousePos = sf::Vector2f(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->gameView));
+				GuidGenerator gen;
+				gameLogicManager.enemies.Add(gen.newGuid(), std::make_unique<Enemies>(game, mousePos));
+			}
 
-			}
-			if (event.key.code == sf::Keyboard::F5)
-			{
-				this->game->switches.showPath = (this->game->switches.showPath == true) ? false : true;
-			}
-			if (event.key.code == sf::Keyboard::F6)
-			{
-				this->game->switches.showPathfinder = (this->game->switches.showPathfinder == true) ? false : true;
-			}
-			if (event.key.code == sf::Keyboard::F7)
-			{
-				this->game->switches.showHitboxHighlights = (this->game->switches.showHitboxHighlights == true) ? false : true;
-			}
-			if (event.key.code == sf::Keyboard::F8)
-			{
-				this->game->switches.showPolygon = (this->game->switches.showPolygon == true) ? false : true;
-			}
 			if (event.key.code == sf::Keyboard::F9)
 			{
-				this->player.setPosition(sf::Vector2f(0, 0));
+				this->player->setPosition(sf::Vector2f(0, 0));
 			}
-			if (event.key.code == sf::Keyboard::E)
-			{
-				sf::Vector2f mousePos = sf::Vector2f(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window),this->gameView));
-				//npc.shootAtTarget(mousePos);
-				this->enemies.emplace_back(Enemies(game,mousePos));
 
-			}
+			//if (event.key.code == sf::Keyboard::LAlt && event.key.code == sf::Keyboard::Period)
+
+			//if(event.key.code == sf::Keyboard::)
+			//{
+			//	Console::Instance(game).ToggleShow();
+			//}
+
 		}
+		default:
+			break;
 		}
 
-	}
-}
-
-//void GameStatePlaying::testPathfinder()
-//{
-//	sf::Vector2f start = this->npc.getPosition();
-//	
-//	sf::Vector2f end = this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->gameView);
-//	
-//	testPath = this->map.pathfinder.searchPath(start, end);
-//}
-
-void GameStatePlaying::drawTestPath()
-{
-	
-	int i = 0;
-	for(std::deque<sf::Vector2f>::const_iterator it = testPath.begin(); it != testPath.end(); ++it){
-	//for(auto point : testPath){
-		sf::Text text(std::to_string(i++), this->game->fonts["main_font"], 12);
-		text.setPosition(*it);
-		sf::CircleShape circle(5);
-		circle.setOrigin(5, 5);
-		circle.setFillColor(sf::Color::Black);
-		circle.setPosition(*it);
-		this->game->window.draw(circle);
-		this->game->window.draw(text);
+		Console::Instance().HandleEvent(event);
 	}
 
-	
+	if (!hasFocus) return;
+	if (Console::Instance().getShow())
+		return;
+	this->playerInput->handleInput();
 }

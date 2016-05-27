@@ -9,7 +9,7 @@ public:
 	MapHitbox();
 	~MapHitbox();
 
-	virtual void draw(sf::RenderWindow& window, float dt);
+	virtual void draw(sf::RenderWindow& window);
 	virtual void update(float dt);
 
 	virtual void setPosition(sf::Vector2f pos);

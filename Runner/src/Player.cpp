@@ -4,12 +4,17 @@
 #include "MapTools.h"
 #include "math.h"
 #include "V2Tools.h"
+#include "Console.h"
 #include <string>
 #include <memory>
 
 
+Player::Player()
+{
+}
+
 Player::Player(Game* game, IPlayerInput* playerInput) : game(game), playerInput(playerInput), 
-	playerModel(PLAYER_RADIUS), playerHead(PLAYER_RADIUS / 2), isAttacking(false), hitboxRadius(PLAYER_RADIUS)
+	playerModel(PLAYER_RADIUS), playerHead(PLAYER_RADIUS / 2), hitboxRadius(PLAYER_RADIUS)
 {
 	hitpoints = 100;
 
@@ -43,18 +48,71 @@ Player::Player(Game* game, IPlayerInput* playerInput) : game(game), playerInput(
 	healthBarEmpty.setFillColor(sf::Color::Red);
 	healthBarEmpty.setOutlineThickness(-2.0f);
 	healthBarEmpty.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
+
+	GuidGenerator gen;
+	this->entityID = gen.newGuid();
+	NetworkPlayerEvent event;
+	event.entityID = this->entityID;
+	Console::Instance() << "Created player with " << entityID << std::endl;
+	if (this->game->networkmgr.type == "client")
+	{
+		this->game->networkmgr.sendInitAlive(entityID);
+	}
+	remote = false;
+	
+}
+
+Player::Player(Game* game, IPlayerInput* playerInput,const Guid& guid) : game(game), playerInput(playerInput),
+playerModel(PLAYER_RADIUS), playerHead(PLAYER_RADIUS / 2), hitboxRadius(PLAYER_RADIUS)
+{
+	hitpoints = 100;
+
+	hitbox = sf::ConvexShape(4);
+	hitbox.setPoint(0, sf::Vector2f(0, 0));
+	hitbox.setPoint(1, sf::Vector2f(0, PLAYER_RADIUS));
+	hitbox.setPoint(2, sf::Vector2f(PLAYER_RADIUS, PLAYER_RADIUS));
+	hitbox.setPoint(3, sf::Vector2f(PLAYER_RADIUS, 0));
+	hitbox.setOutlineColor(sf::Color::White);
+	hitbox.setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
+	hitbox.setRotation(45);
+
+	//hitbox = sf::ConvexShape(1);
+	//hitbox.setPoint(0, sf::Vector2f(0, 0));
+
+	playerModel.setFillColor(sf::Color::Green);
+	playerModel.setOrigin(PLAYER_RADIUS, PLAYER_RADIUS);
+	playerModel.setScale(0.5, 1);
+
+	playerHead.setFillColor(sf::Color::Black);
+	playerHead.setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
+
+	healthBarFull.setSize(sf::Vector2f(50, 10));
+	healthBarFull.setOutlineColor(sf::Color::Black);
+	healthBarFull.setFillColor(sf::Color::Green);
+	healthBarFull.setOutlineThickness(-2.0f);
+	healthBarFull.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
+
+	healthBarEmpty.setSize(sf::Vector2f(50, 10));
+	healthBarEmpty.setOutlineColor(sf::Color::Black);
+	healthBarEmpty.setFillColor(sf::Color::Red);
+	healthBarEmpty.setOutlineThickness(-2.0f);
+	healthBarEmpty.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
+
+	this->entityID = guid;
+
+	Console::Instance() << "Created remote Player with " << entityID << std::endl;
+	remote = true;
 }
 
 
 Player::~Player()
 {
-	delete playerInput;
+	//delete playerInput;
 }
 
-void Player::draw(sf::RenderWindow& window, float dt)
+void Player::draw(sf::RenderWindow& window)
 {
-	if (isAttacking)
-		weapon.draw(window, dt);
+	weapon.draw(window);
 	window.draw(playerModel);
 	window.draw(playerHead);
 	//window.draw(displacement);
@@ -84,54 +142,63 @@ sf::Vector2f Player::getPosition() const
 
 void Player::update(float dt)
 {
-	if (hitpoints <= 0) this->shouldEnd = true;
+	if (hitpoints <= 0) this->isDead = true;
 
-	float moveBy = PLAYER_SPEED * dt;
-
-	float angleOffset = playerInput->getAngle();
-	this->hitbox.setRotation(angleOffset+45);
-	this->playerModel.setRotation(angleOffset);
-	this->playerHead.setRotation(angleOffset);
-	
-
-	sf::Vector2f directionOffset = playerInput->getOffset() * moveBy;
-	this->hitbox.move(directionOffset);
-	this->playerModel.move(directionOffset);
-	this->playerHead.move(directionOffset);
-
-	this->healthBarEmpty.move(directionOffset);
-	this->healthBarFull.move(directionOffset);
-
-
-	//sf::Vector2f weaponToCursor = sf::Vector2f(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window))) - weapon.getPosition();
-	//float weaponToCursorAngle = atan2(weaponToCursor.y, weaponToCursor.x) * 180 / M_PI;
-	//this->attackingAngle = fmod(weaponToCursorAngle, 360);
-	this->attackingAngle = angleOffset;
-	weapon.attachedMove(directionOffset, angleOffset);
-
-	
-
-	
-	if (this->playerInput->getAction() > 0)
+	if (remote == true)
 	{
-		isAttacking = true;
-		if (weapon.reloadTimer >= weapon.reloadTime)
+		std::stack<NetworkPlayerEvent> events;
+		events = this->game->networkmgr.getEvents(entityID);
+		if (events.size() != 0)
 		{
-			weapon.reloadTimer = 0.0f;
-			isShooting = true;
+			hitpoints = events.top().hitpoints;
 		}
-		else
-		{
-			isShooting = false;
-		}
-			
+		playerInput->getInput(dt, events);
 	}
 	else
 	{
-		isAttacking = false;
-		isShooting = false;
+		playerInput->getInput(dt);
 	}
-	weapon.reloadTimer += dt;
+
+	
+	float angleOffset = playerInput->getAngle();
+	sf::Vector2f newPos = playerInput->getPosition(this->getPosition());
+
+	this->hitbox.setRotation(angleOffset+45);
+	this->playerModel.setRotation(angleOffset);
+	this->playerHead.setRotation(angleOffset);
+		
+	this->hitbox.setPosition(newPos);
+	this->playerModel.setPosition(newPos);
+	this->playerHead.setPosition(newPos);
+
+	this->healthBarEmpty.setPosition(newPos);
+	this->healthBarFull.setPosition(newPos);
+	
+	this->attackingAngle = angleOffset;
+	weapon.attachedSetPosition(newPos, angleOffset);
+
+	weapon.update(dt);
+	
+	if (this->playerInput->getAction() > 0)
+	{
+		weapon.trigger();
+		//isAttacking = true;
+		//if (weapon.ready)
+		//{
+		//	
+		//	isShooting = true;
+		//}
+		//else
+		//{
+		//	isShooting = false;
+		//}
+	}
+	//else
+	//{
+	//	isAttacking = false;
+	////	isShooting = false;
+	//}
+	
 
 
 	if (this->playerInput->getAlternateAction() > 0 && this->playerInput->getAction() == 0)
@@ -149,21 +216,33 @@ void Player::update(float dt)
 		healingTimer = 0;
 	}
 	this->healthBarFull.setSize(sf::Vector2f(50.0f * this->hitpoints / 100.0f, 10));
-}
 
-//void Player::updateCollision(sf::Vector2f displace, float dt)
-//{
-//	if (displace == sf::Vector2f(0, 0)) return;
-//	float moveBy = PLAYER_SPEED * dt;
-//
-//	float angle = atan2(displace.y, displace.x) * 180 / M_PI;
-//	float length = V2Tools::length(displace);
-//
-//	this->hitbox.move(displace * moveBy);
-//	this->playerModel.move(displace * moveBy);
-//	this->playerHead.move(displace * moveBy);
-//	this->weapon.attachedMove(displace * moveBy, playerInput->getAngle());
-//}
+	if (remote == false)
+	{
+		if (this->game->networkmgr.networkGameObjects.size() != 0)
+		{
+			NetworkPlayerEvent event;
+			event.x = newPos.x;
+			event.y = newPos.y;
+			event.angle = playerInput->getAngle();
+			event.hitpoints = hitpoints;
+			event.action = playerInput->getAction();
+			event.alternateAction = playerInput->getAlternateAction();
+			event.entityID = this->entityID;
+			
+			this->game->networkmgr.queueEvent(event);
+			//if (aliveTimer > 0)
+			//{
+			//	aliveTimer -= dt;
+			//}
+			//else
+			//{
+			//	this->game->networkmgr.broadcastAlive(this->entityID);
+			//	aliveTimer = 5;
+			//}
+		}
+	}
+}
 
 void Player::collide(IGameEntity& other, unsigned int type, float dt)
 {
@@ -173,7 +252,7 @@ void Player::collide(IGameEntity& other, unsigned int type, float dt)
 		if (type == 1)
 		{
 			this->hitpoints -= 5;
-			other.shouldEnd = true;
+			other.isDeletable = true;
 		}
 		if (type == 0)
 		{

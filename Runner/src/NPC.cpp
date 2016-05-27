@@ -50,10 +50,10 @@ NPC::~NPC()
 {
 }
 
-void NPC::draw(sf::RenderWindow& window, float dt)
+void NPC::draw(sf::RenderWindow& window)
 {
 	if (isAttacking)
-		weapon.draw(window, dt);
+		weapon.draw(window);
 	window.draw(npcModel);
 	window.draw(npcHead);
 	//window.draw(displacement);
@@ -95,7 +95,7 @@ void NPC::shootAtTarget(sf::Vector2f target)
 
 void NPC::update(float dt)
 {
-	if (hitpoints <= 0) this->shouldEnd = true;
+	if (hitpoints <= 0) this->isDeletable = true;
 
 	float moveBy = PLAYER_SPEED * dt;	
 	
@@ -192,7 +192,7 @@ void NPC::collide(IGameEntity& other, unsigned int type, float dt)
 		if (type == 1)
 		{
 			this->hitpoints -= 5;
-			other.shouldEnd = true;
+			other.isDeletable = true;
 			this->healthBarFull.setSize(sf::Vector2f(50.0f * this->hitpoints / 100.0f, 10));
 		}
 		if (type == 0)
