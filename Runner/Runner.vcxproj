@@ -172,7 +172,10 @@
   <ItemGroup>
     <ClInclude Include="src\AnimationHandler.h" />
     <ClInclude Include="src\AStarSearch.h" />
+    <ClInclude Include="src\Beam.h" />
     <ClInclude Include="src\Bullet.h" />
+    <ClInclude Include="src\Pellet.h" />
+    <ClInclude Include="src\Projectile.h" />
     <ClInclude Include="src\CollisionManager.h" />
     <ClInclude Include="src\Console.h" />
     <ClInclude Include="src\Enemies.h" />
@@ -183,7 +186,10 @@
     <ClInclude Include="src\NetworkManager.h" />
     <ClInclude Include="src\NetworkPacket.h" />
     <ClInclude Include="src\Node.h" />
+    <ClInclude Include="src\Railgun.h" />
     <ClInclude Include="src\SendBinary.h" />
+    <ClInclude Include="src\Shotgun.h" />
+    <ClInclude Include="src\SMG.h" />
     <ClInclude Include="src\V2Tools.h" />
     <ClInclude Include="src\NPC.h" />
     <ClInclude Include="src\SAT.h" />
@@ -212,7 +218,10 @@
   <ItemGroup>
     <ClCompile Include="src\AnimationHandler.cpp" />
     <ClCompile Include="src\AStarSearch.cpp" />
+    <ClCompile Include="src\Beam.cpp" />
     <ClCompile Include="src\Bullet.cpp" />
+    <ClCompile Include="src\Pellet.cpp" />
+    <ClCompile Include="src\Projectile.cpp" />
     <ClCompile Include="src\CollisionManager.cpp" />
     <ClCompile Include="src\Console.cpp" />
     <ClCompile Include="src\Enemies.cpp" />
@@ -222,10 +231,10 @@
     <ClCompile Include="src\NetworkInput.cpp" />
     <ClCompile Include="src\NetworkManager.cpp" />
     <ClCompile Include="src\NPC.cpp" />
+    <ClCompile Include="src\Railgun.cpp" />
     <ClCompile Include="src\SAT.cpp" />
     <ClCompile Include="src\Cursor.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\GameStateEditor.cpp" />
     <ClCompile Include="src\GameStatePlaying.cpp" />
     <ClCompile Include="src\GameStateStart.cpp" />
@@ -236,6 +245,8 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\MKInput.cpp" />
     <ClCompile Include="src\SendBinary.cpp" />
+    <ClCompile Include="src\Shotgun.cpp" />
+    <ClCompile Include="src\SMG.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

@@ -8,6 +8,10 @@
 #include <string>
 #include <memory>
 
+#include "SMG.h"
+#include "Shotgun.h"
+#include "Railgun.h"
+
 
 Player::Player()
 {
@@ -17,6 +21,10 @@ Player::Player(Game* game, IPlayerInput* playerInput) : game(game), playerInput(
 	playerModel(PLAYER_RADIUS), playerHead(PLAYER_RADIUS / 2), hitboxRadius(PLAYER_RADIUS)
 {
 	hitpoints = 100;
+	this->weapons.emplace_back(std::make_shared<Shotgun>());
+	this->weapons.emplace_back(std::make_shared<SMG>());
+	this->weapons.emplace_back(std::make_shared<Railgun>());
+	weapon = weapons.begin();
 
 	hitbox = sf::ConvexShape(4);
 	hitbox.setPoint(0, sf::Vector2f(0, 0));
@@ -26,9 +34,6 @@ Player::Player(Game* game, IPlayerInput* playerInput) : game(game), playerInput(
 	hitbox.setOutlineColor(sf::Color::White);
 	hitbox.setOrigin(PLAYER_RADIUS/2, PLAYER_RADIUS / 2);
 	hitbox.setRotation(45);
-
-	//hitbox = sf::ConvexShape(1);
-	//hitbox.setPoint(0, sf::Vector2f(0, 0));
 
 	playerModel.setFillColor(sf::Color::Blue);
 	playerModel.setOrigin(PLAYER_RADIUS, PLAYER_RADIUS);
@@ -49,8 +54,8 @@ Player::Player(Game* game, IPlayerInput* playerInput) : game(game), playerInput(
 	healthBarEmpty.setOutlineThickness(-2.0f);
 	healthBarEmpty.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
 
-	GuidGenerator gen;
-	this->entityID = gen.newGuid();
+	//GuidGenerator gen;
+	//this->entityID = gen.newGuid();
 	NetworkPlayerEvent event;
 	event.entityID = this->entityID;
 	Console::Instance() << "Created player with " << entityID << std::endl;
@@ -66,6 +71,10 @@ Player::Player(Game* game, IPlayerInput* playerInput,const Guid& guid) : game(ga
 playerModel(PLAYER_RADIUS), playerHead(PLAYER_RADIUS / 2), hitboxRadius(PLAYER_RADIUS)
 {
 	hitpoints = 100;
+	this->weapons.emplace_back(std::make_shared<Shotgun>());
+	this->weapons.emplace_back(std::make_shared<SMG>());
+	this->weapons.emplace_back(std::make_shared<Railgun>());
+	weapon = weapons.begin();
 
 	hitbox = sf::ConvexShape(4);
 	hitbox.setPoint(0, sf::Vector2f(0, 0));
@@ -75,9 +84,6 @@ playerModel(PLAYER_RADIUS), playerHead(PLAYER_RADIUS / 2), hitboxRadius(PLAYER_R
 	hitbox.setOutlineColor(sf::Color::White);
 	hitbox.setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
 	hitbox.setRotation(45);
-
-	//hitbox = sf::ConvexShape(1);
-	//hitbox.setPoint(0, sf::Vector2f(0, 0));
 
 	playerModel.setFillColor(sf::Color::Green);
 	playerModel.setOrigin(PLAYER_RADIUS, PLAYER_RADIUS);
@@ -107,16 +113,14 @@ playerModel(PLAYER_RADIUS), playerHead(PLAYER_RADIUS / 2), hitboxRadius(PLAYER_R
 
 Player::~Player()
 {
-	//delete playerInput;
 }
 
 void Player::draw(sf::RenderWindow& window)
 {
-	weapon.draw(window);
+	(*weapon)->draw(window);
+	//weapon->draw(window);
 	window.draw(playerModel);
 	window.draw(playerHead);
-	//window.draw(displacement);
-	//window.draw(hitbox);
 
 	window.draw(healthBarEmpty);
 	window.draw(healthBarFull);
@@ -129,7 +133,7 @@ void Player::setPosition(sf::Vector2f pos)
 	playerModel.setPosition(pos);
 	playerHead.setPosition(pos);
 
-	weapon.setPosition(pos);
+	(*weapon)->setPosition(pos);
 
 	healthBarEmpty.setPosition(pos);
 	healthBarFull.setPosition(pos);
@@ -151,8 +155,10 @@ void Player::update(float dt)
 		if (events.size() != 0)
 		{
 			hitpoints = events.top().hitpoints;
+			weapon = weapons.begin() + events.top().equippedWeapon;
 		}
 		playerInput->getInput(dt, events);
+		
 	}
 	else
 	{
@@ -175,30 +181,10 @@ void Player::update(float dt)
 	this->healthBarFull.setPosition(newPos);
 	
 	this->attackingAngle = angleOffset;
-	weapon.attachedSetPosition(newPos, angleOffset);
 
-	weapon.update(dt);
-	
-	if (this->playerInput->getAction() > 0)
-	{
-		weapon.trigger();
-		//isAttacking = true;
-		//if (weapon.ready)
-		//{
-		//	
-		//	isShooting = true;
-		//}
-		//else
-		//{
-		//	isShooting = false;
-		//}
-	}
-	//else
-	//{
-	//	isAttacking = false;
-	////	isShooting = false;
-	//}
-	
+	(*weapon)->attachedSetPosition(newPos, angleOffset);
+	(*weapon)->update(dt);
+	(*weapon)->triggered = (this->playerInput->getAction() > 0) ? true : false;
 
 
 	if (this->playerInput->getAlternateAction() > 0 && this->playerInput->getAction() == 0)
@@ -228,18 +214,10 @@ void Player::update(float dt)
 			event.hitpoints = hitpoints;
 			event.action = playerInput->getAction();
 			event.alternateAction = playerInput->getAlternateAction();
+			event.equippedWeapon = weapon - weapons.begin();
 			event.entityID = this->entityID;
 			
 			this->game->networkmgr.queueEvent(event);
-			//if (aliveTimer > 0)
-			//{
-			//	aliveTimer -= dt;
-			//}
-			//else
-			//{
-			//	this->game->networkmgr.broadcastAlive(this->entityID);
-			//	aliveTimer = 5;
-			//}
 		}
 	}
 }
@@ -251,7 +229,7 @@ void Player::collide(IGameEntity& other, unsigned int type, float dt)
 	{
 		if (type == 1)
 		{
-			this->hitpoints -= 5;
+			this->hitpoints -= other.damage;
 			other.isDeletable = true;
 		}
 		if (type == 0)
@@ -264,7 +242,7 @@ void Player::collide(IGameEntity& other, unsigned int type, float dt)
 			this->hitbox.move(displace * moveBy);
 			this->playerModel.move(displace * moveBy);
 			this->playerHead.move(displace * moveBy);
-			this->weapon.attachedMove(displace * moveBy, playerInput->getAngle());
+			(*weapon)->attachedMove(displace * moveBy, playerInput->getAngle());
 
 			this->healthBarEmpty.move(displace * moveBy);
 			this->healthBarFull.move(displace * moveBy);
@@ -272,6 +250,17 @@ void Player::collide(IGameEntity& other, unsigned int type, float dt)
 	}
 }
 
+void Player::nextWeapon()
+{
+	if(weapon != --(weapons.end()))
+		weapon = std::next(weapon);
+}
+
+void Player::prevWeapon()
+{
+	if(weapon != weapons.begin())
+		weapon = std::prev(weapon);
+}
 
 
 sf::Vector2f Player::getPoint(int i) const

@@ -1,13 +1,16 @@
 #pragma once
 #include "IGameEntity.h"
 #include "GameSettingConstants.h"
-#include "Bullet.h"
+#include "Projectile.h"
 
+//template<typename projT>
 class Weapon :
 	public IGameEntity
 {
-public:
+protected:
 	Weapon();
+public:
+	
 	~Weapon();
 
 	float reloadTime;
@@ -22,10 +25,15 @@ public:
 	virtual void update(float dt);
 	void attachedMove(sf::Vector2f directionOffset, float angleOffset);
 	void attachedSetPosition(sf::Vector2f newPos, float angleOffset);
-	std::shared_ptr<Bullet> shoot();
-	void trigger();
+	
+	void toggleTrigger();
+
+	virtual std::vector<std::shared_ptr<Projectile>> shoot() = 0;
+
+	sf::RectangleShape weaponModel;
 
 private:
-	sf::RectangleShape weaponModel;
+	
 };
+
 

@@ -221,13 +221,15 @@ void GameStatePlaying::handleInput()
 		{
 			if (event.mouseWheelScroll.delta < 0)
 			{
-				gameView.zoom(2.0f);
-				zoomLevel *= 2.0f;
+				/*gameView.zoom(2.0f);
+				zoomLevel *= 2.0f;*/
+				this->player->nextWeapon();
 			}
 			else
 			{
-				gameView.zoom(0.5f);
-				zoomLevel *= 0.5f;
+				this->player->prevWeapon();
+				/*gameView.zoom(0.5f);
+				zoomLevel *= 0.5f;*/
 			}
 			break;
 		}

@@ -5,7 +5,7 @@
 #include "CollisionManager.h"
 
 #include "Player.h"
-#include "Bullet.h"
+#include "Projectile.h"
 #include "Enemies.h"
 
 #include "guid.h"
@@ -23,7 +23,7 @@ public:
 	std::shared_ptr<Player> player;
 
 	GameObjectManager<Player> players;
-	GameObjectManager<Bullet> bullets;
+	GameObjectManager<Projectile> bullets;
 	GameObjectManager<Enemies> enemies;
 
 	CollisionManager collisionManager;

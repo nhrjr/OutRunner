@@ -77,7 +77,14 @@ void GameLogicManager::update(float dt) {
 	GuidGenerator guidGen;
 	for (auto& o : players.objects)
 	{
-		if (o.second->weapon.triggered) bullets.Add(guidGen.newGuid(), o.second->weapon.shoot());
+		if (o.second->weapon->get()->triggered)
+		{
+			if (o.second->weapon->get()->ready)
+			{
+				bullets.Add(o.second->weapon->get()->shoot());
+			}
+		}
+			
 
 		auto it = this->game->networkmgr.timeOut.find(o.first);
 		if (it != this->game->networkmgr.timeOut.end() && it->second >= PLAYER_TIMEOUT)
@@ -90,9 +97,9 @@ void GameLogicManager::update(float dt) {
 	}
 
 	this->collisionManager.Collide<Player>(dt, players.objects, *map);
-	this->collisionManager.Collide<Bullet>(dt, bullets.objects, *map);
-	this->collisionManager.Collide<Bullet>(dt, bullets.objects, player);
-	this->collisionManager.Collide<Enemies, Bullet>(dt, enemies.objects, bullets.objects);
+	this->collisionManager.Collide<Projectile>(dt, bullets.objects, *map);
+	this->collisionManager.Collide<Projectile>(dt, bullets.objects, player);
+	this->collisionManager.Collide<Enemies, Projectile>(dt, enemies.objects, bullets.objects);
 
 	for (auto& enemy : enemies.objects)
 	{
@@ -110,6 +117,6 @@ void GameLogicManager::update(float dt) {
 		{
 			enemy.second->isAttacking = false;
 		}
-		if (enemy.second->isShooting) bullets.Add(guidGen.newGuid(), std::make_shared<Bullet>(enemy.second->attackingAngle, enemy.second->getPosition()));
+		if (enemy.second->isShooting) bullets.Add(std::make_shared<Bullet>(enemy.second->attackingAngle, enemy.second->getPosition()));
 	}
 }

@@ -6,12 +6,14 @@
 template<typename T>
 class GameObjectManager
 {
-	static_assert(std::is_base_of<IGameEntity, T>::value, "GameObjectManager<T> - T must derived from IGameEntity");
+	static_assert(std::is_base_of<IGameEntity, T>::value, "GameObjectManager<T> - T must be derived from IGameEntity");
 public:
 	GameObjectManager();
 	~GameObjectManager();
 
-	void Add(Guid entityID, std::shared_ptr<T> gameObject);
+	void Add( Guid entityID, const std::shared_ptr<T>& gameObject);
+	void Add(const std::shared_ptr<T>& gameObject);
+	void Add(const std::vector<std::shared_ptr<T>>& gameObjects);
 	void Remove(Guid entityID);
 	int GetObjectCount() const;
 
@@ -35,8 +37,21 @@ GameObjectManager<T>::~GameObjectManager()
 }
 
 template<typename T>
-void GameObjectManager<T>::Add(Guid entityID, std::shared_ptr<T> gameObject) {
+void GameObjectManager<T>::Add(Guid entityID, const std::shared_ptr<T>& gameObject) {
 	objects.insert(std::make_pair(entityID, gameObject));
+}
+
+template<typename T>
+void GameObjectManager<T>::Add(const std::shared_ptr<T>& gameObject) {
+	objects.insert(std::make_pair(gameObject->entityID, gameObject));
+}
+
+template<typename T>
+void GameObjectManager<T>::Add(const std::vector<std::shared_ptr<T>>& gameObjects)
+{
+	for (auto& obj : gameObjects) {
+		objects.insert(std::make_pair(obj->entityID, obj));
+	}
 }
 
 template<typename T>

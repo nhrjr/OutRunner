@@ -10,6 +10,7 @@ struct NetworkPlayerEvent
 	int hitpoints;
 	int action;
 	int alternateAction;
+	unsigned short equippedWeapon;
 };
 
 // This entity lives at this address
@@ -50,12 +51,12 @@ struct NetworkHeader
 
 inline sf::Packet& operator<<(sf::Packet& packet, const NetworkPlayerEvent& event)
 {
-	return packet << event.entityID << event.x << event.y << event.angle << event.hitpoints << event.action << event.alternateAction;
+	return packet << event.entityID << event.x << event.y << event.angle << event.hitpoints << event.action << event.alternateAction << event.equippedWeapon;
 }
 
 inline sf::Packet& operator >> (sf::Packet& packet, NetworkPlayerEvent& event)
 {
-	return packet >> event.entityID >> event.x >> event.y >> event.angle >> event.hitpoints >> event.action >> event.alternateAction;
+	return packet >> event.entityID >> event.x >> event.y >> event.angle >> event.hitpoints >> event.action >> event.alternateAction >> event.equippedWeapon;
 }
 
 inline sf::Packet& operator << (sf::Packet& packet, const sf::Uint8(&uArray)[NETWORK_BINARYBUFFER_SIZE])

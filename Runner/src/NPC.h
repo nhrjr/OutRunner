@@ -3,8 +3,9 @@
 #include "GameSettingConstants.h"
 #include "Game.h"
 #include "MKInput.h"
-#include "Weapon.h"
-#include "Bullet.h"
+#include "SMG.h"
+#include "Projectile.h"
+
 class NPC :
 	public IGameEntity
 {
@@ -46,7 +47,7 @@ public:
 	sf::RectangleShape healthBarFull;
 	sf::RectangleShape healthBarEmpty;
 
-	Weapon weapon;
+	SMG weapon;
 
 	virtual sf::Vector2f getPoint(int i) const;
 	virtual int getPointCount() const;

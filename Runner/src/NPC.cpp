@@ -191,7 +191,7 @@ void NPC::collide(IGameEntity& other, unsigned int type, float dt)
 	{
 		if (type == 1)
 		{
-			this->hitpoints -= 5;
+			this->hitpoints -= other.damage;
 			other.isDeletable = true;
 			this->healthBarFull.setSize(sf::Vector2f(50.0f * this->hitpoints / 100.0f, 10));
 		}

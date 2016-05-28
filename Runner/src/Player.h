@@ -5,7 +5,7 @@
 #include "MKInput.h"
 #include "NetworkInput.h"
 #include "Weapon.h"
-#include "Bullet.h"
+
 
 class Player :
 	public IGameEntity
@@ -13,17 +13,13 @@ class Player :
 	Game* game;
 	IPlayerInput* playerInput;
 
-
 	sf::CircleShape playerModel;
 	sf::CircleShape playerHead;
 	sf::RectangleShape healthBarFull;
 	sf::RectangleShape healthBarEmpty;
 
-	
-
 	float healingTimer;
 	bool remote;
-	//float aliveTimer;
 
 public:
 	Player();
@@ -37,12 +33,13 @@ public:
 	virtual void update(float dt);
 	void collide(IGameEntity& other, unsigned int type, float dt);
 
-	//void updateCollision(sf::Vector2f displace, float dt);
+	std::vector<std::shared_ptr<Weapon>> weapons;
 
-	Weapon weapon;
+	std::vector<std::shared_ptr<Weapon>>::const_iterator weapon;
 
-	//bool isAttacking = false;
-	//bool isShooting = false;
+	void nextWeapon();
+	void prevWeapon();
+
 	bool isDead = false;
 	float hitboxRadius;
 	float attackingAngle;
@@ -52,7 +49,5 @@ private:
 	virtual int getPointCount() const;
 	virtual sf::Transform getTransform() const;
 	virtual float getMinDistance() const;
-	
-
 };
 
