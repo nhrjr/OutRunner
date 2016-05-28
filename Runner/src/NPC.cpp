@@ -143,9 +143,6 @@ void NPC::update(float dt)
 	this->healthBarEmpty.move(directionOffset);
 	this->healthBarFull.move(directionOffset);
 
-	//sf::Vector2f weaponToCursor = this->target - weapon.getPosition();
-	//float weaponToCursorAngle = atan2(weaponToCursor.y, weaponToCursor.x) * 180 / M_PI;
-	//this->attackingAngle = fmod(weaponToCursorAngle, 360);
 	weapon.attachedMove(directionOffset, attackingAngle);
 
 
@@ -169,20 +166,6 @@ void NPC::update(float dt)
 	weapon.reloadTimer += dt;
 	attackingTimer += dt;
 }
-
-//void NPC::updateCollision(sf::Vector2f displace, float dt)
-//{
-//	if (displace == sf::Vector2f(0, 0)) return;
-//	float moveBy = PLAYER_SPEED * dt;
-//
-//	float angle = atan2(displace.y, displace.x) * 180 / M_PI;
-//	float length = V2Tools::length(displace);
-//
-//	this->hitbox.move(displace * moveBy);
-//	this->npcModel.move(displace * moveBy);
-//	this->npcHead.move(displace * moveBy);
-//	this->weapon.attachedMove(displace * moveBy,attackingAngle);
-//}
 
 void NPC::collide(IGameEntity& other, unsigned int type, float dt)
 {

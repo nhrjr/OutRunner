@@ -7,13 +7,10 @@
 
 Projectile::Projectile(float angle, sf::Vector2f pos) : projectileModel(4), lifeTime(0.0f)
 {
-	this->damage = 5;
 	hitbox = sf::ConvexShape(2);
 	hitbox.setPoint(0, sf::Vector2f(0, 2));
 	hitbox.setPoint(1, sf::Vector2f(8, 2));
-	//hitbox.setPoint(1, sf::Vector2f(0, 0));
-	//hitbox.setPoint(2, sf::Vector2f(0, 4));
-	//hitbox.setFillColor(sf::Color::White);
+
 	hitbox.setOrigin(4, 2);
 	hitbox.setRotation(angle);
 
@@ -62,7 +59,7 @@ void Projectile::update(float dt)
 		projectileModel.move(forward);
 		hitbox.move(forward);
 		lifeTime += dt;
-		if (lifeTime > 0.5f)
+		if (lifeTime > 1.0f)
 			this->isDeletable = true;
 	}
 }

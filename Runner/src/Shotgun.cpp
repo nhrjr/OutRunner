@@ -3,8 +3,7 @@
 
 Shotgun::Shotgun()
 {
-	this->damage = 5;
-	this->reloadTime = 1.0f;
+	this->reloadTime = 0.6f;
 }
 
 Shotgun::~Shotgun()
@@ -17,7 +16,7 @@ std::vector<std::shared_ptr<Projectile>> Shotgun::shoot()
 	this->ready = false;
 	std::vector<std::shared_ptr<Projectile>> bullets;
 	float spread = 10.0f;
-	float numberOfBullets = 21;
+	float numberOfBullets = 15;
 	float nextBullet = spread / numberOfBullets;
 	for (int i = 0; i < numberOfBullets; ++i)
 	{

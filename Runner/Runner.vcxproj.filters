@@ -102,6 +102,15 @@
     <Filter Include="GameObjects\Humans\Source Files">
       <UniqueIdentifier>{a38ef0d1-8f29-4330-a4db-4edec1b2d709}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects\Ammunition">
+      <UniqueIdentifier>{1620f315-db4a-4990-98cc-2d277bddc1b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Ammunition\Header Files">
+      <UniqueIdentifier>{18dd9090-07e6-4c2d-877e-3da314fd3037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObjects\Ammunition\Source Files">
+      <UniqueIdentifier>{e35822ea-0f19-4ed3-85bc-f9ae9e34cd16}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AStarSearch.h">
@@ -221,19 +230,25 @@
     <ClInclude Include="src\Shotgun.h">
       <Filter>GameObjects\Weapons\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Projectile.h">
-      <Filter>GameObjects\Weapons\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Pellet.h">
-      <Filter>GameObjects\Weapons\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Bullet.h">
-      <Filter>GameObjects\Weapons\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Railgun.h">
       <Filter>GameObjects\Weapons\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Beam.h">
+      <Filter>GameObjects\Ammunition\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bullet.h">
+      <Filter>GameObjects\Ammunition\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Flame.h">
+      <Filter>GameObjects\Ammunition\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pellet.h">
+      <Filter>GameObjects\Ammunition\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Projectile.h">
+      <Filter>GameObjects\Ammunition\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FlameThrower.h">
       <Filter>GameObjects\Weapons\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -331,12 +346,6 @@
     <ClCompile Include="src\Shotgun.cpp">
       <Filter>GameObjects\Weapons\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Projectile.cpp">
-      <Filter>GameObjects\Weapons\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Pellet.cpp">
-      <Filter>GameObjects\Weapons\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Weapon.cpp">
       <Filter>GameObjects\Weapons\Source Files</Filter>
     </ClCompile>
@@ -344,9 +353,21 @@
       <Filter>GameObjects\Weapons\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Beam.cpp">
-      <Filter>GameObjects\Weapons\Source Files</Filter>
+      <Filter>GameObjects\Ammunition\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Bullet.cpp">
+      <Filter>GameObjects\Ammunition\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Flame.cpp">
+      <Filter>GameObjects\Ammunition\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Pellet.cpp">
+      <Filter>GameObjects\Ammunition\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Projectile.cpp">
+      <Filter>GameObjects\Ammunition\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FlameThrower.cpp">
       <Filter>GameObjects\Weapons\Source Files</Filter>
     </ClCompile>
   </ItemGroup>

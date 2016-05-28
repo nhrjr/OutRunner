@@ -12,15 +12,13 @@ Beam::Beam(float angle, sf::Vector2f pos) : Projectile(angle, pos)
 	hitbox.setRotation(angle);
 
 	projectileModel.setSize(sf::Vector2f(2, 2));
-	projectileModel.setFillColor(sf::Color::Red);
+	projectileModel.setFillColor(sf::Color::Green);
 
 	projectileModel.setOrigin(1, 1);
 	projectileModel.setRotation(angle);
 
 	direction.x = cos(angle * M_PI / 180);
 	direction.y = sin(angle * M_PI / 180);
-
-	Console::Instance() << angle << std::endl;
 
 	hitbox.setPosition(pos + sf::Vector2f(-direction.y, direction.x) + PLAYER_RADIUS * direction);
 	projectileModel.setPosition(pos + sf::Vector2f(-direction.y, direction.x) + PLAYER_RADIUS * direction);

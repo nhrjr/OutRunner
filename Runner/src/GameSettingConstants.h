@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-const static int SCREEN_WIDTH = 1024;
+const static int SCREEN_WIDTH = 1400;
 const static int SCREEN_HEIGHT = 768;
 const static std::string GAME_NAME = "Runner";
 const static unsigned int NETWORK_BINARYBUFFER_SIZE = 1200;
@@ -17,7 +17,7 @@ const static int GAME_CONSOLE_INPUTBUFFER_LENGTH = 300;
 
 const static float BULLET_SPEED = 1200.0f;
 const static float PLAYER_RADIUS = 20.0f;
-const static float PLAYER_SPEED = 400.0f;
+const static float PLAYER_SPEED = 500.0f;
 const static float PLAYER_TIMEOUT = 10.0f;
 
 const static float SAT_MAX_OVERLAP = (SCREEN_HEIGHT > SCREEN_WIDTH) ? SCREEN_HEIGHT : SCREEN_WIDTH;

@@ -5,7 +5,6 @@
 
 Railgun::Railgun()
 {
-	this->damage = 5;
 	this->reloadTime = 1.0f;
 }
 

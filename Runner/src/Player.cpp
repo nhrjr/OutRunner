@@ -11,6 +11,7 @@
 #include "SMG.h"
 #include "Shotgun.h"
 #include "Railgun.h"
+#include "FlameThrower.h"
 
 
 Player::Player()
@@ -24,6 +25,8 @@ Player::Player(Game* game, IPlayerInput* playerInput) : game(game), playerInput(
 	this->weapons.emplace_back(std::make_shared<Shotgun>());
 	this->weapons.emplace_back(std::make_shared<SMG>());
 	this->weapons.emplace_back(std::make_shared<Railgun>());
+	this->weapons.emplace_back(std::make_shared<FlameThrower>());
+
 	weapon = weapons.begin();
 
 	hitbox = sf::ConvexShape(4);
@@ -74,6 +77,7 @@ playerModel(PLAYER_RADIUS), playerHead(PLAYER_RADIUS / 2), hitboxRadius(PLAYER_R
 	this->weapons.emplace_back(std::make_shared<Shotgun>());
 	this->weapons.emplace_back(std::make_shared<SMG>());
 	this->weapons.emplace_back(std::make_shared<Railgun>());
+	this->weapons.emplace_back(std::make_shared<FlameThrower>());
 	weapon = weapons.begin();
 
 	hitbox = sf::ConvexShape(4);

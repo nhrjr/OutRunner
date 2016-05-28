@@ -1,14 +1,11 @@
 #pragma once
 #include "Weapon.h"
-#include "Bullet.h"
-
-class SMG :
+class FlameThrower :
 	public Weapon
 {
 public:
-	SMG();
-	~SMG();
+	FlameThrower();
+	~FlameThrower();
 	virtual std::vector<std::shared_ptr<Projectile>> shoot();
 };
-
 

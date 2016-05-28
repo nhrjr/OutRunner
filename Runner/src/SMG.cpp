@@ -1,22 +1,15 @@
 #include "stdafx.h"
 #include "SMG.h"
 
-//template<typename projT>
-//SMG<projT>::SMG()
 SMG::SMG()
 {
-	this->damage = 5;
 	this->reloadTime = 0.1f;
 }
 
-//template<typename projT>
-//SMG<projT>::~SMG()
 SMG::~SMG()
 {
 }
 
-//template<typename projT>
-//std::vector<std::shared_ptr<projT>> SMG<projT>::shoot()
 std::vector<std::shared_ptr<Projectile>> SMG::shoot()
 {
 	this->reloadTimer = 0.0;
