@@ -14,10 +14,10 @@ public:
 	bool isSending = false;
 
 	std::vector<char> buffer;
-	size_t pointer = 0;
-	size_t counter = 0;
-	size_t totalPacketNumber = 0;
-	size_t lastValidByte = 0;
+	unsigned int pointer = 0;
+	unsigned int counter = 0;
+	unsigned int totalPacketNumber = 0;
+	unsigned int lastValidByte = 0;
 
 	sf::Clock timeoutClock;
 

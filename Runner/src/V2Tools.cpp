@@ -47,12 +47,12 @@ namespace V2Tools
 
 	float length(const sf::Vector2f& v)
 	{
-		return sqrt(v.x * v.x + v.y * v.y);
+		return (float)sqrt(v.x * v.x + v.y * v.y);
 	}
 
 	int length(const sf::Vector2i& v)
 	{
-		return sqrt(v.x * v.x + v.y * v.y);
+		return (int)sqrt(v.x * v.x + v.y * v.y);
 	}
 
 	sf::Vector2f normalize(const sf::Vector2f& v)
@@ -103,7 +103,6 @@ namespace V2Tools
 		//	out Vector intersection, bool considerCollinearOverlapAsIntersect = false)
 	{
 		//sf::Vector2f intersection;
-
 		auto r = p2 - p;
 		auto s = q2 - q;
 		auto rxs = V2Tools::crossProduct(r, s);

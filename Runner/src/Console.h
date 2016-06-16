@@ -60,7 +60,8 @@ class ConsoleStream : public std::ostream
 			return 0;
 		}
 	};
-ConsoleStreamBuf buffer;
+
+	ConsoleStreamBuf buffer;
 public:
 	ConsoleStream() : std::ostream(&buffer), buffer(str,read) {};
 	bool read;

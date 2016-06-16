@@ -2,7 +2,7 @@
 #include "stdafx.h"
 
 #include <string>
-#include <map>
+#include <unordered_map>
 
 class TextureManager
 {
@@ -15,6 +15,6 @@ public:
 	sf::Texture& getRef(const std::string& texture);
 
 private:
-	std::map<std::string, sf::Texture> textures;
+	std::unordered_map<std::string, sf::Texture> textures;
 };
 

@@ -4,22 +4,22 @@
 
 Flame::Flame(float angle, sf::Vector2f pos) : Projectile(angle, pos), projectileModel(3)
 {
-	this->damage = 2;
-	this->rotationSpeed = 300.0f;
+	this->damage = 1;
+	this->rotationSpeed = 500.0f;
 	hitbox = sf::ConvexShape(3);
-	hitbox.setPoint(0, sf::Vector2f(30, 0));
-	hitbox.setPoint(1, sf::Vector2f(30, 30));
-	hitbox.setPoint(2, sf::Vector2f(0,15));
-	hitbox.setOrigin(15, 15);
+	hitbox.setPoint(0, sf::Vector2f(12, 0));
+	hitbox.setPoint(1, sf::Vector2f(12, 12));
+	hitbox.setPoint(2, sf::Vector2f(0,6));
+	hitbox.setOrigin(6, 6);
 	hitbox.setRotation(angle);
 
 	//projectileModel.setSize(sf::Vector2f(2, 2));
-	projectileModel.setPoint(0, sf::Vector2f(30, 0));
-	projectileModel.setPoint(1, sf::Vector2f(30, 30));
-	projectileModel.setPoint(2, sf::Vector2f(0, 15));
+	projectileModel.setPoint(0, sf::Vector2f(12, 0));
+	projectileModel.setPoint(1, sf::Vector2f(12, 12));
+	projectileModel.setPoint(2, sf::Vector2f(0, 6));
 	projectileModel.setFillColor(sf::Color::Red);
 
-	projectileModel.setOrigin(15, 15);
+	projectileModel.setOrigin(6, 6);
 	projectileModel.setRotation(angle);
 
 	direction.x = cos(angle * M_PI / 180);

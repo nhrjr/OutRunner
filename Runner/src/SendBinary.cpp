@@ -19,7 +19,7 @@ void SendBinary::addBinary(std::vector<char>& b) {
 
 	buffer = b;
 
-	this->totalPacketNumber = (buffer.size() - 1) / NETWORK_BINARYBUFFER_SIZE + 1;
+	this->totalPacketNumber = ((unsigned int)buffer.size() - 1) / NETWORK_BINARYBUFFER_SIZE + 1;
 	this->timeoutClock.restart();
 	this->isSending = true;
 }
@@ -29,10 +29,10 @@ sf::Packet SendBinary::sendChunk() {
 	NetworkBinary bin;
 	int i = 0;
 
-	for (int k = pointer; (k < buffer.size()) && (k < (pointer + NETWORK_BINARYBUFFER_SIZE)); k++)
+	for (int k = pointer; (k < buffer.size()) && (k < (pointer + NETWORK_BINARYBUFFER_SIZE)); ++k)
 	{
 		bin.buffer[i] = buffer[k];
-		i++;
+		++i;
 	}
 	bin.lastValidByte = i;
 	bin.packetNumber = this->counter;
@@ -51,5 +51,5 @@ sf::Packet SendBinary::sendChunk() {
 void SendBinary::advanceToNextChunk()
 {
 	pointer += NETWORK_BINARYBUFFER_SIZE; 
-	counter++;
+	++counter;
 }

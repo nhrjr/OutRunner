@@ -17,21 +17,30 @@ GameStateStart::GameStateStart(Game* game) : isDeletable(false)
 	pos *= 0.5f;
 	this->view.setCenter(pos);
 
-	this->setGuiSystem();
+	this->setGameGUI();
 
 }
 
-void GameStateStart::setGuiSystem()
+void GameStateStart::setGameGUI()
 {
 	this->game->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0)));
 	this->game->background.setScale(
 		float(this->game->window.getSize().x) / float(this->game->background.getTexture()->getSize().x),
 		float(this->game->window.getSize().y) / float(this->game->background.getTexture()->getSize().y));
 
-	this->guiSystem.emplace("menu", GUI(sf::Vector2f(GAME_MENU_BUTTON_WIDTH, GAME_MENU_BUTTON_HEIGHT), 4, false, game->styleSheets.at("button"), { std::make_pair("Singleplayer","play_game_single"),std::make_pair("Host Multiplayer","play_game_server"), std::make_pair("Join Multiplayer","play_game_client"), std::make_pair("Load Editor", "load_game"), std::make_pair("Exit Game", "exit_game") }));
-	this->guiSystem.at("menu").setOrigin(GAME_MENU_BUTTON_WIDTH / 2, GAME_MENU_BUTTON_HEIGHT / 2);
-	this->guiSystem.at("menu").setPosition(sf::Vector2f(this->game->window.getSize().x, this->game->window.getSize().y) * 0.5f);
-	this->guiSystem.at("menu").show();
+	sf::Vector2f dim(GAME_MENU_BUTTON_WIDTH, GAME_MENU_BUTTON_HEIGHT);
+	int padding = 4;
+	std::vector<std::shared_ptr<GuiBasicElement>> menu = {
+		std::make_shared<GuiButtonText>("Singleplayer",dim,padding, game->styleSheets.at("button_text"), "play_game_single"),
+		std::make_shared<GuiButtonText>("Host Multiplayer",dim,padding,game->styleSheets.at("button_text"), "play_game_server"),
+		std::make_shared<GuiButtonText>("Join Multiplayer",dim,padding,game->styleSheets.at("button_text"), "play_game_client"),
+		std::make_shared<GuiButtonText>("Load Editor", dim,padding,game->styleSheets.at("button_text"),"load_game"),
+		std::make_shared<GuiButtonText>("Exit Game",dim,padding,game->styleSheets.at("button_text"), "exit_game")
+	};
+	this->guiElements.emplace("menu", std::make_shared<GuiList>(menu, false));
+	this->guiElements.at("menu")->setOrigin(GAME_MENU_BUTTON_WIDTH / 2, GAME_MENU_BUTTON_HEIGHT / 2);
+	this->guiElements.at("menu")->setPosition(sf::Vector2f(this->game->window.getSize().x, this->game->window.getSize().y) * 0.5f);
+	this->guiElements.at("menu")->show();
 }
 
 void GameStateStart::resize(sf::Event& event)
@@ -47,8 +56,8 @@ void GameStateStart::resize(sf::Event& event)
 		float(event.size.width) / float(this->game->background.getTexture()->getSize().x),
 		float(event.size.height) / float(this->game->background.getTexture()->getSize().y));
 
-	this->guiSystem.at("menu").setPosition(pos * 0.5f);
-	this->guiSystem.at("menu").show();
+	this->guiElements.at("menu")->setPosition(pos * 0.5f);
+	this->guiElements.at("menu")->show();
 }
 
 
@@ -62,14 +71,14 @@ void GameStateStart::draw(float dt) {
 	this->game->window.clear(sf::Color::Black);
 	this->game->window.draw(this->game->background);
 
-	for (auto gui : guiSystem) this->game->window.draw(gui.second);
+	for (auto gui : guiElements) this->game->window.draw(*gui.second);
 
 	this->game->window.draw(Console::Instance());
 }
 
 void GameStateStart::update(float dt) {
 	sf::Vector2f mousePos = this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->view);
-	this->guiSystem.at("menu").highlight(this->guiSystem.at("menu").getEntry(mousePos));
+	this->guiElements.at("menu")->highlight(this->guiElements.at("menu")->getBasicElement(mousePos));
 }
 
 void GameStateStart::handleInput() {
@@ -98,7 +107,7 @@ void GameStateStart::handleInput() {
 			sf::Vector2f pos = sf::Vector2f(event.size.width, event.size.height);
 			pos *= 0.5f;
 			pos = this->game->window.mapPixelToCoords(sf::Vector2i(pos), this->view);
-			this->guiSystem.at("menu").setPosition(pos);
+			this->guiElements.at("menu")->setPosition(pos);
 			this->game->background.setScale(
 				float(event.size.width) / float(this->game->background.getTexture()->getSize().x),
 				float(event.size.height) / float(this->game->background.getTexture()->getSize().y));
@@ -108,7 +117,7 @@ void GameStateStart::handleInput() {
 		{
 			if (event.mouseButton.button == sf::Mouse::Left)
 			{
-				std::string msg = this->guiSystem.at("menu").activate(mousePos);
+				std::string msg = this->guiElements.at("menu")->activate(mousePos);
 
 				if (msg == "play_game_single")
 				{

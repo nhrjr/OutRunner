@@ -13,6 +13,10 @@ MKInput::MKInput(Game* game)
 	this->left = sf::Vector2f(-1, 0);
 }
 
+MKInput::~MKInput()
+{
+}
+
 void MKInput::getInput(float dt)
 {
 	this->dt = dt;
@@ -20,10 +24,10 @@ void MKInput::getInput(float dt)
 
 float MKInput::getAngle()
 {
-	sf::Vector2f mousePos = sf::Vector2f(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window)));
-	sf::Vector2f direction = mousePos - sf::Vector2f(this->game->window.getSize().x / 2, this->game->window.getSize().y / 2);
-	float angleOffset = atan2(direction.y, direction.x) * 180 / M_PI;
-	return angleOffset = fmod(angleOffset, 360);
+	//sf::Vector2f mousePos = sf::Vector2f(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window)));
+	//sf::Vector2f direction = mousePos - sf::Vector2f(this->game->window.getSize().x / 2, this->game->window.getSize().y / 2);
+	//float angleOffset = atan2(direction.y, direction.x) * 180 / M_PI;
+	return (float)fmod(this->angle, 360);
 }
 
 void MKInput::handleInput()
@@ -32,22 +36,67 @@ void MKInput::handleInput()
 	int count = 1;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W) || sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
 		this->directionOffset += up;
-		count++;
+		++count;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) || sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
 		this->directionOffset += down;
-		count++;
+		++count;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
 		this->directionOffset += left;
-		count++;
+		++count;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
 		this->directionOffset += right;
-		count++;
+		++count;
 	}
 	if (count >= 2) {
 		this->directionOffset /= sqrtf(2);
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		action = 1;
+	}
+	else {
+		action = 0;
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
+		alternateAction = 1;
+	}
+	else {
+		alternateAction = 0;
+	}
+
+	sf::Vector2f mousePos = sf::Vector2f(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window)));
+	sf::Vector2f direction = mousePos - sf::Vector2f(this->game->window.getSize().x / 2, this->game->window.getSize().y / 2);
+	this->angle = atan2(direction.y, direction.x) * 180 / M_PI;
+}
+
+void MKInput::handleEvent(const sf::Event& ev)
+{
+	switch (ev.type)
+	{
+	case sf::Event::MouseWheelScrolled:
+	{
+		if (ev.mouseWheelScroll.delta < 0)
+		{
+			events.push_back(0);
+		}
+		else
+		{
+			events.push_back(1);
+		}
+		break;
+	}
+	case sf::Event::KeyPressed:
+	{
+		if (ev.key.code == sf::Keyboard::Q) events.push_back(2);
+		if (ev.key.code == sf::Keyboard::E) events.push_back(3);
+		if (ev.key.code == sf::Keyboard::R) events.push_back(4);
+		if (ev.key.code == sf::Keyboard::F) events.push_back(5);
+		break;
+	}
 	}
 }
 
@@ -59,21 +108,18 @@ sf::Vector2f MKInput::getPosition(sf::Vector2f lastPos) {
 
 int MKInput::getAction()
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
-		return 1;
-	}
-	return 0;
+	return action;
 }
 
 int MKInput::getAlternateAction()
 {
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right)) {
-		return 1;
-	}
-	return 0;
+	return alternateAction;
 }
 
-
-MKInput::~MKInput()
+std::vector<int> MKInput::getEvent()
 {
+	return events;
 }
+
+
+

@@ -5,28 +5,29 @@
 #include "MKInput.h"
 #include "NetworkInput.h"
 #include "Weapon.h"
+#include "Healthbar.h"
+#include "AnimatedModel.h"
 
+#include "signal_slot.h"
 
 class Player :
-	public IGameEntity
+	public IGameEntity, public Nano::Observer
 {
 	Game* game;
 	IPlayerInput* playerInput;
 
-	sf::CircleShape playerModel;
-	sf::CircleShape playerHead;
-	sf::RectangleShape healthBarFull;
-	sf::RectangleShape healthBarEmpty;
+	AnimatedModel playerModel;
+	
+	GuiHealthbar healthbar;
 
 	float healingTimer;
 	bool remote;
 
 public:
-	Player();
-	Player(Game* game, IPlayerInput* playerInput);
+	Player(Game* game, IPlayerInput* playerInput, bool r);
 	Player(Game* game, IPlayerInput* playerInput,const Guid& guid);
 	~Player();
-	
+
 	virtual void draw(sf::RenderWindow& window);
 	virtual void setPosition(sf::Vector2f pos);
 	virtual sf::Vector2f getPosition() const;
@@ -43,10 +44,17 @@ public:
 	bool isDead = false;
 	float hitboxRadius;
 	float attackingAngle;
+	//Signals
+	Nano::Signal<void(float)> changedHitpoints;
+	Nano::Signal<void(std::string)> changedWeapon;
+	Nano::Signal<void(int)> changedAmmo;
+
+	sf::CircleShape facingDot;
+	sf::CircleShape walkingDirectionDot;
 
 private:
 	virtual sf::Vector2f getPoint(int i) const;
-	virtual int getPointCount() const;
+	virtual size_t getPointCount() const;
 	virtual sf::Transform getTransform() const;
 	virtual float getMinDistance() const;
 };

@@ -2,6 +2,7 @@
 #include "stdafx.h"
 #include "IGameState.h"
 #include "Map.h"
+#include "GuiList.h"
 
 enum class EditionState { NONE, EDITING, PAINTING, SELECTING };
 
@@ -20,7 +21,7 @@ class GameStateEditor :
 	sf::Vector2i panningAnchor;
 	float zoomLevel;
 
-	std::map<std::string, GUI> guiSystem;
+	std::map<std::string, std::shared_ptr<GuiElement>> guiElements;
 
 	TileType editingTileType;
 	Tile* currentTile;
@@ -37,7 +38,7 @@ public:
 	virtual void handleInput();
 	virtual bool end();
 
-	void setGuiSystem();
+	void setGameGUI();
 	void resize(sf::Event& event);
 
 private:

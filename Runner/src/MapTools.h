@@ -23,7 +23,7 @@ typedef std::tuple<sf::Vector2f, VertexType, int> Vertex;
 class MapTools
 {
 	
-	VectorHash vectorHash;
+	//VectorHash vectorHash;
 	std::vector<MapHitbox> hitboxes;
 	std::vector<std::pair<std::vector<sf::Vector2f>, std::vector<sf::Vector2f>>> polygons;
 	NodeHashMap nodes;

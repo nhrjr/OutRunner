@@ -5,6 +5,7 @@
 #include "MKInput.h"
 #include "SMG.h"
 #include "Projectile.h"
+#include "Healthbar.h"
 
 class NPC :
 	public IGameEntity
@@ -24,9 +25,6 @@ public:
 	void moveToTarget(std::deque<sf::Vector2f> target);
 	void shootAtTarget(sf::Vector2f target);
 
-	//void updateCollision(sf::Vector2f displace, float dt);
-	
-
 	bool isAttacking = false;
 	bool isShooting = false;
 	float attackingAngle;
@@ -38,19 +36,16 @@ public:
 	sf::Vector2f target;
 
 	float attackingTimer = 0.0f;
-	
-
 
 	sf::CircleShape npcModel;
 	sf::CircleShape npcHead;
 
-	sf::RectangleShape healthBarFull;
-	sf::RectangleShape healthBarEmpty;
+	GuiHealthbar healthbar;
 
 	SMG weapon;
 
 	virtual sf::Vector2f getPoint(int i) const;
-	virtual int getPointCount() const;
+	virtual size_t getPointCount() const;
 	virtual sf::Transform getTransform() const;
 	virtual float getMinDistance() const;
 };

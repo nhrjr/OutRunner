@@ -58,7 +58,7 @@ void UniformGrid<T>::writeGridToStream(std::ofstream& outputFile)
 
 	unsigned int size = this->L.size();
 	outputFile.write((char*)&size, sizeof(unsigned int));
-	size = this->C.size();
+	size = (unsigned int)this->C.size();
 	outputFile.write((char*)&size, sizeof(unsigned int));
 
 	for (auto& l : this->L) {
@@ -105,8 +105,8 @@ void UniformGrid<T>::constructArrays(int w, int h, std::vector<T>* o)
 	//float grid_dim = sqrt(w*h) / (GAME_TILESIZE);
 	//conversion = sqrt(GRID_DIMENSIONS * GRID_DIMENSIONS / (w*h));
 	conversion = sqrt(4.0f / (w*h));
-	width = conversion * w * GAME_TILESIZE;
-	height = conversion * h * GAME_TILESIZE;
+	width = (int)conversion * w * GAME_TILESIZE;
+	height = (int)conversion * h * GAME_TILESIZE;
 	C = std::vector<unsigned int>(width*height + 1);
 	for (int y = 0; y < this->height; ++y) {
 		for (int x = 0; x < this->width; ++x) {

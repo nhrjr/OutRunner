@@ -4,8 +4,8 @@ class FlameThrower :
 	public Weapon
 {
 public:
-	FlameThrower();
+	FlameThrower(TextureManager& t);
 	~FlameThrower();
-	virtual std::vector<std::shared_ptr<Projectile>> shoot();
+	virtual void shoot();
 };
 

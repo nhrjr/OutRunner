@@ -1,7 +1,9 @@
 #pragma once
 #include "stdafx.h"
 #include "IGameState.h"
-#include "GUI.h"
+//#include "GUI.h"
+#include "GuiList.h"
+
 class GameStateStart :
 	public IGameState
 {
@@ -14,14 +16,14 @@ public:
 	virtual void handleInput();
 	virtual bool end();
 
-	void setGuiSystem();
+	void setGameGUI();
 	void resize(sf::Event& event);
 
 private: 
 	bool isDeletable;
 	bool hasFocus = true;
 	sf::View view;
-	std::map<std::string, GUI> guiSystem;
+	std::map<std::string, std::shared_ptr<GuiElement>> guiElements;
 	void loadEditor();
 	void playGameSingle();
 	void playGameServer();

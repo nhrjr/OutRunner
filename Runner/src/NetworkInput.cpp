@@ -33,6 +33,17 @@ void NetworkInput::handleInput()
 
 }
 
+void NetworkInput::handleEvent(const sf::Event& event)
+{
+
+}
+
+std::vector<int> NetworkInput::getEvent()
+{
+	std::vector<int> tmp;
+	return tmp;
+}
+
 
 float NetworkInput::getAngle()
 {

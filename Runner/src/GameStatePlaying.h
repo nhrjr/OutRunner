@@ -11,6 +11,10 @@
 #include "SAT.h"
 #include "MapHitbox.h"
 #include "Console.h"
+#include "GUI.h"
+
+#include "signal_slot.h"
+#include "StateMachine.h"
 
 #include <vector>
 #include <string>
@@ -30,10 +34,12 @@ public:
 	virtual void handleInput();
 	virtual bool end();
 
-	void setGuiSystem();
+	void setGameGUI();
 	void resize(sf::Event& event);
 
 	bool moveNPC = false;
+
+	std::unique_ptr<StateMachine> stateMachine;
 
 private:
 	bool isDeletable;
@@ -52,12 +58,75 @@ private:
 	sf::Vector2i panningAnchor;
 	float zoomLevel;
 
-	std::map<std::string, GUI> guiSystem;
+	//
+
+	GuiPlaying gui;
 
 	GameLogicManager gameLogicManager;
 
 	Map map;
 
 	float aliveTimer = 0;
+
+	
+	
 };
 
+class DownState : public BaseState
+{
+public:
+	virtual void enterState(BaseState* previousState)
+	{
+		if (previousState != nullptr)
+			Console::Instance() << "Downstate enter() Entered from " << typeid(*previousState).name() << std::endl;
+	};
+	virtual bool isValidState(BaseState* state)
+	{
+		if (state != nullptr)
+			Console::Instance() << "Is this state a next valid state? : " << typeid(*state).name() << std::endl;
+		return true;
+	};
+
+	virtual void exitState(BaseState* nextState)
+	{
+		if (nextState != nullptr)
+			Console::Instance() << "Exit LowState to next state " << typeid(*nextState).name() << std::endl;
+	};
+	std::string downStateString = "!!!";
+};
+
+class LowState : public DownState
+{
+public:
+	virtual bool isValidState(BaseState* state)
+	{
+		if (state != nullptr)
+		Console::Instance() << "Is this state a next valid state? : " << typeid(*state).name() << std::endl;
+		return true;
+	};
+
+	virtual void exitState(BaseState* nextState)
+	{
+		if (nextState != nullptr)
+		Console::Instance() << "Exit LowState to next state " << typeid(*nextState).name() << std::endl;
+		Console::Instance() << downStateString << std::endl;
+	};
+};
+
+class HighState : public DownState
+{
+public:
+	virtual bool isValidState(BaseState* state)
+	{
+		if(state != nullptr)
+		Console::Instance() << "Is this state a next valid state? : " << typeid(*state).name() << std::endl;
+		return true;
+	};
+
+	virtual void exitState(BaseState* nextState)
+	{
+		if (nextState != nullptr)
+		Console::Instance() << "Exit HighState to next state " << typeid(*nextState).name() << std::endl;
+		Console::Instance() << downStateString << std::endl;
+	};
+};

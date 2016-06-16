@@ -225,7 +225,7 @@ namespace Collision
 			tmp2.setPosition(d);
 			tmp2.setRotation(angle);
 			axis.emplace_back(tmp2);
-			counter++;
+			++counter;
 		}
 		counter = 0;
 		for (auto& d : helper.d2points) {
@@ -249,7 +249,7 @@ namespace Collision
 			}
 
 			
-			counter++;
+			++counter;
 		}
 
 		for (auto& dot : dots) {

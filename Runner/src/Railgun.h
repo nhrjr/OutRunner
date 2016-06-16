@@ -4,8 +4,8 @@ class Railgun :
 	public Weapon
 {
 public:
-	Railgun();
+	Railgun(TextureManager& t);
 	~Railgun();
-	virtual std::vector<std::shared_ptr<Projectile>> shoot();
+	virtual void shoot();
 };
 

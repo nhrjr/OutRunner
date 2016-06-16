@@ -6,9 +6,9 @@ class SMG :
 	public Weapon
 {
 public:
-	SMG();
+	SMG(TextureManager& t);
 	~SMG();
-	virtual std::vector<std::shared_ptr<Projectile>> shoot();
+	virtual void shoot();
 };
 
 

@@ -2,10 +2,31 @@
 #include "FlameThrower.h"
 #include "Flame.h"
 
+static unsigned int g_seed;
 
-FlameThrower::FlameThrower()
+//Used to seed the generator.
+
+inline void fast_srand(int seed)
 {
-	this->reloadTime = 0.05f;
+	g_seed = seed;
+}
+//fastrand routine returns one integer, similar output value range as C lib.
+inline int fastrand()
+{
+	g_seed = (214013 * g_seed + 2531011);
+
+	return (g_seed >> 16) & 0x7FFF;
+}
+
+
+FlameThrower::FlameThrower(TextureManager& t) : Weapon("FlameThrower", t)
+{
+	this->cooldownTime = 0.005f;
+	this->reloadTime = 2.0f;
+	this->ammoCap = 300;
+	this->ammo = ammoCap;
+	fast_srand((int)time(nullptr));
+	weaponModel.setOrigin(-50, -10);
 }
 
 
@@ -13,20 +34,9 @@ FlameThrower::~FlameThrower()
 {
 }
 
-std::vector<std::shared_ptr<Projectile>> FlameThrower::shoot()
+void FlameThrower::shoot()
 {
-	this->reloadTimer = 0.0;
-	this->ready = false;
-	std::vector<std::shared_ptr<Projectile>> bullets;
-
-	float spread = 30.0f;
-	float numberOfBullets = 3;
-	float nextBullet = spread / numberOfBullets;
-	for (int i = 0; i < numberOfBullets; ++i)
-	{
-		float angle = weaponModel.getRotation() - spread / 2 + nextBullet * i;
-		bullets.emplace_back(std::make_shared<Flame>(angle, getPosition()));
-	}
-
-	return bullets;
+	int spread = 40;
+	float angle = weaponModel.getRotation() - spread / 2 + (fastrand() % spread);
+	spawnedEntities.emplace_back(std::make_shared<Flame>(angle, getBarrelPosition()));
 }

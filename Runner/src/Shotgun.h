@@ -7,7 +7,7 @@ class Shotgun :
 	public Weapon
 {
 public:
-	Shotgun();
+	Shotgun(TextureManager& t);
 	~Shotgun();
-	virtual std::vector<std::shared_ptr<Projectile>> shoot();
+	virtual void shoot();
 };

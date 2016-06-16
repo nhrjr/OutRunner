@@ -16,7 +16,7 @@ public:
 	
 	virtual sf::Vector2f getPosition() const;
 	virtual sf::Vector2f getPoint(int i) const;
-	virtual int getPointCount() const;
+	virtual size_t getPointCount() const;
 	virtual sf::Transform getTransform() const;
 };
 

@@ -18,7 +18,7 @@ GameStateEditor::GameStateEditor(Game* game) : map(game), zoomLevel(1.0f), actio
 	this->guiView.reset(viewRect);
 	this->guiView.setCenter(pos * 0.5f);
 
-	this->setGuiSystem();
+	this->setGameGUI();
 
 	//this->map = Map();
 	this->map.loadFromDiskEditor("data/map.dat", this->game->tileAtlas);
@@ -31,44 +31,48 @@ GameStateEditor::GameStateEditor(Game* game) : map(game), zoomLevel(1.0f), actio
 	this->selectionRectangle.setFillColor(sf::Color(255, 255, 255, 128));
 }
 
-void GameStateEditor::setGuiSystem()
+void GameStateEditor::setGameGUI()
 {
 	this->game->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0)));
 	this->game->background.setScale(
 		float(this->game->window.getSize().x) / float(this->game->background.getTexture()->getSize().x),
 		float(this->game->window.getSize().y) / float(this->game->background.getTexture()->getSize().y));
 
-	std::vector<std::pair<std::string, std::string>> F10 = {
-		std::make_pair("F10","F10")
+	sf::Vector2f dim(64, 32);
+	int padding = 4;
+	std::vector<std::shared_ptr<GuiBasicElement>> F10 = {
+		std::make_shared<GuiButtonText>("F10",dim,padding,this->game->styleSheets.at("button_text"),"F10")
 	};
 
-	std::vector<std::pair<std::string, std::string>> toolBarEntries = {
-		std::make_pair("Concrete","tile_concrete"),
-		std::make_pair("Water","tile_water"),
-		std::make_pair("Wall","tile_wall")
+	dim = sf::Vector2f(128, 32);
+	std::vector<std::shared_ptr<GuiBasicElement>> toolBarEntries = {
+		std::make_shared<GuiButtonText>("Concrete",dim,padding,this->game->styleSheets.at("button_text"),"tile_concrete"),
+		std::make_shared<GuiButtonText>("Water",dim,padding,this->game->styleSheets.at("button_text"),"tile_water"),
+		std::make_shared<GuiButtonText>("Wall",dim,padding,this->game->styleSheets.at("button_text"),"tile_wall")
 	};
 
-	std::vector<std::pair<std::string, std::string>> settingsEntries = {
-		std::make_pair("Resume","resume"),
-		std::make_pair("Save Map","save_map"),
-		std::make_pair("Save & Quit", "save_quit"),
-		std::make_pair("Quit to Menu","quit_to_menu"),
-		std::make_pair("Exit Game","exit_game"),
+	dim = sf::Vector2f(GAME_MENU_BUTTON_WIDTH * 2, GAME_MENU_BUTTON_HEIGHT);
+	std::vector<std::shared_ptr<GuiBasicElement>> settingsEntries = {
+		std::make_shared<GuiButtonText>("Resume",dim,padding,this->game->styleSheets.at("button_text"),"resume"),
+		std::make_shared<GuiButtonText>("Save Map",dim,padding,this->game->styleSheets.at("button_text"),"save_map"),
+		std::make_shared<GuiButtonText>("Save & Quit",dim,padding,this->game->styleSheets.at("button_text"), "save_quit"),
+		std::make_shared<GuiButtonText>("Quit to Menu",dim,padding,this->game->styleSheets.at("button_text"),"quit_to_menu"),
+		std::make_shared<GuiButtonText>("Exit Game",dim,padding,this->game->styleSheets.at("button_text"),"exit_game"),
 	};
 
-	this->guiSystem.clear();
+	this->guiElements.clear();
 
-	this->guiSystem.emplace("toolbar", GUI(sf::Vector2f(128, 32), 4, true, this->game->styleSheets.at("button"), toolBarEntries));
-	this->guiSystem.at("toolbar").setPosition(sf::Vector2f(0, this->game->window.getSize().y - 40));
-	this->guiSystem.at("toolbar").show();
-
-	this->guiSystem.emplace("F10", GUI(sf::Vector2f(64, 32), 4, true, this->game->styleSheets.at("button"), F10));
-	this->guiSystem.at("F10").setPosition(sf::Vector2f(this->game->window.getSize().x - 64, 0));
-	this->guiSystem.at("F10").show();
-
-	this->guiSystem.emplace("settings", GUI(sf::Vector2f(GAME_MENU_BUTTON_WIDTH * 2, GAME_MENU_BUTTON_HEIGHT), 4, false, this->game->styleSheets.at("button"), settingsEntries));
-	this->guiSystem.at("settings").setOrigin(GAME_MENU_BUTTON_WIDTH / 2, GAME_MENU_BUTTON_HEIGHT / 2);
-	this->guiSystem.at("settings").setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y * 0.5f));
+	this->guiElements.emplace("toolbar", std::make_shared<GuiList>(toolBarEntries, true));
+	this->guiElements.at("toolbar")->setPosition(sf::Vector2f(0, this->game->window.getSize().y - 40));
+	this->guiElements.at("toolbar")->show();
+	
+	this->guiElements.emplace("F10", std::make_shared<GuiList>(F10, true));
+	this->guiElements.at("F10")->setPosition(sf::Vector2f(this->game->window.getSize().x - 64, 0));
+	this->guiElements.at("F10")->show();
+	
+	this->guiElements.emplace("settings", std::make_shared<GuiList>(settingsEntries, false));
+	this->guiElements.at("settings")->setOrigin(GAME_MENU_BUTTON_WIDTH / 2, GAME_MENU_BUTTON_HEIGHT / 2);
+	this->guiElements.at("settings")->setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y * 0.5f));
 }
 
 void GameStateEditor::resize(sf::Event& event)
@@ -86,12 +90,12 @@ void GameStateEditor::resize(sf::Event& event)
 		float(event.size.width) / float(this->game->background.getTexture()->getSize().x),
 		float(event.size.height) / float(this->game->background.getTexture()->getSize().y));
 
-	this->guiSystem.at("toolbar").setPosition(sf::Vector2f(0, event.size.height - 40));
-	this->guiSystem.at("toolbar").hide();
-	this->guiSystem.at("toolbar").show();
-	this->guiSystem.at("F10").setPosition(sf::Vector2f(event.size.width - 64, 0));
-	this->guiSystem.at("F10").show();
-	this->guiSystem.at("settings").setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y * 0.5f));
+	this->guiElements.at("toolbar")->setPosition(sf::Vector2f(0, event.size.height - 40));
+	this->guiElements.at("toolbar")->hide();
+	this->guiElements.at("toolbar")->show();
+	this->guiElements.at("F10")->setPosition(sf::Vector2f(event.size.width - 64, 0));
+	this->guiElements.at("F10")->show();
+	this->guiElements.at("settings")->setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y * 0.5f));
 }
 
 
@@ -111,7 +115,7 @@ void GameStateEditor::draw(float dt) {
 	this->game->window.draw(selectionRectangle);
 
 	this->game->window.setView(this->guiView);
-	for (auto gui : guiSystem) this->game->window.draw(gui.second);
+	for (auto gui : guiElements) this->game->window.draw(*gui.second);
 
 	this->game->window.draw(Console::Instance());
 }
@@ -121,23 +125,23 @@ bool GameStateEditor::end() {
 }
 
 void GameStateEditor::update(float dt) {
-	this->guiSystem.at("settings").highlight(this->guiSystem.at("settings").getEntry(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->guiView)));
-	this->guiSystem.at("F10").highlight(this->guiSystem.at("F10").getEntry(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->guiView)));
-
-	int mouseHighLightEntry = this->guiSystem.at("toolbar").getEntry(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->guiView));
+	this->guiElements.at("settings")->highlight(this->guiElements.at("settings")->getBasicElement(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->guiView)));
+	this->guiElements.at("F10")->highlight(this->guiElements.at("F10")->getBasicElement(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->guiView)));
+	
+	int mouseHighLightEntry = this->guiElements.at("toolbar")->getBasicElement(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window), this->guiView));
 	if (mouseHighLightEntry >= 0) {
-		this->guiSystem.at("toolbar").highlight(mouseHighLightEntry);
+		this->guiElements.at("toolbar")->highlight(mouseHighLightEntry);
 	}
 	else {
 		if (this->editingTileType == TileType::CONCRETE)
 		{
-			this->guiSystem.at("toolbar").highlight(this->guiSystem.at("toolbar").getEntry("tile_concrete"));
+			this->guiElements.at("toolbar")->highlight(this->guiElements.at("toolbar")->getBasicElement("tile_concrete"));
 		}
 		else if (this->editingTileType == TileType::WATER) {
-			this->guiSystem.at("toolbar").highlight(this->guiSystem.at("toolbar").getEntry("tile_water"));
+			this->guiElements.at("toolbar")->highlight(this->guiElements.at("toolbar")->getBasicElement("tile_water"));
 		}
 		else if (this->editingTileType == TileType::WALL) {
-			this->guiSystem.at("toolbar").highlight(this->guiSystem.at("toolbar").getEntry("tile_wall"));
+			this->guiElements.at("toolbar")->highlight(this->guiElements.at("toolbar")->getBasicElement("tile_wall"));
 		}
 	}
 }
@@ -219,13 +223,13 @@ void GameStateEditor::handleInput()
 			{
 				if (this->actionState == ActionState::NONE)
 				{
-					std::string msgF10 = this->guiSystem.at("F10").activate(mousePosGUI);
-					std::string msgToolbar = this->guiSystem.at("toolbar").activate(mousePosGUI);
+					std::string msgF10 = this->guiElements.at("F10")->activate(mousePosGUI);
+					std::string msgToolbar = this->guiElements.at("toolbar")->activate(mousePosGUI);
 					if (msgF10 == "F10")
 					{
 						this->actionState = ActionState::SETTINGS;
-						this->guiSystem.at("F10").hide();
-						this->guiSystem.at("settings").show();
+						this->guiElements.at("F10")->hide();
+						this->guiElements.at("settings")->show();
 					}					
 					else if (msgToolbar == "tile_concrete")
 					{
@@ -284,18 +288,18 @@ void GameStateEditor::handleInput()
 				else if (this->actionState == ActionState::SETTINGS)
 				{
 					this->editingState = EditionState::NONE;
-					std::string msg = this->guiSystem.at("settings").activate(mousePosGUI);
+					std::string msg = this->guiElements.at("settings")->activate(mousePosGUI);
 					if (msg == "resume") {
 						this->actionState = ActionState::NONE;
-						this->guiSystem.at("settings").hide();
-						this->guiSystem.at("F10").show();
+						this->guiElements.at("settings")->hide();
+						this->guiElements.at("F10")->show();
 					}
 					else if (msg == "save_map")
 					{
 						this->actionState = ActionState::NONE;
 						this->map.saveToDisk("data/map.dat");
-						this->guiSystem.at("settings").hide();
-						this->guiSystem.at("F10").show();
+						this->guiElements.at("settings")->hide();
+						this->guiElements.at("F10")->show();
 					}
 					else if (msg == "save_quit")
 					{
@@ -371,14 +375,14 @@ void GameStateEditor::handleInput()
 				if (this->actionState == ActionState::NONE)
 				{
 					this->actionState = ActionState::SETTINGS;
-					this->guiSystem.at("settings").show();
-					this->guiSystem.at("F10").hide();
+					this->guiElements.at("settings")->show();
+					this->guiElements.at("F10")->hide();
 				}
 				else if (this->actionState == ActionState::SETTINGS)
 				{
 					this->actionState = ActionState::NONE;
-					this->guiSystem.at("settings").hide();
-					this->guiSystem.at("F10").show();
+					this->guiElements.at("settings")->hide();
+					this->guiElements.at("F10")->show();
 				}
 					
 			}

@@ -10,7 +10,7 @@ struct NetworkPlayerEvent
 	int hitpoints;
 	int action;
 	int alternateAction;
-	unsigned short equippedWeapon;
+	unsigned int equippedWeapon;
 };
 
 // This entity lives at this address

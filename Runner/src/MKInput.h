@@ -15,6 +15,8 @@ public:
 	virtual int getAction();
 	virtual int getAlternateAction();
 	virtual void handleInput();
+	virtual void handleEvent(const sf::Event& event);
+	virtual std::vector<int> getEvent();
 
 private:
 	Game* game;
@@ -24,6 +26,11 @@ private:
 	sf::Vector2f left;
 	sf::Vector2f right;
 	sf::Vector2f directionOffset;
+	float angle;
 	float dt;
+
+	int action;
+	int alternateAction;
+	std::vector<int> events;
 };
 

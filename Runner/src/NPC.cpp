@@ -9,7 +9,7 @@
 
 
 NPC::NPC(Game* game, sf::Vector2f pos) : game(game),
-npcModel(PLAYER_RADIUS), npcHead(PLAYER_RADIUS / 2), isAttacking(false), hitboxRadius(PLAYER_RADIUS)
+npcModel(PLAYER_RADIUS), npcHead(PLAYER_RADIUS / 2), isAttacking(false), hitboxRadius(PLAYER_RADIUS), healthbar(sf::Vector2f(50,10)), weapon(this->game->texmgr)
 {
 	hitpoints = 100;
 
@@ -30,17 +30,8 @@ npcModel(PLAYER_RADIUS), npcHead(PLAYER_RADIUS / 2), isAttacking(false), hitboxR
 	npcHead.setFillColor(sf::Color::Black);
 	npcHead.setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
 
-	healthBarFull.setSize(sf::Vector2f(50, 10));
-	healthBarFull.setOutlineColor(sf::Color::Black);
-	healthBarFull.setFillColor(sf::Color::Green);
-	healthBarFull.setOutlineThickness(-2.0f);
-	healthBarFull.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
-
-	healthBarEmpty.setSize(sf::Vector2f(50, 10));
-	healthBarEmpty.setOutlineColor(sf::Color::Black);
-	healthBarEmpty.setFillColor(sf::Color::Red);
-	healthBarEmpty.setOutlineThickness(-2.0f);
-	healthBarEmpty.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
+	healthbar.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
+	healthbar.show();
 
 	setPosition(pos);
 }
@@ -56,11 +47,8 @@ void NPC::draw(sf::RenderWindow& window)
 		weapon.draw(window);
 	window.draw(npcModel);
 	window.draw(npcHead);
-	//window.draw(displacement);
-	//window.draw(hitbox);
-	window.draw(healthBarEmpty);
-	window.draw(healthBarFull);
 
+	window.draw(healthbar);
 }
 
 void NPC::setPosition(sf::Vector2f pos)
@@ -72,8 +60,7 @@ void NPC::setPosition(sf::Vector2f pos)
 
 	weapon.setPosition(pos);
 
-	healthBarEmpty.setPosition(pos);
-	healthBarFull.setPosition(pos);
+	healthbar.setPosition(pos);
 }
 
 sf::Vector2f NPC::getPosition() const
@@ -140,30 +127,29 @@ void NPC::update(float dt)
 	this->npcModel.move(directionOffset);
 	this->npcHead.move(directionOffset);
 
-	this->healthBarEmpty.move(directionOffset);
-	this->healthBarFull.move(directionOffset);
+	this->healthbar.move(directionOffset);
 
 	weapon.attachedMove(directionOffset, attackingAngle);
-
-
+	weapon.update(dt);
 
 	if (isAttacking == true)
 	{
-		if (weapon.reloadTimer >= weapon.reloadTime)
-		{
-			weapon.reloadTimer = 0.0f;
-			isShooting = true;
-		}
-		else
-		{
-			isShooting = false;
-		}
+		weapon.enterState<Discharge>();
+		//if (weapon.cooldownTimer >= weapon.cooldownTime)
+		//{
+		//	weapon.cooldownTimer = 0.0f;
+		//	isShooting = true;
+		//}
+		//else
+		//{
+		//	isShooting = false;
+		//}
 	}
-	else {
-		isShooting = false;
-	}
+	//else {
+	//	isShooting = false;
+	//}
 
-	weapon.reloadTimer += dt;
+	//weapon.cooldownTimer += dt;
 	attackingTimer += dt;
 }
 
@@ -176,7 +162,7 @@ void NPC::collide(IGameEntity& other, unsigned int type, float dt)
 		{
 			this->hitpoints -= other.damage;
 			other.isDeletable = true;
-			this->healthBarFull.setSize(sf::Vector2f(50.0f * this->hitpoints / 100.0f, 10));
+			this->healthbar.setValue(this->hitpoints / 100.0f);
 		}
 		if (type == 0)
 		{
@@ -190,8 +176,7 @@ void NPC::collide(IGameEntity& other, unsigned int type, float dt)
 			this->npcHead.move(displace * moveBy);
 			this->weapon.attachedMove(displace * moveBy, this->attackingAngle);
 
-			this->healthBarEmpty.move(displace * moveBy);
-			this->healthBarFull.move(displace * moveBy);
+			this->healthbar.move(displace * moveBy);
 		}
 	}
 }
@@ -202,7 +187,7 @@ sf::Vector2f NPC::getPoint(int i) const
 {
 	return hitbox.getPoint(i);
 }
-int NPC::getPointCount() const
+size_t NPC::getPointCount() const
 {
 	return hitbox.getPointCount();
 }

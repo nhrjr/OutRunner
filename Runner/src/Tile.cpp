@@ -12,12 +12,12 @@ Tile::Tile(const unsigned int height, const unsigned int width, sf::Texture& tex
 	sprite.setOrigin(sf::Vector2f(0.0f, 0.0f));
 
 	sprite.setTexture(texture);
-	animHandler.frameSize = sf::IntRect(0, 0, width, height);
-	animHandler.bounds = animHandler.frameSize;
+	//animHandler.frameSize = sf::IntRect(0, 0, width, height);
+	//animHandler.bounds = animHandler.frameSize;
 	animHandler.addAnim(animation);
-	//animHandler.setAnimVariant(numberOfVariants);
+	//animHandler.setRandomAnimVariant(numberOfVariants);
 	
-	animHandler.update(0.0f);
+	//animHandler.update(0.0f);
 }
 
 Tile::Tile(const unsigned int height, const unsigned int width, const TileType tileType) :
@@ -37,7 +37,7 @@ Tile::~Tile() {
 
 void Tile::initialize()
 {
-	animHandler.setAnimVariant(numberOfVariants);
+	//animHandler.setRandomAnimVariant(numberOfVariants);
 }
 
 void Tile::draw(sf::RenderWindow& window)

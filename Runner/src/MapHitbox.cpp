@@ -49,7 +49,7 @@ sf::Vector2f MapHitbox::getPoint(int i) const
 {
 	return hitbox.getPoint(i);
 }
-int MapHitbox::getPointCount() const
+size_t MapHitbox::getPointCount() const
 {
 	return hitbox.getPointCount();
 }

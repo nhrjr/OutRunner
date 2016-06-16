@@ -19,9 +19,10 @@ protected:
 	sf::CircleShape projectileModel;
 	sf::Vector2f direction;
 	float lifeTime;
+	float speed;
 
 	virtual sf::Vector2f getPoint(int i) const;
-	virtual int getPointCount() const;
+	virtual size_t getPointCount() const;
 	virtual sf::Transform getTransform() const;
 	virtual float getMinDistance() const;
 };

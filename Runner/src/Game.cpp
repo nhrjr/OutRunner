@@ -5,6 +5,10 @@
 #include "GameStateStart.h"
 #include "GameStateEditor.h"
 
+#include "CycleCounter.h"
+
+//#include <Windows.h>
+
 Game::Game()
 {
 	this->loadTextures();
@@ -39,6 +43,12 @@ Game::Game()
 		return std::string("Set showPolygon to " + std::to_string(this->switches.showPolygon));
 	};
 	Console::Instance().Add("togglePolygon", c);
+
+	c = [this](std::vector<std::string> str) -> std::string {
+		this->switches.playerInvincible = (this->switches.playerInvincible == true) ? false : true;
+		return std::string("Set playerInvincible to " + std::to_string(this->switches.playerInvincible));
+	};
+	Console::Instance().Add("p_toggleInvincible", c);
 
 	c = [this](std::vector<std::string> str) -> std::string {
 		this->window.close();
@@ -91,9 +101,10 @@ void Game::start() {
 
 void Game::gameLoop(sf::Clock& clock) {
 	
-	while (this->window.isOpen())
+		while (this->window.isOpen())
 	{
 		float dt = clock.restart().asSeconds();
+
 		if (this->peekState() == nullptr) continue;
 
 		networkmgr.processSocket(dt);
@@ -101,8 +112,6 @@ void Game::gameLoop(sf::Clock& clock) {
 		peekState()->update(dt);
 		networkmgr.sendEvents();
 
-		peekState()->draw(dt);		
-		this->window.display();
 		if (peekState()->end())
 		{
 			popState();
@@ -111,10 +120,17 @@ void Game::gameLoop(sf::Clock& clock) {
 				networkmgr.reset();
 				pushState(new GameStateStart(this));
 			}
-				
+
 		}
-			
-		//std::cout << "Framerate: " << 1 / dt << std::endl;
+		peekState()->draw(dt);		
+		this->window.display();
+
+
+#ifdef DEBUG_CYCLECOUNT
+		DebugCycleCounterResetAndPrint(dt);
+#endif
+		
+		//std::cout << "Megacycles / Frame: " << cyclesElapsed / ( 1000 * 1000 ) << std::endl;
 	}
 }
 
@@ -124,16 +140,21 @@ void Game::loadTextures() {
 	texmgr.loadTexture("Water", "textures/water.png");
 	texmgr.loadTexture("background", "textures/background.png");
 	texmgr.loadTexture("cursor", "textures/cursor.png");
+	texmgr.loadTexture("survivor_rifle", "textures/survivor_rifle.png");
+	texmgr.loadTexture("survivor_feet", "textures/survivor_feet.png");
+	texmgr.loadTexture("SMG", "textures/rifle_muzzleflash.png");
+	texmgr.loadTexture("Shotgun", "textures/shotgun_muzzleflash.png");
 }
 
 void Game::loadTiles() {
-	Animation staticAnim(0, 0, 0.0f);
-	Animation waterAnim(0,7,1.0f);
+	Animation concreteAnim(0, 0, 0.0f, GAME_TILESIZE, GAME_TILESIZE, true, 3);
+	Animation wallAnim(0, 0, 0.0f, GAME_TILESIZE, GAME_TILESIZE, true, 2);
+	Animation waterAnim(0,7,1.0f, GAME_TILESIZE, GAME_TILESIZE, true, 1);
 
 	tileAtlas.emplace("Void", Tile(GAME_TILESIZE, GAME_TILESIZE, TileType::VOID));
-	tileAtlas.emplace("Concrete",Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Concrete"), { staticAnim }, TileType::CONCRETE,3));
-	tileAtlas.emplace("Wall", Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Wall"), { staticAnim }, TileType::WALL,2));
-	tileAtlas.emplace("Water", Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Water"), { waterAnim }, TileType::WATER,1));
+	tileAtlas.emplace("Concrete",Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Concrete"), concreteAnim , TileType::CONCRETE,3));
+	tileAtlas.emplace("Wall", Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Wall"), wallAnim , TileType::WALL,2));
+	tileAtlas.emplace("Water", Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Water"), waterAnim, TileType::WATER,1));
 }
 
 void Game::loadFonts()
@@ -145,10 +166,10 @@ void Game::loadFonts()
 
 void Game::loadStyleSheets()
 {
-	this->styleSheets["button"] = GuiStyle(&this->fonts.at("main_font"), 1.0f,
+	this->styleSheets["button_text"] = ButtonStyle(&this->fonts.at("main_font"), 1.0f,
 		sf::Color(0xc6, 0xc6, 0xc6), sf::Color(0x94, 0x94, 0x94), sf::Color(0x00, 0x00, 0x00),
 		sf::Color(0x61, 0x61, 0x61), sf::Color(0x94, 0x94, 0x94), sf::Color(0x00, 0x00, 0x00));
-	this->styleSheets["text"] = GuiStyle(&this->fonts.at("main_font"), 0.0f,
+	this->styleSheets["text"] = ButtonStyle(&this->fonts.at("main_font"), 0.0f,
 		sf::Color(0x00, 0x00, 0x00, 0x00), sf::Color(0x00, 0x00, 0x00), sf::Color(0xff, 0xff, 0xff),
 		sf::Color(0x00, 0x00, 0x00, 0x00), sf::Color(0x00, 0x00, 0x00), sf::Color(0xff, 0x00, 0x00));
 }

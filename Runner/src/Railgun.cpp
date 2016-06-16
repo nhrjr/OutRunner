@@ -3,9 +3,13 @@
 #include "Beam.h"
 
 
-Railgun::Railgun()
+Railgun::Railgun(TextureManager& t) : Weapon("Railgun", t)
 {
-	this->reloadTime = 1.0f;
+	this->cooldownTime = 1.0f;
+	this->reloadTime = 2.0f;
+	this->ammoCap = 5;
+	this->ammo = ammoCap;
+	weaponModel.setOrigin(-50, -10);
 }
 
 
@@ -13,11 +17,7 @@ Railgun::~Railgun()
 {
 }
 
-std::vector<std::shared_ptr<Projectile>> Railgun::shoot()
+void Railgun::shoot()
 {
-	this->reloadTimer = 0.0;
-	this->ready = false;
-	std::vector<std::shared_ptr<Projectile>> bullets;
-	bullets.emplace_back(std::make_shared<Beam>(weaponModel.getRotation(), getPosition()));
-	return bullets;
+	spawnedEntities.emplace_back(std::make_shared<Beam>(weaponModel.getRotation(), getBarrelPosition()));
 }

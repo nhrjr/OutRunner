@@ -15,6 +15,7 @@ void GameLogicManager::Init(std::shared_ptr<Player> p, Map* m)
 {
 	player = p;
 	map = m;
+	players.Add(player->entityID, player);
 }
 
 void GameLogicManager::draw(sf::RenderWindow& renderWindow) {
@@ -30,7 +31,6 @@ void GameLogicManager::draw(sf::RenderWindow& renderWindow) {
 
 void GameLogicManager::drawTestPath()
 {
-
 	int i = 0;
 	for (std::deque<sf::Vector2f>::const_iterator it = testPath.begin(); it != testPath.end(); ++it) {
 		sf::Text text(std::to_string(i++), this->game->fonts["main_font"], 12);
@@ -42,8 +42,6 @@ void GameLogicManager::drawTestPath()
 		this->game->window.draw(circle);
 		this->game->window.draw(text);
 	}
-
-
 }
 
 void GameLogicManager::update(float dt) {
@@ -77,13 +75,7 @@ void GameLogicManager::update(float dt) {
 	GuidGenerator guidGen;
 	for (auto& o : players.objects)
 	{
-		if (o.second->weapon->get()->triggered)
-		{
-			if (o.second->weapon->get()->ready)
-			{
-				bullets.Add(o.second->weapon->get()->shoot());
-			}
-		}
+		bullets.Add(o.second->weapon->get()->spawnedEntities);
 			
 
 		auto it = this->game->networkmgr.timeOut.find(o.first);
@@ -98,7 +90,8 @@ void GameLogicManager::update(float dt) {
 
 	this->collisionManager.Collide<Player>(dt, players.objects, *map);
 	this->collisionManager.Collide<Projectile>(dt, bullets.objects, *map);
-	this->collisionManager.Collide<Projectile>(dt, bullets.objects, player);
+	if(!this->game->switches.playerInvincible)
+		this->collisionManager.Collide<Projectile>(dt, bullets.objects, player);
 	this->collisionManager.Collide<Enemies, Projectile>(dt, enemies.objects, bullets.objects);
 
 	for (auto& enemy : enemies.objects)
@@ -117,6 +110,6 @@ void GameLogicManager::update(float dt) {
 		{
 			enemy.second->isAttacking = false;
 		}
-		if (enemy.second->isShooting) bullets.Add(std::make_shared<Bullet>(enemy.second->attackingAngle, enemy.second->getPosition()));
+		bullets.Add(enemy.second->weapon.spawnedEntities);
 	}
 }

@@ -15,6 +15,8 @@ public:
 	virtual int getAction();
 	virtual int getAlternateAction();
 	virtual void handleInput();
+	virtual void handleEvent(const sf::Event& event);
+	virtual std::vector<int> getEvent();
 
 private:
 	Game* game;

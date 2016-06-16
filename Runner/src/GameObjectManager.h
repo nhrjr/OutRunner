@@ -97,7 +97,7 @@ void GameObjectManager<T>::update(float dt) {
 		}
 		else
 		{
-			it++;
+			++it;
 		}
 	}
 }

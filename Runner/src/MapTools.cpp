@@ -545,7 +545,6 @@ Vertex MapTools::makeVertex(Vector vec, VertexType type, int orientation, int la
 	{
 		return std::make_tuple(sf::Vector2f(0,0), VertexType::EDGE, 0);
 	}
-	
 }
 
 void MapTools::createNodes()

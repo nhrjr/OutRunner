@@ -9,4 +9,6 @@ public:
 	virtual int getAction() = 0;
 	virtual int getAlternateAction() = 0;
 	virtual void handleInput() = 0;
+	virtual void handleEvent(const sf::Event& event) = 0;
+	virtual std::vector<int> getEvent() = 0;
 };

@@ -81,34 +81,34 @@
     <Filter Include="Input\Source Files">
       <UniqueIdentifier>{47633bee-1b2d-488a-af9b-27ef4e368003}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects">
+    <Filter Include="Gameplay">
       <UniqueIdentifier>{c1a6adea-8b75-4e0e-a7a9-923ca7068f4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Weapons">
+    <Filter Include="Gameplay\Weapons">
       <UniqueIdentifier>{0ae3ad49-cb3d-4a88-9ef6-bb31b9e44ba4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Weapons\Header Files">
+    <Filter Include="Gameplay\Weapons\Header Files">
       <UniqueIdentifier>{3b5a6fa0-b3fc-47e0-89af-e49502908c65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Weapons\Source Files">
+    <Filter Include="Gameplay\Weapons\Source Files">
       <UniqueIdentifier>{89205760-5928-482c-980e-2850e39d7f8f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Humans">
+    <Filter Include="Gameplay\Humans">
       <UniqueIdentifier>{5f9092ed-f338-4e83-9379-94bf5c0861b7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Humans\Header Files">
+    <Filter Include="Gameplay\Humans\Header Files">
       <UniqueIdentifier>{7f7e226d-c045-43f2-89de-f383c130fae1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Humans\Source Files">
+    <Filter Include="Gameplay\Humans\Source Files">
       <UniqueIdentifier>{a38ef0d1-8f29-4330-a4db-4edec1b2d709}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Ammunition">
+    <Filter Include="Gameplay\Ammunition">
       <UniqueIdentifier>{1620f315-db4a-4990-98cc-2d277bddc1b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Ammunition\Header Files">
+    <Filter Include="Gameplay\Ammunition\Header Files">
       <UniqueIdentifier>{18dd9090-07e6-4c2d-877e-3da314fd3037}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameObjects\Ammunition\Source Files">
+    <Filter Include="Gameplay\Ammunition\Source Files">
       <UniqueIdentifier>{e35822ea-0f19-4ed3-85bc-f9ae9e34cd16}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -141,7 +141,7 @@
       <Filter>Game\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Enemies.h">
-      <Filter>GameObjects\Humans\Header Files</Filter>
+      <Filter>Gameplay\Humans\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Game.h">
       <Filter>Game\Header Files</Filter>
@@ -192,10 +192,10 @@
       <Filter>Network\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Player.h">
-      <Filter>GameObjects\Humans\Header Files</Filter>
+      <Filter>Gameplay\Humans\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\NPC.h">
-      <Filter>GameObjects\Humans\Header Files</Filter>
+      <Filter>Gameplay\Humans\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SendBinary.h">
       <Filter>Network\Header Files</Filter>
@@ -209,9 +209,6 @@
     <ClInclude Include="src\AnimationHandler.h">
       <Filter>Map\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\TextureManager.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\MKInput.h">
       <Filter>Input\Header Files</Filter>
     </ClInclude>
@@ -219,37 +216,76 @@
       <Filter>Input\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Weapon.h">
-      <Filter>GameObjects\Weapons\Header Files</Filter>
+      <Filter>Gameplay\Weapons\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Cursor.h">
       <Filter>GUI\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SMG.h">
-      <Filter>GameObjects\Weapons\Header Files</Filter>
+      <Filter>Gameplay\Weapons\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Shotgun.h">
-      <Filter>GameObjects\Weapons\Header Files</Filter>
+      <Filter>Gameplay\Weapons\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Railgun.h">
-      <Filter>GameObjects\Weapons\Header Files</Filter>
+      <Filter>Gameplay\Weapons\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Beam.h">
-      <Filter>GameObjects\Ammunition\Header Files</Filter>
+      <Filter>Gameplay\Ammunition\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Bullet.h">
-      <Filter>GameObjects\Ammunition\Header Files</Filter>
+      <Filter>Gameplay\Ammunition\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Flame.h">
-      <Filter>GameObjects\Ammunition\Header Files</Filter>
+      <Filter>Gameplay\Ammunition\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Pellet.h">
-      <Filter>GameObjects\Ammunition\Header Files</Filter>
+      <Filter>Gameplay\Ammunition\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\Projectile.h">
-      <Filter>GameObjects\Ammunition\Header Files</Filter>
+      <Filter>Gameplay\Ammunition\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\FlameThrower.h">
-      <Filter>GameObjects\Weapons\Header Files</Filter>
+      <Filter>Gameplay\Weapons\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Healthbar.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CycleCounter.h">
+      <Filter>Game\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\function.h">
+      <Filter>Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\observer.h">
+      <Filter>Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\signal_slot.h">
+      <Filter>Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextureManager.h">
+      <Filter>Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SimpleSignal.h">
+      <Filter>Manager\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiFrame.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiList.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiElements.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GuiBasicElement.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AnimatedModel.h">
+      <Filter>Gameplay\Humans\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StateMachine.h">
+      <Filter>Algorithms\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -278,7 +314,7 @@
       <Filter>Game\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Enemies.cpp">
-      <Filter>GameObjects\Humans\Source Files</Filter>
+      <Filter>Gameplay\Humans\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Game.cpp">
       <Filter>Game\Source Files</Filter>
@@ -311,10 +347,10 @@
       <Filter>Network\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\NPC.cpp">
-      <Filter>GameObjects\Humans\Source Files</Filter>
+      <Filter>Gameplay\Humans\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Player.cpp">
-      <Filter>GameObjects\Humans\Source Files</Filter>
+      <Filter>Gameplay\Humans\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SendBinary.cpp">
       <Filter>Network\Source Files</Filter>
@@ -331,9 +367,6 @@
     <ClCompile Include="src\MKInput.cpp">
       <Filter>Input\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\TextureManager.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\NetworkInput.cpp">
       <Filter>Input\Source Files</Filter>
     </ClCompile>
@@ -341,34 +374,62 @@
       <Filter>GUI\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\SMG.cpp">
-      <Filter>GameObjects\Weapons\Source Files</Filter>
+      <Filter>Gameplay\Weapons\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Shotgun.cpp">
-      <Filter>GameObjects\Weapons\Source Files</Filter>
+      <Filter>Gameplay\Weapons\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Weapon.cpp">
-      <Filter>GameObjects\Weapons\Source Files</Filter>
+      <Filter>Gameplay\Weapons\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Railgun.cpp">
-      <Filter>GameObjects\Weapons\Source Files</Filter>
+      <Filter>Gameplay\Weapons\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Beam.cpp">
-      <Filter>GameObjects\Ammunition\Source Files</Filter>
+      <Filter>Gameplay\Ammunition\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Bullet.cpp">
-      <Filter>GameObjects\Ammunition\Source Files</Filter>
+      <Filter>Gameplay\Ammunition\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Flame.cpp">
-      <Filter>GameObjects\Ammunition\Source Files</Filter>
+      <Filter>Gameplay\Ammunition\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Pellet.cpp">
-      <Filter>GameObjects\Ammunition\Source Files</Filter>
+      <Filter>Gameplay\Ammunition\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Projectile.cpp">
-      <Filter>GameObjects\Ammunition\Source Files</Filter>
+      <Filter>Gameplay\Ammunition\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\FlameThrower.cpp">
-      <Filter>GameObjects\Weapons\Source Files</Filter>
+      <Filter>Gameplay\Weapons\Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Healthbar.cpp">
+      <Filter>GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CycleCounter.cpp">
+      <Filter>Game\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureManager.cpp">
+      <Filter>Manager\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiFrame.cpp">
+      <Filter>GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiList.cpp">
+      <Filter>GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiElements.cpp">
+      <Filter>GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GuiBasicElement.cpp">
+      <Filter>GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StateMachine.cpp">
+      <Filter>Algorithms\Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

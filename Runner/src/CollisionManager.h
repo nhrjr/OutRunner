@@ -24,12 +24,13 @@ void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_pt
 	while (object != objects.end())
 	{
 		std::unordered_set<unsigned int> indices = map.grid.getCollisionObjects(object->second->getPosition());
+		map.setDrawableHitboxes(indices);
 		std::unordered_set<unsigned int>::const_iterator it;
 		for (it = indices.begin(); it != indices.end(); ++it)
 		{
 			object->second->collide(map.hitboxes[*it], 0, dt);
 		}
-		object++;
+		++object;
 	}
 }
 
@@ -45,7 +46,7 @@ void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_pt
 		entity->collide(*object->second, 1, dt);
 		//object->second->collide(map.hitboxes[*it], 0, dt);
 		//}
-		object++;
+		++object;
 	}
 }
 

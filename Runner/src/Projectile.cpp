@@ -5,7 +5,7 @@
 #include <cmath>
 
 
-Projectile::Projectile(float angle, sf::Vector2f pos) : projectileModel(4), lifeTime(0.0f)
+Projectile::Projectile(float angle, sf::Vector2f pos) : projectileModel(4), lifeTime(0.0f), speed(BULLET_SPEED)
 {
 	hitbox = sf::ConvexShape(2);
 	hitbox.setPoint(0, sf::Vector2f(0, 2));
@@ -55,7 +55,7 @@ void Projectile::update(float dt)
 {
 	if (this->isDeletable == false)
 	{
-		sf::Vector2f forward = direction * BULLET_SPEED * dt;
+		sf::Vector2f forward = direction * speed * dt;
 		projectileModel.move(forward);
 		hitbox.move(forward);
 		lifeTime += dt;
@@ -81,7 +81,7 @@ sf::Vector2f Projectile::getPoint(int i) const
 	return hitbox.getPoint(i);
 }
 
-int Projectile::getPointCount() const
+size_t Projectile::getPointCount() const
 {
 	return hitbox.getPointCount();
 }

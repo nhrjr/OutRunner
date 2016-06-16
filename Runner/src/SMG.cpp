@@ -1,22 +1,25 @@
 #include "stdafx.h"
 #include "SMG.h"
+#include "Console.h"
 
-SMG::SMG()
+SMG::SMG(TextureManager& t) : Weapon("SMG", t)
 {
-	this->reloadTime = 0.1f;
+	this->cooldownTime = 0.1f;
+	this->reloadTime = 2.0f;
+	this->ammoCap = 30;
+	this->ammo = ammoCap;
+	weaponModel.setOrigin(-47, -8.5);
 }
 
 SMG::~SMG()
 {
 }
 
-std::vector<std::shared_ptr<Projectile>> SMG::shoot()
+void SMG::shoot()
 {
-	this->reloadTimer = 0.0;
-	this->ready = false;
-	std::vector<std::shared_ptr<Projectile>> bullets;
-	bullets.emplace_back(std::make_shared<Bullet>(weaponModel.getRotation(), getPosition()));
-	return bullets;
+	
+	spawnedEntities.emplace_back(std::make_shared<Bullet>(weaponModel.getRotation(), getBarrelPosition()));
+	weaponModel.spriteDefs[0].setnextState(WEAPON::SHOOT);
 }
 
 

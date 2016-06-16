@@ -98,7 +98,6 @@ void NetworkManager::processSocket(float dt)
 	sf::Packet packet;
 	sf::IpAddress sender;
 	unsigned short port;
-	sf::Socket::Status status;
 
 	for (auto& t : timeOut)
 	{ 
@@ -229,7 +228,7 @@ void NetworkManager::processPacketBody(sf::Packet& packet, PacketType& type, sf:
 			{
 				Console::Instance() << "GameUpdate: New mapchunk " << sendBinary.counter << " / " <<sendBinary.totalPacketNumber << std::endl;
 				this->sendBinary.buffer.insert(sendBinary.buffer.end(), &bin.buffer[0], &bin.buffer[bin.lastValidByte]);
-				this->sendBinary.counter++;
+				++this->sendBinary.counter;
 			}
 			if (this->sendBinary.counter < this->sendBinary.totalPacketNumber)
 			{
@@ -377,7 +376,7 @@ std::stack<NetworkPlayerEvent> NetworkManager::getEvents(Guid entityID)
 
 void NetworkManager::sendEvents()
 {
-	for (std::unordered_map<Guid, std::stack<NetworkPlayerEvent>>::iterator it = outgoingEvents.begin(); it != outgoingEvents.end(); it++)
+	for (std::unordered_map<Guid, std::stack<NetworkPlayerEvent>>::iterator it = outgoingEvents.begin(); it != outgoingEvents.end(); ++it)
 	{
 		while(!it->second.empty())
 		{

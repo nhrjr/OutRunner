@@ -1,29 +1,29 @@
 #include "stdafx.h"
 #include "Shotgun.h"
 
-Shotgun::Shotgun()
+Shotgun::Shotgun(TextureManager& t) : Weapon("Shotgun",t)
 {
-	this->reloadTime = 0.6f;
+	this->cooldownTime = 0.6f;
+	this->reloadTime = 2.0f;
+	this->ammoCap = 8;
+	this->ammo = ammoCap;
+	weaponModel.setOrigin(-50, -10);
 }
 
 Shotgun::~Shotgun()
 {
 }
 
-std::vector<std::shared_ptr<Projectile>> Shotgun::shoot()
+void Shotgun::shoot()
 {
-	this->reloadTimer = 0.0;
-	this->ready = false;
-	std::vector<std::shared_ptr<Projectile>> bullets;
 	float spread = 10.0f;
 	float numberOfBullets = 15;
 	float nextBullet = spread / numberOfBullets;
 	for (int i = 0; i < numberOfBullets; ++i)
 	{
 		float angle = weaponModel.getRotation() - spread / 2 + nextBullet * i;
-		bullets.emplace_back(std::make_shared<Pellet>(angle, getPosition()));
+		spawnedEntities.emplace_back(std::make_shared<Pellet>(angle, getBarrelPosition()));
+		
 	}
-
-	return bullets;
 }
 

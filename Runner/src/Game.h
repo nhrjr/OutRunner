@@ -6,7 +6,7 @@
 #include "GameSettingConstants.h"
 #include "Tile.h"
 #include "TextureManager.h"
-#include "GUI.h"
+#include "GuiElements.h"
 #include "NetworkManager.h"
 
 #include <string>
@@ -20,6 +20,7 @@ struct Switches {
 	bool showPathfinder = false;
 	bool showPath = false;
 	bool showHitboxHighlights = false;
+	bool playerInvincible = false;
 };
 
 class Game
@@ -45,7 +46,7 @@ public:
 
 	
 	std::map<std::string, Tile> tileAtlas;
-	std::map<std::string, GuiStyle> styleSheets;
+	std::map<std::string, ButtonStyle> styleSheets;
 	std::map<std::string, sf::Font> fonts;
 	std::queue<IGameState*> states;
 

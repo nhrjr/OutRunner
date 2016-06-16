@@ -103,7 +103,7 @@ void Map::loadFromDiskPlaying(const std::string& filename, std::map<std::string,
 	this->grid.readGridFromStream(inputFile);
 	this->readPolygonsFromStream(inputFile);
 	this->readNodesFromStream(inputFile);
-
+	
 	this->constructPlayingData();
 
 	inputFile.close();
@@ -237,11 +237,14 @@ void Map::draw(sf::RenderWindow& window, float dt) {
 			}
 		}
 	}
+
+	this->set.clear();
 }
 
 void Map::setDrawableHitboxes(std::unordered_set<unsigned int>& set)
 {
-	this->set = set;
+	//this->set = set;
+	this->set.insert(set.begin(), set.end());
 }
 
 Tile* Map::getCurrentTile(sf::Vector2f pos)
@@ -510,7 +513,7 @@ void Map::writeNodesToStream(std::ofstream& outputFile)
 	for (auto& node : nodes)
 	{
 		V2Tools::writeVectorToStream(node.second.position, outputFile);
-		size = node.second.neighborHashes.size();
+		size = (unsigned int)node.second.neighborHashes.size();
 		outputFile.write((char*)&size, sizeof(unsigned int));
 		for (int i = 0; i < node.second.neighborHashes.size(); ++i)
 		{

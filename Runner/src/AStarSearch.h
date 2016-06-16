@@ -20,7 +20,7 @@ class PathFinder
 	Node startNode;
 	Node endNode;
 
-	VectorHash vectorHash;
+	//VectorHash vectorHash;
 	
 public:
 	

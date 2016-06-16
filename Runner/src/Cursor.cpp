@@ -6,7 +6,10 @@ Cursor::Cursor(Game* game, IPlayerInput* playerInput) : game(game), playerInput(
 {
 	//cursorModel.setFillColor(sf::Color::White);
 	//cursorModel.setOrigin(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
-	cursorModel.setTexture(this->game->texmgr.getRef("cursor"));
+	sf::Texture& cursorTexture = this->game->texmgr.getRef("cursor");
+	cursorTexture.setSmooth(true);
+	cursorModel.setTexture(cursorTexture);
+	//cursorModel.setTexture(this->game->texmgr.getRef("cursor"));
 	cursorModel.setOrigin(16,16);
 }
 

@@ -16,7 +16,7 @@ const static int GAME_CONSOLE_HISTORYLENGTH = 30;
 const static int GAME_CONSOLE_INPUTBUFFER_LENGTH = 300;
 
 const static float BULLET_SPEED = 1200.0f;
-const static float PLAYER_RADIUS = 20.0f;
+const static float PLAYER_RADIUS = 30.0f;
 const static float PLAYER_SPEED = 500.0f;
 const static float PLAYER_TIMEOUT = 10.0f;
 
