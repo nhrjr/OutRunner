@@ -106,6 +106,7 @@ public:
 	virtual bool isValidState(BaseState* state);
 
 
+
 };
 
 class ReadyToFire : public WeaponState {
