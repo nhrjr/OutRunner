@@ -33,7 +33,7 @@ GuiPlaying::GuiPlaying(Game* game)
 	};
 
 	this->guiElements.emplace("F10", std::make_shared<GuiList>(F10, true));
-	this->guiElements.at("F10")->setPosition(sf::Vector2f(this->game->window.getSize().x - 64, 0));
+	this->guiElements.at("F10")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x) - 64.f, 0.f));
 	this->guiElements.at("F10")->show();
 
 	this->guiElements.emplace("settings", std::make_shared<GuiList>(settingsEntries, false));
@@ -42,17 +42,17 @@ GuiPlaying::GuiPlaying(Game* game)
 
 	this->guiElements.emplace("playerbox", std::make_shared<GuiList>( playerEntries, true));
 	this->guiElements.at("playerbox")->setOrigin(50, 16);
-	this->guiElements.at("playerbox")->setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y -16));
+	this->guiElements.at("playerbox")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x ) * 0.5f, static_cast<float>(this->game->window.getSize().y) - 16.f));
 	this->guiElements.at("playerbox")->show();
 }
 
 void GuiPlaying::resize()
 {
-	this->guiElements.at("F10")->setPosition(sf::Vector2f(this->game->window.getSize().x - 64, 0));
+	this->guiElements.at("F10")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x) - 64.f, 0));
 	this->guiElements.at("F10")->show();
-	this->guiElements.at("settings")->setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y * 0.5f));
+	this->guiElements.at("settings")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x) * 0.5f, static_cast<float>(this->game->window.getSize().y) * 0.5f));
 	this->guiElements.at("settings")->hide();
-	this->guiElements.at("playerbox")->setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y - 16));
+	this->guiElements.at("playerbox")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x) * 0.5f, static_cast<float>(this->game->window.getSize().y) - 16.f));
 	this->guiElements.at("playerbox")->show();
 }
 

@@ -15,6 +15,8 @@ public:
 	virtual void update(float dt);
 	void collide(IGameEntity& other, unsigned int type, float dt);
 
+	sf::Vector2f getDirection() const;
+
 protected:
 	sf::CircleShape projectileModel;
 	sf::Vector2f direction;
@@ -25,5 +27,6 @@ protected:
 	virtual unsigned int getPointCount() const;
 	virtual sf::Transform getTransform() const;
 	virtual float getMinDistance() const;
+	
 };
 

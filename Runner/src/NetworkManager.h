@@ -9,11 +9,6 @@
 #include "GameSettingConstants.h"
 #include "NetworkPacket.h"
 
-
-
-
-
-
 class NetworkManager
 {
 
@@ -25,8 +20,6 @@ public:
 
 
 	// SETTINGS
-	//sf::IpAddress ownAddress = sf::IpAddress::getLocalAddress();
-	//sf::IpAddress serverAddress = "10.0.0.10";
 	sf::IpAddress ownAddress = sf::IpAddress::getPublicAddress();
 	sf::IpAddress serverAddress = "umami.ddns.net";
 	unsigned short serverPort = 54000;

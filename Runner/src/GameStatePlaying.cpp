@@ -31,7 +31,7 @@ GameStatePlaying::GameStatePlaying(Game* game, IPlayerInput* playerInput) : map(
 	this->game->networkmgr.AddGameEntity(player->entityID);
 	
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
-	sf::FloatRect viewRect(0, 0, this->game->window.getSize().x, this->game->window.getSize().y);
+	sf::FloatRect viewRect(0, 0, static_cast<float>(this->game->window.getSize().x), static_cast<float>(this->game->window.getSize().y));
 	this->guiView.reset(viewRect);
 	this->gameView.reset(viewRect);
 	pos *= 0.5f;
@@ -39,7 +39,7 @@ GameStatePlaying::GameStatePlaying(Game* game, IPlayerInput* playerInput) : map(
 
 	this->setGameGUI();
 
-	sf::Vector2f center(this->map.width * 0.5, this->map.height * 0.5);
+	sf::Vector2f center(static_cast<float>(this->map.width) * 0.5f, static_cast<float>(this->map.height) * 0.5f);
 	center *= float(this->map.tileSize);
 	gameView.setCenter(center);
 	player->setPosition(center);
@@ -80,8 +80,8 @@ void GameStatePlaying::setGameGUI()
 
 void GameStatePlaying::resize(sf::Event& event)
 {
-	sf::Vector2f pos = sf::Vector2f(event.size.width, event.size.height);
-	sf::FloatRect viewRect(0, 0, event.size.width, event.size.height);
+	sf::Vector2f pos = sf::Vector2f(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+	sf::FloatRect viewRect(0, 0, static_cast<float>(event.size.width), static_cast<float>(event.size.height));
 
 	this->guiView.reset(viewRect);
 	this->guiView.setCenter(pos*0.5f);
@@ -90,8 +90,8 @@ void GameStatePlaying::resize(sf::Event& event)
 	this->gameView.zoom(zoomLevel);
 	this->game->background.setPosition(this->game->window.mapPixelToCoords(sf::Vector2i(0, 0)));
 	this->game->background.setScale(
-		float(event.size.width) / float(this->game->background.getTexture()->getSize().x),
-		float(event.size.height) / float(this->game->background.getTexture()->getSize().y));
+		static_cast<float>(event.size.width) / static_cast<float>(this->game->background.getTexture()->getSize().x),
+		static_cast<float>(event.size.height) / static_cast<float>(this->game->background.getTexture()->getSize().y));
 
 	this->gui.resize();
 	

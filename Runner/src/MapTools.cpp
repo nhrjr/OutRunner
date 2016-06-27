@@ -65,8 +65,8 @@ bool less(const sf::Vector2f& a,const sf::Vector2f& b,const sf::Vector2f& center
 
 	// points a and b are on the same line from the center
 	// check which point is closer to the center
-	int d1 = (a.x - center.x) * (a.x - center.x) + (a.y - center.y) * (a.y - center.y);
-	int d2 = (b.x - center.x) * (b.x - center.x) + (b.y - center.y) * (b.y - center.y);
+	float d1 = (a.x - center.x) * (a.x - center.x) + (a.y - center.y) * (a.y - center.y);
+	float d2 = (b.x - center.x) * (b.x - center.x) + (b.y - center.y) * (b.y - center.y);
 	return d1 > d2;
 }
 
@@ -153,8 +153,8 @@ MapHitbox MapTools::getMapHitbox(std::vector<sf::Vector2i>& reg)
 	};
 	reg.erase(std::remove_if(reg.begin(), reg.end(), func), reg.end());
 
-	sf::Vector2f nw = sf::Vector2f(tmp[0].x * GAME_TILESIZE, tmp[0].y * GAME_TILESIZE);
-	sf::Vector2f se = sf::Vector2f(tmp[1].x * GAME_TILESIZE + GAME_TILESIZE, tmp[1].y * GAME_TILESIZE + GAME_TILESIZE);
+	sf::Vector2f nw = sf::Vector2f(static_cast<float>(tmp[0].x * GAME_TILESIZE), static_cast<float>(tmp[0].y * GAME_TILESIZE));
+	sf::Vector2f se = sf::Vector2f(static_cast<float>(tmp[1].x * GAME_TILESIZE + GAME_TILESIZE), static_cast<float>(tmp[1].y * GAME_TILESIZE + GAME_TILESIZE));
 
 	MapHitbox rec = MapHitbox(se - nw);
 	rec.setPosition(nw);
@@ -239,14 +239,15 @@ void MapTools::createPolygons(std::vector<std::vector<sf::Vector2i>>& regCoord)
 		for (auto& tile : region)
 		{
 			
-			sf::Vector2f one = sf::Vector2f(tile.x*GAME_TILESIZE, tile.y*GAME_TILESIZE);
-			countPointFrequency(polygonPointCounter, one);
+			
+			
 			//pointsInside[i].emplace_back(one + sf::Vector2f(GAME_TILESIZE / 2, GAME_TILESIZE / 2));
 			//polygonPointCounter.push_back(std::pair<int,sf::Vector2f>(0,one));
-
-			sf::Vector2f two = sf::Vector2f(tile.x*GAME_TILESIZE + GAME_TILESIZE, tile.y*GAME_TILESIZE);
-			sf::Vector2f three = sf::Vector2f(tile.x*GAME_TILESIZE + GAME_TILESIZE, tile.y*GAME_TILESIZE + GAME_TILESIZE);
-			sf::Vector2f four = sf::Vector2f(tile.x*GAME_TILESIZE, tile.y*GAME_TILESIZE + GAME_TILESIZE);
+			sf::Vector2f one = sf::Vector2f(static_cast<float>(tile.x*GAME_TILESIZE), static_cast<float>(tile.y*GAME_TILESIZE));
+			sf::Vector2f two = sf::Vector2f(static_cast<float>(tile.x*GAME_TILESIZE + GAME_TILESIZE), static_cast<float>(tile.y*GAME_TILESIZE));
+			sf::Vector2f three = sf::Vector2f(static_cast<float>(tile.x*GAME_TILESIZE + GAME_TILESIZE), static_cast<float>(tile.y*GAME_TILESIZE + GAME_TILESIZE));
+			sf::Vector2f four = sf::Vector2f(static_cast<float>(tile.x*GAME_TILESIZE), static_cast<float>(tile.y*GAME_TILESIZE + GAME_TILESIZE));
+			countPointFrequency(polygonPointCounter, one);
 			countPointFrequency(polygonPointCounter, two);
 			countPointFrequency(polygonPointCounter, three);
 			countPointFrequency(polygonPointCounter, four);
@@ -518,7 +519,9 @@ Vertex MapTools::makeVertex(Vector vec, VertexType type, int orientation, int la
 
 	if (label2 == 0)
 	{
-		if (label1 == 0 && label2 == 0) makeExtendendPoint = true;
+		if (label1 == 0 && label2 == 0) {
+			makeExtendendPoint = true;
+		}
 		if (type == VertexType::CONVEX) {
 			offset = 1;
 		}
@@ -541,7 +544,7 @@ Vertex MapTools::makeVertex(Vector vec, VertexType type, int orientation, int la
 		map->debugTags.push_back(std::to_string(map->debugTags.size()) + "_A" + std::to_string(o));
 		return std::make_tuple(vec, VertexType::CONCAVE, (orientation + offset)%4);
 	}
-	else if (label2 == label && label1 == 0)
+	else //(label2 == label && label1 == 0)
 	{
 		return std::make_tuple(sf::Vector2f(0,0), VertexType::EDGE, 0);
 	}

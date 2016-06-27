@@ -144,8 +144,8 @@ void UniformGrid<T>::constructArrays(int w, int h, std::vector<T>* o)
 template<typename T>
 std::unordered_set<unsigned int> UniformGrid<T>::getCollisionObjects(sf::Vector2f coord, int radius)
 {
-	int x = coord.x * conversion;
-	int y = coord.y * conversion;
+	int x = static_cast<int>( coord.x * conversion );
+	int y = static_cast<int>( coord.y * conversion );
 	std::unordered_set<unsigned int> returnValue;
 	for (int i = x - radius; i <= x + radius; ++i){
 		for (int j = y - radius; j <= y + radius; ++j){
@@ -166,7 +166,7 @@ bool UniformGrid<T>::intersectObjectsSAT(const T& object, int y, int x)
 {
 	bool found = false;
 	const float gridlengthWC = 1 / conversion;
-	const int distance = 2 * gridlengthWC;
+	const int distance = 2 * static_cast<int>(gridlengthWC);
 	//const int distance = 3;
 	const float x_map = x * gridlengthWC;
 	const float y_map = y * gridlengthWC;

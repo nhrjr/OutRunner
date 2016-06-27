@@ -76,6 +76,7 @@ public:
 	virtual bool isValidState(BaseState* state);
 
 
+
 };
 
 class Reload : public WeaponState {
@@ -104,6 +105,7 @@ public:
 
 	virtual bool isValidState(BaseState* state);
 
+
 };
 
 class ReadyToFire : public WeaponState {
@@ -112,6 +114,7 @@ public:
 	ReadyToFire(Weapon* weapon) ;
 
 	virtual bool isValidState(BaseState* state);
+
 
 };
 

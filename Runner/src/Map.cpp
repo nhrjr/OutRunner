@@ -163,8 +163,8 @@ void Map::draw(sf::RenderWindow& window, float dt) {
 	for (int y = 0; y < this->height; ++y) {
 		for (int x = 0; x < this->width; ++x) {
 			sf::Vector2f pos;
-			pos.x = x * this->tileSize;
-			pos.y = y * this->tileSize;
+			pos.x = static_cast<float>(x * this->tileSize);
+			pos.y = static_cast<float>(y * this->tileSize);
 			this->tiles[y*this->width + x].sprite.setPosition(pos);
 			this->tiles[y*this->width + x].update(dt);
 			this->tiles[y*this->width + x].draw(window);
@@ -250,8 +250,8 @@ void Map::setDrawableHitboxes(std::unordered_set<unsigned int>& set)
 
 Tile* Map::getCurrentTile(sf::Vector2f pos)
 {
-	int x = std::floor(pos.x / this->tileSize);
-	int y = std::floor(pos.y / this->tileSize);
+	int x = static_cast<int>(std::floor(pos.x / this->tileSize));
+	int y = static_cast<int>(std::floor(pos.y / this->tileSize));
 	if (x >= 0 && y >= 0 && x < this->width && y < this->height)
 		return &tiles[y*this->width + x];
 	else

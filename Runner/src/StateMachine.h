@@ -12,7 +12,7 @@ public:
 
 	virtual void updateState(float delta) {};
 
-	virtual bool isValidState(BaseState* state) { return false; };
+	virtual bool isValidNextState(BaseState* state) { return false; };
 
 	virtual void exitState(BaseState* nextState) {};
 
@@ -79,7 +79,7 @@ public:
 			auto state = findState<T>();
 			if (state)
 			{
-				return state->isValidState(state);
+				return state->isValidNextState(state);
 			}
 		}
 		return false;
@@ -99,7 +99,7 @@ public:
 			}
 			else
 			{
-				if (state->isValidState(newState))
+				if (state->isValidNextState(newState))
 				{
 					state->exitState(newState);
 					newState->enterState(state);

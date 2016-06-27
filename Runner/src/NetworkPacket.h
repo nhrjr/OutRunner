@@ -32,12 +32,14 @@ struct NetworkBinary
 //types of packet body
 enum class PacketType
 {
-	p_UPDATE,
-	p_NEW,
-	p_ACK,
 	n_NEW,
 	n_ACK,
 	n_ALIVE,
+
+	p_UPDATE,
+	p_NEW,
+	p_ACK,
+
 	b_NEW,
 	b_ACK,
 	b_END,

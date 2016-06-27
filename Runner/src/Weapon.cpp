@@ -18,7 +18,7 @@ std::unordered_map<int, Animation> animationsWeapon
 };
 
 Weapon::Weapon(std::string n, TextureManager& t) : name(n)
-	,weaponModel(SpriteDefinition(animationsWeapon, sf::Vector2f(50, 54), 0.1, t.getRef(n)))
+	,weaponModel(SpriteDefinition(animationsWeapon, sf::Vector2f(50.f, 54.f), 0.1f, t.getRef(n)))
 {
 	weaponModel.spriteDefs[0].setnextState(WEAPON::IDLE);
 

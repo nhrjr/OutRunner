@@ -95,3 +95,8 @@ float Projectile::getMinDistance() const
 	return 2;
 }
 
+sf::Vector2f Projectile::getDirection() const
+{
+	return direction;
+}
+

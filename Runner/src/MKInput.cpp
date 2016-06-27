@@ -69,8 +69,8 @@ void MKInput::handleInput()
 	}
 
 	sf::Vector2f mousePos = sf::Vector2f(this->game->window.mapPixelToCoords(sf::Mouse::getPosition(this->game->window)));
-	sf::Vector2f direction = mousePos - sf::Vector2f(this->game->window.getSize().x / 2, this->game->window.getSize().y / 2);
-	this->angle = atan2(direction.y, direction.x) * 180 / M_PI;
+	sf::Vector2f direction = mousePos - sf::Vector2f(static_cast<float>(this->game->window.getSize().x / 2), static_cast<float>(this->game->window.getSize().y / 2));
+	this->angle = atan2(direction.y, direction.x) * 180.f / M_PI;
 }
 
 void MKInput::handleEvent(const sf::Event& ev)

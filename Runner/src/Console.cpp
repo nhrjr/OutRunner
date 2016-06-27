@@ -19,7 +19,7 @@ Console::Console()
 
 	this->font.loadFromFile("media/font.ttf");
 
-	this->background.setSize(sf::Vector2f(SCREEN_WIDTH, SCREEN_HEIGHT / 2));
+	this->background.setSize(sf::Vector2f(static_cast<float>(SCREEN_WIDTH), static_cast<float>(SCREEN_HEIGHT / 2)));
 	this->background.setFillColor(sf::Color(255, 255, 255, 128));
 	
 	this->outputText.setFont(font);

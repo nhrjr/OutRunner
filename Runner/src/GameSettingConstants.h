@@ -10,8 +10,8 @@ const static std::string GAME_MAP_NAME = "data/map.dat";
 const static std::string GAME_MAP_NAME_REMOTE = "data/map_multiplayer.dat";
 
 const static int GAME_TILESIZE = 32;
-const static int GAME_MENU_BUTTON_HEIGHT = 32;
-const static int GAME_MENU_BUTTON_WIDTH = 256;
+const static float GAME_MENU_BUTTON_HEIGHT = 32;
+const static float GAME_MENU_BUTTON_WIDTH = 256;
 const static int GAME_CONSOLE_HISTORYLENGTH = 30;
 const static int GAME_CONSOLE_INPUTBUFFER_LENGTH = 300;
 

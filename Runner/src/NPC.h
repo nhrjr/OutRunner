@@ -6,9 +6,10 @@
 #include "SMG.h"
 #include "Projectile.h"
 #include "Healthbar.h"
+#include "StateMachine.h"
 
 class NPC :
-	public IGameEntity
+	public IGameEntity, public StateMachine
 {
 public:
 	explicit NPC(Game* game, sf::Vector2f pos);
@@ -21,8 +22,11 @@ public:
 
 	void collide(IGameEntity& other, unsigned int type, float dt);
 
+	sf::Vector2f direction;
+	float viewAngle;
 
 	void moveToTarget(std::deque<sf::Vector2f> target);
+	void moveToTarget(sf::Vector2f target);
 	void shootAtTarget(sf::Vector2f target);
 
 	bool isAttacking = false;
@@ -34,8 +38,6 @@ public:
 
 	std::deque<sf::Vector2f> targetList;
 	sf::Vector2f target;
-
-	float attackingTimer = 0.0f;
 
 	sf::CircleShape npcModel;
 	sf::CircleShape npcHead;

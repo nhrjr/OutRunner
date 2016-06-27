@@ -34,6 +34,9 @@ npcModel(PLAYER_RADIUS), npcHead(PLAYER_RADIUS / 2), isAttacking(false), hitboxR
 	healthbar.show();
 
 	setPosition(pos);
+
+	this->game->networkmgr.AddGameEntity(entityID);
+	this->game->networkmgr.broadcastGameObjects();
 }
 
 
@@ -74,6 +77,11 @@ void NPC::moveToTarget(std::deque<sf::Vector2f> target)
 	this->targetList.pop_front();
 }
 
+void NPC::moveToTarget(sf::Vector2f target)
+{
+	this->targetList.emplace_front(target);
+}
+
 void NPC::shootAtTarget(sf::Vector2f target)
 {
 	this->target = target;
@@ -83,44 +91,12 @@ void NPC::shootAtTarget(sf::Vector2f target)
 void NPC::update(float dt)
 {
 	if (hitpoints <= 0) this->isDeletable = true;
-
+	
 	float moveBy = PLAYER_SPEED * dt;	
 	
-
-	sf::Vector2f direction;
-	if (!targetList.empty())
-	{
-		direction = V2Tools::normalize(targetList.front() - this->getPosition());
-		float dis = V2Tools::distance(targetList.front(), this->getPosition());
-		if (dis <= moveBy)
-		{
-			targetList.pop_front();
-		}
-		if (targetList.size() == 1)
-		{
-			if (dis <= PLAYER_RADIUS* 10.0f)
-			{
-				targetList.pop_front();
-				direction = sf::Vector2f(0, 0);
-			}
-			
-		}
-	}
-
-	float angleOffset;
-	if (isAttacking) {
-		sf::Vector2f attackDirection = this->target - this->getPosition();
-		angleOffset = atan2(attackDirection.y, attackDirection.x) * 180 / M_PI;
-
-		this->attackingAngle = angleOffset;
-	}
-	else {
-		angleOffset = atan2(direction.y, direction.x) * 180 / M_PI;
-	}
-
-	this->hitbox.setRotation(angleOffset + 45);
-	this->npcModel.setRotation(angleOffset);
-	this->npcHead.setRotation(angleOffset);
+	this->hitbox.setRotation(viewAngle + 45);
+	this->npcModel.setRotation(viewAngle);
+	this->npcHead.setRotation(viewAngle);
 
 	sf::Vector2f directionOffset = direction * moveBy;
 	this->hitbox.move(directionOffset);
@@ -129,28 +105,26 @@ void NPC::update(float dt)
 
 	this->healthbar.move(directionOffset);
 
-	weapon.attachedMove(directionOffset, attackingAngle);
+	weapon.attachedMove(directionOffset, viewAngle);
 	weapon.update(dt);
 
-	if (isAttacking == true)
-	{
-		weapon.enterState<Discharge>();
-		//if (weapon.cooldownTimer >= weapon.cooldownTime)
-		//{
-		//	weapon.cooldownTimer = 0.0f;
-		//	isShooting = true;
-		//}
-		//else
-		//{
-		//	isShooting = false;
-		//}
-	}
-	//else {
-	//	isShooting = false;
-	//}
+	this->updateWithDeltaTime(dt);	
 
-	//weapon.cooldownTimer += dt;
-	attackingTimer += dt;
+	if (this->game->networkmgr.networkGameObjects.size() != 0)
+	{
+		sf::Vector2f newPos = this->getPosition();
+		NetworkPlayerEvent event;
+		event.x = newPos.x;
+		event.y = newPos.y;
+		event.angle = this->viewAngle;
+		event.hitpoints = hitpoints;
+		event.action = 0;
+		event.alternateAction = 0;
+		event.equippedWeapon = 1;
+		event.entityID = this->entityID;
+
+		this->game->networkmgr.queueEvent(event);
+	}
 }
 
 void NPC::collide(IGameEntity& other, unsigned int type, float dt)
@@ -180,8 +154,6 @@ void NPC::collide(IGameEntity& other, unsigned int type, float dt)
 		}
 	}
 }
-
-
 
 sf::Vector2f NPC::getPoint(int i) const
 {

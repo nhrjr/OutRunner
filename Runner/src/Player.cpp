@@ -59,8 +59,8 @@ std::unordered_map<int, Animation> animationsBody{
 
 Player::Player(Game* game, IPlayerInput* playerInput,bool r) : game(game), playerInput(playerInput), remote(r),
 	hitboxRadius(PLAYER_RADIUS), healthbar(sf::Vector2f(50,10)),
-	playerModel(SpriteDefinition(animationsFeet/*,"survivor_feet"*/,sf::Vector2f(100, 70),0.3,this->game->texmgr.getRef("survivor_feet")),
-		SpriteDefinition(animationsBody/*,"survivor_rifle"*/, sf::Vector2f(100, 120), 0.3, this->game->texmgr.getRef("survivor_rifle")))
+	playerModel(SpriteDefinition(animationsFeet, sf::Vector2f(100, 70), 0.3f, this->game->texmgr.getRef("survivor_feet")),
+		SpriteDefinition(animationsBody, sf::Vector2f(100, 120), 0.3f, this->game->texmgr.getRef("survivor_rifle")))
 {
 	hitpoints = 100;
 	this->weapons.emplace_back(std::make_shared<Shotgun>(this->game->texmgr));
@@ -270,7 +270,7 @@ void Player::update(float dt)
 		if (healingTimer >= 1.0f && hitpoints < 100)
 		{
 			hitpoints += 5;
-			changedHitpoints.emit(hitpoints);
+			changedHitpoints.emit(static_cast<float>(hitpoints));
 			healingTimer = 0;
 			std::cout << hitpoints << std::endl;
 		}
@@ -310,7 +310,7 @@ void Player::collide(IGameEntity& other, unsigned int type, float dt)
 		if (type == 1)
 		{
 			this->hitpoints -= other.damage;
-			changedHitpoints.emit(hitpoints);
+			changedHitpoints.emit(static_cast<float>(hitpoints));
 			other.isDeletable = true;
 		}
 		if (type == 0)

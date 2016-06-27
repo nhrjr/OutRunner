@@ -7,7 +7,7 @@ GameStateLoading::GameStateLoading(Game* g)
 {
 	this->game = g;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
-	sf::FloatRect viewRect(0, 0, this->game->window.getSize().x, this->game->window.getSize().y);
+	sf::FloatRect viewRect(0.f, 0.f, static_cast<float>(this->game->window.getSize().x), static_cast<float>(this->game->window.getSize().y));
 	this->view.reset(viewRect);
 	pos *= 0.5f;
 	this->view.setCenter(pos);
@@ -24,8 +24,8 @@ GameStateLoading::~GameStateLoading()
 
 void GameStateLoading::resize(sf::Event& event)
 {
-	sf::Vector2f pos = sf::Vector2f(event.size.width, event.size.height);
-	sf::FloatRect viewRect(0, 0, event.size.width, event.size.height);
+	sf::Vector2f pos(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+	sf::FloatRect viewRect(0.f, 0.f, static_cast<float>(event.size.width), static_cast<float>(event.size.height));
 
 	this->view.reset(viewRect);
 	this->view.setCenter(pos*0.5f);

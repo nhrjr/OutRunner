@@ -35,6 +35,8 @@ public:
 
 	void draw(sf::RenderWindow& renderWindow);
 	void update(float dt);
+
+	std::vector<std::shared_ptr<IGameEntity>> getVisibleObjects(std::shared_ptr<IGameEntity> ent, const GameObjectManager<IGameEntity>& toCheckAgainst);
 };
 
 

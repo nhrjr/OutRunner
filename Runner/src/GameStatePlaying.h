@@ -80,7 +80,7 @@ public:
 		if (previousState != nullptr)
 			Console::Instance() << "Downstate enter() Entered from " << typeid(*previousState).name() << std::endl;
 	};
-	virtual bool isValidState(BaseState* state)
+	virtual bool isValidNextState(BaseState* state)
 	{
 		if (state != nullptr)
 			Console::Instance() << "Is this state a next valid state? : " << typeid(*state).name() << std::endl;
@@ -98,7 +98,7 @@ public:
 class LowState : public DownState
 {
 public:
-	virtual bool isValidState(BaseState* state)
+	virtual bool isValidNextState(BaseState* state)
 	{
 		if (state != nullptr)
 		Console::Instance() << "Is this state a next valid state? : " << typeid(*state).name() << std::endl;
@@ -116,7 +116,7 @@ public:
 class HighState : public DownState
 {
 public:
-	virtual bool isValidState(BaseState* state)
+	virtual bool isValidNextState(BaseState* state)
 	{
 		if(state != nullptr)
 		Console::Instance() << "Is this state a next valid state? : " << typeid(*state).name() << std::endl;

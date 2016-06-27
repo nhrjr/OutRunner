@@ -14,7 +14,7 @@ GameStateEditor::GameStateEditor(Game* game) : map(game), zoomLevel(1.0f), actio
 {
 	this->game = game;
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
-	sf::FloatRect viewRect(0, 0, this->game->window.getSize().x, this->game->window.getSize().y);
+	sf::FloatRect viewRect(0, 0, static_cast<float>(this->game->window.getSize().x), static_cast<float>(this->game->window.getSize().y));
 	this->guiView.reset(viewRect);
 	this->guiView.setCenter(pos * 0.5f);
 
@@ -63,22 +63,22 @@ void GameStateEditor::setGameGUI()
 	this->guiElements.clear();
 
 	this->guiElements.emplace("toolbar", std::make_shared<GuiList>(toolBarEntries, true));
-	this->guiElements.at("toolbar")->setPosition(sf::Vector2f(0, this->game->window.getSize().y - 40));
+	this->guiElements.at("toolbar")->setPosition(sf::Vector2f(0, static_cast<float>(this->game->window.getSize().y) - 40.f));
 	this->guiElements.at("toolbar")->show();
 	
 	this->guiElements.emplace("F10", std::make_shared<GuiList>(F10, true));
-	this->guiElements.at("F10")->setPosition(sf::Vector2f(this->game->window.getSize().x - 64, 0));
+	this->guiElements.at("F10")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x) - 64.f, 0));
 	this->guiElements.at("F10")->show();
 	
 	this->guiElements.emplace("settings", std::make_shared<GuiList>(settingsEntries, false));
-	this->guiElements.at("settings")->setOrigin(GAME_MENU_BUTTON_WIDTH / 2, GAME_MENU_BUTTON_HEIGHT / 2);
-	this->guiElements.at("settings")->setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y * 0.5f));
+	this->guiElements.at("settings")->setOrigin(static_cast<float>(GAME_MENU_BUTTON_WIDTH / 2), static_cast<float>(GAME_MENU_BUTTON_HEIGHT / 2));
+	this->guiElements.at("settings")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x) * 0.5f, static_cast<float>(this->game->window.getSize().y) * 0.5f));
 }
 
 void GameStateEditor::resize(sf::Event& event)
 {
-	sf::Vector2f pos = sf::Vector2f(event.size.width, event.size.height);
-	sf::FloatRect viewRect(0, 0, event.size.width, event.size.height);
+	sf::Vector2f pos = sf::Vector2f(static_cast<float>(event.size.width), static_cast<float>(event.size.height));
+	sf::FloatRect viewRect(0, 0, static_cast<float>(event.size.width), static_cast<float>(event.size.height));
 
 	this->guiView.reset(viewRect);	
 	this->guiView.setCenter(pos*0.5f);
@@ -90,12 +90,12 @@ void GameStateEditor::resize(sf::Event& event)
 		float(event.size.width) / float(this->game->background.getTexture()->getSize().x),
 		float(event.size.height) / float(this->game->background.getTexture()->getSize().y));
 
-	this->guiElements.at("toolbar")->setPosition(sf::Vector2f(0, event.size.height - 40));
+	this->guiElements.at("toolbar")->setPosition(sf::Vector2f(0, static_cast<float>(event.size.height) - 40.f));
 	this->guiElements.at("toolbar")->hide();
 	this->guiElements.at("toolbar")->show();
-	this->guiElements.at("F10")->setPosition(sf::Vector2f(event.size.width - 64, 0));
+	this->guiElements.at("F10")->setPosition(sf::Vector2f(static_cast<float>(event.size.width) - 64.f, 0));
 	this->guiElements.at("F10")->show();
-	this->guiElements.at("settings")->setPosition(sf::Vector2f(this->game->window.getSize().x * 0.5f, this->game->window.getSize().y * 0.5f));
+	this->guiElements.at("settings")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x) * 0.5f, static_cast<float>(this->game->window.getSize().y) * 0.5f));
 }
 
 
@@ -400,11 +400,11 @@ void GameStateEditor::handleInput()
 void GameStateEditor::editSelectedTiles()
 {
 	sf::FloatRect rect = selectionRectangle.getGlobalBounds();
-	for (int i = rect.left ; i < rect.width + rect.left ; i += GAME_TILESIZE)
+	for (int i = static_cast<int>(rect.left) ; i < static_cast<int>(rect.width + rect.left) ; i += GAME_TILESIZE)
 	{
-		for (int j = rect.top ; j < rect.top + rect.height ; j += GAME_TILESIZE)
+		for (int j = static_cast<int>(rect.top) ; j < static_cast<int>(rect.top + rect.height) ; j += GAME_TILESIZE)
 		{
-			Tile* currentTile = map.getCurrentTile(sf::Vector2f(i,j));
+			Tile* currentTile = map.getCurrentTile(sf::Vector2f(static_cast<float>(i),static_cast<float>(j)));
 			if (currentTile != nullptr)
 			{
 				if (this->editingTileType == TileType::CONCRETE)

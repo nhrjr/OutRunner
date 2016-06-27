@@ -90,26 +90,46 @@ void GameLogicManager::update(float dt) {
 
 	this->collisionManager.Collide<Player>(dt, players.objects, *map);
 	this->collisionManager.Collide<Projectile>(dt, bullets.objects, *map);
-	if(!this->game->switches.playerInvincible)
-		this->collisionManager.Collide<Projectile>(dt, bullets.objects, player);
+	this->collisionManager.Collide<Enemies>(dt, enemies.objects, *map);
 	this->collisionManager.Collide<Enemies, Projectile>(dt, enemies.objects, bullets.objects);
+	if (!this->game->switches.playerInvincible)
+		this->collisionManager.Collide<Projectile>(dt, bullets.objects, player);
 
 	for (auto& enemy : enemies.objects)
 	{
-		if (enemy.second->targetList.empty())
+		//if (enemy.second->targetList.empty())
+		//{
+		//	testPath = map->pathfinder.searchPath(enemy.second->getPosition(), player->getPosition());
+		//	enemy.second->moveToTarget(testPath);
+		//}
+		enemy.second->updateVisibleEnemies(this->players);
+		enemy.second->updateVisibleProjectiles(this->bullets);
+		if(enemy.second->target != nullptr)
+		if (!V2Tools::inLineOfSight_againstPolygon(map->polygons, enemy.second->getPosition(), enemy.second->target->getPosition()))
 		{
-			testPath = map->pathfinder.searchPath(enemy.second->getPosition(), player->getPosition());
-			enemy.second->moveToTarget(testPath);
+			enemy.second->enterState<IdleState>();
 		}
-
-		if (V2Tools::inLineOfSight_againstPolygon(map->polygons, enemy.second->getPosition(), player->getPosition()))
-		{
-			enemy.second->shootAtTarget(player->getPosition());
-		}
-		else
-		{
-			enemy.second->isAttacking = false;
-		}
+		//	enemy.second->shootAtTarget(player->getPosition());
+		//	
+		//}
+		//else
+		//{
+		//	enemy.second->isAttacking = false;
+		//}
 		bullets.Add(enemy.second->weapon.spawnedEntities);
 	}
+}
+
+
+std::vector<std::shared_ptr<IGameEntity>> GameLogicManager::getVisibleObjects(std::shared_ptr<IGameEntity> ent, const GameObjectManager<IGameEntity>& toCheckAgainst )
+{
+	std::vector<std::shared_ptr<IGameEntity>> returnValue;
+	for (auto& e : toCheckAgainst.objects)
+	{
+		if (V2Tools::inLineOfSight_againstPolygon(map->polygons, e.second->getPosition(), ent->getPosition()))
+		{
+			returnValue.emplace_back(e.second);
+		}
+	}
+	return returnValue;
 }

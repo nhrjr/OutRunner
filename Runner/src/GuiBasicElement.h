@@ -49,13 +49,13 @@ public:
 class GuiButtonText : public GuiBasicElement
 {
 public:
-	GuiButtonText(std::string t, sf::Vector2f d, int padding, ButtonStyle& style, std::string message) : GuiBasicElement(message, d), style(style), text(t,*style.font, d.y - 2 * padding), shape(d) {
+	GuiButtonText(std::string t, sf::Vector2f d, int padding, ButtonStyle& style, std::string message) : GuiBasicElement(message, d), style(style), text(t,*style.font, static_cast<unsigned int>(d.y) - 2 * padding), shape(d) {
 		text.setColor(style.textColor);
 		
 		shape.setFillColor(style.bodyColor);
 		shape.setOutlineColor(style.borderColor);
 		shape.setOutlineThickness(style.borderSize);
-		text.move(sf::Vector2f(padding, 0));
+		text.move(sf::Vector2f(static_cast<float>(padding), 0.0f));
 	}
 	~GuiButtonText() = default;
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
