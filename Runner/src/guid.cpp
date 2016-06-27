@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 #include "stdafx.h"
+#include <cstring>
 #include "guid.h"
 
 #ifdef GUID_LIBUUID
@@ -70,18 +71,57 @@ ostream &operator<<(ostream &s, const Guid &guid)
 
 
 
-size_t &operator<<(size_t& s, const Guid &guid)
+//size_t &operator<<(size_t& s, const Guid &guid)
+//{
+//	s = size_t(guid._bytes.data());
+//	return s;
+//}
+
+// convert to string using std::snprintf() and std::string
+std::string Guid::str() const
 {
-	s = size_t(guid._bytes.data());
-	return s;
+  char  one[  10 ],   two[ 6 ],
+        three[ 6 ],  four[ 6 ],
+                    five[ 14 ];
+
+  std::snprintf(one,   10, "%02x%02x%02x%02x",          _bytes[0],  _bytes[1],
+                                                        _bytes[2],  _bytes[3]);
+  std::snprintf(two,    6, "%02x%02x",                  _bytes[4],  _bytes[5]);
+  std::snprintf(three,  6, "%02x%02x",                  _bytes[6],  _bytes[7]);
+  std::snprintf(four,   6, "%02x%02x",                  _bytes[8],  _bytes[9]);
+  std::snprintf(five,  14, "%02x%02x%02x%02x%02x%02x",  _bytes[10], _bytes[11], _bytes[12],
+                                                        _bytes[13], _bytes[14], _bytes[15]);
+  const std::string S("-");
+  std::string out(one);
+
+  out += S + two;
+  out += S + three;
+  out += S + four;
+  out += S + five;
+
+  return out;
 }
+
+// convert to a C-style string
+const char *Guid::c_str() const
+{
+  return str().c_str();
+}
+
+// conversion operator for std::string
+Guid::operator std::string() const
+{
+  return str();
+}
+
 
 sf::Packet &operator<<(sf::Packet& s, const Guid &guid)
 {
-	std::stringstream ss;
-	ss << guid;
-	std::string sss = ss.str();
-	return s << sss;
+	//std::stringstream ss;
+	//ss << guid;
+	//std::string sss = ss.str();
+	//return s << sss;
+  return s << guid.str();
 }
 
 sf::Packet &operator >> (sf::Packet& s, Guid &guid)
@@ -170,7 +210,7 @@ Guid::Guid(const Guid &other)
 // overload assignment operator
 Guid &Guid::operator=(const Guid &other)
 {
-  _bytes = other._bytes;
+  Guid(other).swap(*this);
   return *this;
 }
 
@@ -184,6 +224,12 @@ bool Guid::operator==(const Guid &other) const
 bool Guid::operator!=(const Guid &other) const
 {
   return !((*this) == other);
+}
+
+// member swap function
+void Guid::swap(Guid& other) noexcept
+{
+  _bytes.swap(other._bytes);
 }
 
 // This is the linux friendly implementation, but it could work on other
@@ -235,7 +281,7 @@ Guid GuidGenerator::newGuid()
   GUID newId;
   CoCreateGuid(&newId);
 
-  const unsigned char bytes[16] = 
+  const unsigned char bytes[16] =
   {
     (newId.Data1 >> 24) & 0xFF,
     (newId.Data1 >> 16) & 0xFF,
@@ -279,7 +325,7 @@ Guid GuidGenerator::newGuid()
   jlong mostSignificant = _env->CallLongMethod(javaUuid, _mostSignificantBitsMethod);
   jlong leastSignificant = _env->CallLongMethod(javaUuid, _leastSignificantBitsMethod);
 
-  unsigned char bytes[16] = 
+  unsigned char bytes[16] =
   {
     (mostSignificant >> 56) & 0xFF,
     (mostSignificant >> 48) & 0xFF,
@@ -303,3 +349,15 @@ Guid GuidGenerator::newGuid()
 #endif
 
 
+// Specialization for std::swap<Guid>() --
+// call member swap function of lhs, passing rhs
+namespace std
+{
+
+  template <>
+  void swap(Guid& lhs, Guid& rhs)
+  {
+    lhs.swap(rhs);
+  }
+
+}; /* namespace std */
