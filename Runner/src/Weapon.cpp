@@ -82,7 +82,6 @@ void Weapon::update(float dt)
 Cooldown::Cooldown(Weapon* weapon) : WeaponState(weapon), cooldownTimer(0.0f) {}
 void Cooldown::enterState(BaseState* state)
 {
-	//weapon->ready = false;
 	stateLocked = true;
 }
 void Cooldown::updateState(float dt)
@@ -101,11 +100,10 @@ void Cooldown::updateState(float dt)
 }
 void Cooldown::exitState(BaseState* state)
 {
-	//weapon->ready = true;
 	weapon->weaponModel.spriteDefs[0].setnextState(WEAPON::IDLE);
 	cooldownTimer = 0.0f;
 }
-bool Cooldown::isValidState(BaseState* state)
+bool Cooldown::isValidNextState(BaseState* state)
 {
 	if (stateLocked) return false;
 	if (typeid(*state) == typeid(Reload)
@@ -117,12 +115,10 @@ bool Cooldown::isValidState(BaseState* state)
 Reload::Reload(Weapon* weapon) : WeaponState(weapon), reloadTimer(0.0f) {}
 void Reload::enterState(BaseState* state)
 {
-	//weapon->ready = false;
 	stateLocked = true;
 }
 void Reload::exitState(BaseState* state)
 {
-	//weapon->ready = true;
 	reloadTimer = 0.0f;
 }
 void Reload::updateState(float dt)
@@ -135,7 +131,7 @@ void Reload::updateState(float dt)
 		_stateMachine->enterState<ReadyToFire>();
 	}
 }
-bool Reload::isValidState(BaseState* state)
+bool Reload::isValidNextState(BaseState* state)
 {
 	if (stateLocked) return false;
 	if (typeid(*state) == typeid(ReadyToFire))
@@ -146,7 +142,6 @@ bool Reload::isValidState(BaseState* state)
 Discharge::Discharge(Weapon* weapon) : WeaponState(weapon) {}
 void Discharge::enterState(BaseState* state)
 {
-	//weapon->triggered = true;
 	weapon->shoot();
 	--weapon->ammo;
 	weapon->weaponModel.spriteDefs[0].setnextState(WEAPON::SHOOT);
@@ -155,11 +150,8 @@ void Discharge::updateState(float dt)
 {
 	_stateMachine->enterState<Cooldown>();
 }
-//virtual void exitState(BaseState* state)
-//{
-//	//weapon->triggered = false;
-//}
-bool Discharge::isValidState(BaseState* state)
+
+bool Discharge::isValidNextState(BaseState* state)
 {
 	if (typeid(*state) == typeid(Cooldown))
 		return true;
@@ -167,7 +159,7 @@ bool Discharge::isValidState(BaseState* state)
 }
 
 ReadyToFire::ReadyToFire(Weapon* weapon) : WeaponState(weapon) {}
-bool ReadyToFire::isValidState(BaseState* state)
+bool ReadyToFire::isValidNextState(BaseState* state)
 {
 	if (typeid(*state) == typeid(Discharge)
 		|| typeid(*state) == typeid(Reload))

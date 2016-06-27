@@ -276,7 +276,7 @@
     <ClCompile Include="src\GameStatePlaying.cpp" />
     <ClCompile Include="src\GameStateStart.cpp" />
     <ClCompile Include="src\GUI.cpp" />
-    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Map.cpp" />
     <ClCompile Include="src\MapTools.cpp" />
     <ClCompile Include="src\Player.cpp" />

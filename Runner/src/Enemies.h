@@ -92,6 +92,10 @@ public:
 			return false;
 		}
 	}
+
+	virtual void enterState(BaseState* state) {}; 
+
+	virtual void exitState(BaseState* state) {};
 };
 
 class FightingState : public EnemyState

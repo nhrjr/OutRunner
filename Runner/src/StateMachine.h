@@ -8,13 +8,13 @@ class BaseState
 {
 public:
 
-	virtual void enterState(BaseState* previousState) {};
+	virtual void enterState(BaseState* previousState) = 0;
 
-	virtual void updateState(float delta) {};
+	virtual void updateState(float delta) = 0;
 
-	virtual bool isValidNextState(BaseState* state) { return false; };
+	virtual bool isValidNextState(BaseState* state) = 0;
 
-	virtual void exitState(BaseState* nextState) {};
+	virtual void exitState(BaseState* nextState) = 0;
 
 	StateMachine* getStateMachine()
 	{

@@ -73,7 +73,7 @@ public:
 
 	virtual void exitState(BaseState* state);
 
-	virtual bool isValidState(BaseState* state);
+	virtual bool isValidNextState(BaseState* state);
 
 
 
@@ -90,7 +90,7 @@ public:
 
 	virtual void updateState(float dt);
 
-	virtual bool isValidState(BaseState* state);
+	virtual bool isValidNextState(BaseState* state);
 
 };
 
@@ -100,23 +100,26 @@ public:
 	Discharge(Weapon* weapon) ;
 	virtual void enterState(BaseState* state);
 
+	virtual void exitState(BaseState* state) {};
+
 	virtual void updateState(float dt);
 
-
-	virtual bool isValidState(BaseState* state);
-
-
+	virtual bool isValidNextState(BaseState* state);
 
 };
 
 class ReadyToFire : public WeaponState {
 	
 public:
-	ReadyToFire(Weapon* weapon) ;
+	ReadyToFire(Weapon* weapon);
 
-	virtual bool isValidState(BaseState* state);
+	virtual void enterState(BaseState* state) {};
 
+	virtual void exitState(BaseState* state) {};
 
+	virtual void updateState(float dt) {};
+
+	virtual bool isValidNextState(BaseState* state);
 };
 
 
