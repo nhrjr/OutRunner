@@ -19,8 +19,9 @@ public:
 };
 
 template<typename TypeT>
-void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, Map& map) {
-	std::unordered_map<Guid, std::shared_ptr<TypeT>>::const_iterator object = objects.begin();
+void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, Map& map) 
+{
+	typename std::unordered_map<Guid, std::shared_ptr<TypeT>>::const_iterator object = objects.begin();
 	while (object != objects.end())
 	{
 		std::unordered_set<unsigned int> indices = map.grid.getCollisionObjects(object->second->getPosition());
@@ -35,8 +36,9 @@ void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_pt
 }
 
 template<typename TypeT>
-void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, std::shared_ptr<IGameEntity> entity) {
-	std::unordered_map < Guid, std::shared_ptr<TypeT>> ::const_iterator object = objects.begin();
+void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, std::shared_ptr<IGameEntity> entity) 
+{
+	typename std::unordered_map < Guid, std::shared_ptr<TypeT>> ::const_iterator object = objects.begin();
 	while (object != objects.end())
 	{
 		//std::unordered_set<unsigned int> indices = map.grid.getCollisionObjects(object->second->getPosition());

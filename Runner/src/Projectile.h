@@ -22,7 +22,7 @@ protected:
 	float speed;
 
 	virtual sf::Vector2f getPoint(int i) const;
-	virtual size_t getPointCount() const;
+	virtual unsigned int getPointCount() const;
 	virtual sf::Transform getTransform() const;
 	virtual float getMinDistance() const;
 };

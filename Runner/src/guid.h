@@ -30,7 +30,7 @@ THE SOFTWARE.
 #include <string>
 #include <iomanip>
 
-#include "SFML\Network.hpp"
+#include <SFML/Network.hpp>
 
 #ifdef GUID_ANDROID
 #include <jni.h>

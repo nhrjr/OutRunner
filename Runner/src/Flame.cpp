@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "Flame.h"
 
+#include <cmath>
+
 
 Flame::Flame(float angle, sf::Vector2f pos) : Projectile(angle, pos), projectileModel(3)
 {

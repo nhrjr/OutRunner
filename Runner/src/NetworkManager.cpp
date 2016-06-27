@@ -165,8 +165,8 @@ void NetworkManager::processPacketBody(sf::Packet& packet, PacketType& type, sf:
 			packet >> update;
 			if (this->peers.count(update.entityID) == 0 && update.entityID != networkID)
 			{
-				//this->peers.insert(std::make_pair(update.entityID, std::make_pair(update.ip, update.port)));
-				this->peers[update.entityID] = std::make_pair(update.ip, update.port);
+				this->peers.insert_or_assign(update.entityID, std::make_pair(update.ip, update.port));
+				//this->peers[update.entityID] = std::make_pair(update.ip, update.port);
 				Console::Instance() << "NetworkUpdate: Found new GameClient " << update.entityID << " at " << sender << ":" << std::dec << port << std::endl;
 				NetworkHeader resHeader;
 				NetworkEntityInfo resUpdate;
@@ -413,6 +413,16 @@ void NetworkManager::sendGameMap(Guid peer)
 	std::ifstream file(GAME_MAP_NAME, std::ios::binary | std::ios::ate);
 	std::streamsize size = file.tellg();
 	file.seekg(0, std::ios::beg);
+
+	std::hash<Guid> hashOf;
+	for(auto& it : peers)
+	{
+			//std::cout << peer() << std::endl;
+		std::cout << "peersID " << it.first << std::endl;
+		std::cout << "peersHash " << hashOf(it.first) << std::endl;
+	}
+	std::cout << "peerID " << peer << std::endl;
+	std::cout << "peerHash " << hashOf(peer) << std::endl;
 
 	std::vector<char> buffer(size);
 	if (file.read(buffer.data(), size))

@@ -55,8 +55,9 @@ void GameObjectManager<T>::Add(const std::vector<std::shared_ptr<T>>& gameObject
 }
 
 template<typename T>
-void GameObjectManager<T>::Remove(Guid entityID) {
-	std::unordered_map<Guid, T*>::iterator results = objects.find(entityID);
+void GameObjectManager<T>::Remove(Guid entityID)
+{
+	typename std::unordered_map<Guid,T*>::iterator results = objects.find(entityID);
 	if (results != objects.end()) {
 		delete results->second;
 		objects.erase(results);
@@ -64,8 +65,9 @@ void GameObjectManager<T>::Remove(Guid entityID) {
 }
 
 template<typename T>
-std::shared_ptr<T> GameObjectManager<T>::Get(Guid entityID) const {
-	std::unordered_map<Guid, std::shared_ptr<T>>::const_iterator results = objects.find(entityID);
+std::shared_ptr<T> GameObjectManager<T>::Get(Guid entityID) const 
+{
+	typename std::unordered_map<Guid, std::shared_ptr<T>>::const_iterator results = objects.find(entityID);
 	if (results == objects.end()) {
 		return NULL;
 	}
@@ -86,8 +88,9 @@ void GameObjectManager<T>::draw(sf::RenderWindow& renderWindow) {
 }
 
 template<typename T>
-void GameObjectManager<T>::update(float dt) {
-	std::unordered_map<Guid, std::shared_ptr<T>>::const_iterator it = objects.begin();
+void GameObjectManager<T>::update(float dt) 
+{
+	typename std::unordered_map<Guid, std::shared_ptr<T>>::const_iterator it = objects.begin();
 	while (it != objects.end())
 	{
 		it->second->update(dt);

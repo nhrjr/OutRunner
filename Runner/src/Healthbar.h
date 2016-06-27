@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML\Graphics\Drawable.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 #include "GuiBasicElement.h"
 
 class GuiHealthbar :
@@ -7,8 +7,8 @@ class GuiHealthbar :
 {
 public:
 	//GuiHealthbar();
-	GuiHealthbar(std::string message, sf::Vector2f& size);
-	GuiHealthbar(sf::Vector2f& size);
+	GuiHealthbar(std::string message, const sf::Vector2f& size);
+	GuiHealthbar(const sf::Vector2f& size);
 	~GuiHealthbar();
 
 	sf::RectangleShape healthBarFull;

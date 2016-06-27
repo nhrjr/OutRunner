@@ -23,7 +23,7 @@ public:
 
 	virtual void collide(IGameEntity& other, unsigned int type, float dt) {};
 	virtual sf::Vector2f getPoint(int i) const { return sf::Vector2f(0, 0); };
-	virtual size_t getPointCount() const { return 0; };
+	virtual unsigned int getPointCount() const { return 0; };
 	virtual sf::Transform getTransform() const { return sf::Transform(); };
 	virtual float getMinDistance() const { return 0; };
 

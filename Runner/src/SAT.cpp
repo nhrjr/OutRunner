@@ -31,6 +31,7 @@ ProjectionRange generateProjectionRangeOnAxis(const std::vector<sf::Vector2f>& p
 	return result;
 }
 
+
 sf::Vector2f shortestAxis(const sf::Vector2f& point, const std::vector<sf::Vector2f>& points)
 {
 	std::map<float, sf::Vector2f> result;

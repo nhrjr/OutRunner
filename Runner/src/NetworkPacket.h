@@ -25,7 +25,7 @@ struct NetworkBinary
 {
 	unsigned int packetNumber;
 	unsigned int totalPacketNumber;
-	size_t lastValidByte;
+	unsigned int lastValidByte;
 	unsigned char buffer[NETWORK_BINARYBUFFER_SIZE];
 };
 

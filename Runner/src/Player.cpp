@@ -346,7 +346,7 @@ sf::Vector2f Player::getPoint(int i) const
 {
 	return hitbox.getPoint(i);
 }
-size_t Player::getPointCount() const
+unsigned int Player::getPointCount() const
 {
 	return hitbox.getPointCount();
 }

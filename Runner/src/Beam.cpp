@@ -2,6 +2,8 @@
 #include "Beam.h"
 #include "Console.h"
 
+#include <cmath>
+
 Beam::Beam(float angle, sf::Vector2f pos) : Projectile(angle, pos)
 {
 	damage = 55;

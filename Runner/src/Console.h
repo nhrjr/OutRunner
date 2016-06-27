@@ -1,11 +1,13 @@
 #pragma once
-#include <SFML\Graphics\Drawable.hpp>
+#include <SFML/Graphics/Drawable.hpp>
 
 #include "Game.h"
 
 #include <unordered_map>
 #include <functional>
 #include <queue>
+#include <list>
+
 
 template < class ContainerT >
 void tokenize(const std::string& str, ContainerT& tokens,

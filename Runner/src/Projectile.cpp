@@ -81,7 +81,7 @@ sf::Vector2f Projectile::getPoint(int i) const
 	return hitbox.getPoint(i);
 }
 
-size_t Projectile::getPointCount() const
+unsigned int Projectile::getPointCount() const
 {
 	return hitbox.getPointCount();
 }

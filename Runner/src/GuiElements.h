@@ -1,5 +1,5 @@
 #pragma once
-#include <SFML\Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "GuiBasicElement.h"
 
 #include <memory>
@@ -37,8 +37,8 @@ public:
 	std::string activate(const int entry);
 	std::string activate(const sf::Vector2f mousePos);
 
-	int GuiElement::getBasicElement(const sf::Vector2f mousePos);
-	int GuiElement::getBasicElement(const std::string message);
+	int getBasicElement(const std::string message);
+	int getBasicElement(const sf::Vector2f mousePos);
 
 	//void setDimensions(sf::Vector2f dimensions);
 	//

@@ -61,51 +61,20 @@ public:
 	bool stateLocked = false;
 };
 
-class ReadyToFire;
-class Discharge;
-class Cooldown;
-class Reload;
-
 class Cooldown : public WeaponState {
 	float cooldownTimer;
 	
 public:
-	Cooldown(Weapon* weapon) : WeaponState(weapon), cooldownTimer(0.0f) {}
+	Cooldown(Weapon* weapon);
 
-	virtual void enterState(BaseState* state)
-	{
-		//weapon->ready = false;
-		stateLocked = true;
-	}
-	virtual void updateState(float dt)
-	{
-		cooldownTimer += dt;
-		if (cooldownTimer >= weapon->cooldownTime)
-		{
-			stateLocked = false;
-			if (weapon->ammo == 0)
-			{
-				_stateMachine->enterState<Reload>();
-				return;
-			}
-			_stateMachine->enterState<ReadyToFire>();
-		}
-	}
-	virtual void exitState(BaseState* state)
-	{
-		//weapon->ready = true;
+	virtual void enterState(BaseState* state);
 
-		weapon->weaponModel.spriteDefs[0].setnextState(WEAPON::IDLE);
-		cooldownTimer = 0.0f;
-	}
-	virtual bool isValidState(BaseState* state)
-	{
-		if (stateLocked) return false;
-		if (typeid(*state) == typeid(Reload)
-		 || typeid(*state) == typeid(ReadyToFire))
-			return true;
-		return false;
-	}
+	virtual void updateState(float dt);
+
+	virtual void exitState(BaseState* state);
+
+	virtual bool isValidState(BaseState* state);
+
 
 };
 
@@ -113,75 +82,37 @@ class Reload : public WeaponState {
 	float reloadTimer;
 	
 public:
-	Reload(Weapon* weapon) : WeaponState(weapon), reloadTimer(0.0f) {}
-	virtual void enterState(BaseState* state)
-	{
-		//weapon->ready = false;
-		stateLocked = true;
-	}
-	virtual void exitState(BaseState* state)
-	{
-		//weapon->ready = true;
-		reloadTimer = 0.0f;
-	}
-	virtual void updateState(float dt)
-	{
-		reloadTimer += dt;
-		if (reloadTimer >= weapon->reloadTime)
-		{
-			stateLocked = false;
-			weapon->ammo = weapon->ammoCap;
-			_stateMachine->enterState<ReadyToFire>();
-		}
-	}
-	virtual bool isValidState(BaseState* state)
-	{
-		if (stateLocked) return false;
-		if (typeid(*state) == typeid(ReadyToFire))
-			return true;
-		return false;
-	}
+	Reload(Weapon* weapon);
+	virtual void enterState(BaseState* state);
+
+	virtual void exitState(BaseState* state);
+
+	virtual void updateState(float dt);
+
+	virtual bool isValidState(BaseState* state);
+
 };
 
 class Discharge : public WeaponState {
 	
 public:
-	Discharge(Weapon* weapon) : WeaponState(weapon) {}
-	virtual void enterState(BaseState* state)
-	{
-		//weapon->triggered = true;
-		weapon->shoot();
-		--weapon->ammo;
-		weapon->weaponModel.spriteDefs[0].setnextState(WEAPON::SHOOT);
-	}
-	virtual void updateState(float dt)
-	{
-		_stateMachine->enterState<Cooldown>();
-	}
-	//virtual void exitState(BaseState* state)
-	//{
-	//	//weapon->triggered = false;
-	//}
-	virtual bool isValidState(BaseState* state)
-	{
-		if (typeid(*state) == typeid(Cooldown))
-			return true;
-		return false;
-	}
+	Discharge(Weapon* weapon) ;
+	virtual void enterState(BaseState* state);
+
+	virtual void updateState(float dt);
+
+
+	virtual bool isValidState(BaseState* state);
+
 };
 
 class ReadyToFire : public WeaponState {
 	
 public:
-	ReadyToFire(Weapon* weapon) : WeaponState(weapon) {}
+	ReadyToFire(Weapon* weapon) ;
 
-	virtual bool isValidState(BaseState* state)
-	{
-		if (typeid(*state) == typeid(Discharge)
-			|| typeid(*state) == typeid(Reload))
-			return true;
-		return false;
-	}
+	virtual bool isValidState(BaseState* state);
+
 };
 
 

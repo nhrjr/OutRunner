@@ -187,7 +187,7 @@ sf::Vector2f NPC::getPoint(int i) const
 {
 	return hitbox.getPoint(i);
 }
-size_t NPC::getPointCount() const
+unsigned int NPC::getPointCount() const
 {
 	return hitbox.getPointCount();
 }

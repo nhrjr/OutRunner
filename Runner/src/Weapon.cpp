@@ -2,6 +2,9 @@
 #include "Weapon.h"
 #include "Console.h"
 
+#include <cmath>
+
+
 struct {
 	Animation w_idle{ 0, 0, 0.0f , 0 , 0, false, -1 };
 	Animation w_shoot{ 0, 19, 0.01f, 192, 108, false, 0 };
@@ -74,4 +77,100 @@ void Weapon::update(float dt)
 	this->updateWithDeltaTime(dt);
 
 	weaponModel.update(dt);
+}
+
+Cooldown::Cooldown(Weapon* weapon) : WeaponState(weapon), cooldownTimer(0.0f) {}
+void Cooldown::enterState(BaseState* state)
+{
+	//weapon->ready = false;
+	stateLocked = true;
+}
+void Cooldown::updateState(float dt)
+{
+	cooldownTimer += dt;
+	if (cooldownTimer >= weapon->cooldownTime)
+	{
+		stateLocked = false;
+		if (weapon->ammo == 0)
+		{
+			_stateMachine->enterState<Reload>();
+			return;
+		}
+		_stateMachine->enterState<ReadyToFire>();
+	}
+}
+void Cooldown::exitState(BaseState* state)
+{
+	//weapon->ready = true;
+	weapon->weaponModel.spriteDefs[0].setnextState(WEAPON::IDLE);
+	cooldownTimer = 0.0f;
+}
+bool Cooldown::isValidState(BaseState* state)
+{
+	if (stateLocked) return false;
+	if (typeid(*state) == typeid(Reload)
+	 || typeid(*state) == typeid(ReadyToFire))
+		return true;
+	return false;
+}
+
+Reload::Reload(Weapon* weapon) : WeaponState(weapon), reloadTimer(0.0f) {}
+void Reload::enterState(BaseState* state)
+{
+	//weapon->ready = false;
+	stateLocked = true;
+}
+void Reload::exitState(BaseState* state)
+{
+	//weapon->ready = true;
+	reloadTimer = 0.0f;
+}
+void Reload::updateState(float dt)
+{
+	reloadTimer += dt;
+	if (reloadTimer >= weapon->reloadTime)
+	{
+		stateLocked = false;
+		weapon->ammo = weapon->ammoCap;
+		_stateMachine->enterState<ReadyToFire>();
+	}
+}
+bool Reload::isValidState(BaseState* state)
+{
+	if (stateLocked) return false;
+	if (typeid(*state) == typeid(ReadyToFire))
+		return true;
+	return false;
+}
+
+Discharge::Discharge(Weapon* weapon) : WeaponState(weapon) {}
+void Discharge::enterState(BaseState* state)
+{
+	//weapon->triggered = true;
+	weapon->shoot();
+	--weapon->ammo;
+	weapon->weaponModel.spriteDefs[0].setnextState(WEAPON::SHOOT);
+}
+void Discharge::updateState(float dt)
+{
+	_stateMachine->enterState<Cooldown>();
+}
+//virtual void exitState(BaseState* state)
+//{
+//	//weapon->triggered = false;
+//}
+bool Discharge::isValidState(BaseState* state)
+{
+	if (typeid(*state) == typeid(Cooldown))
+		return true;
+	return false;
+}
+
+ReadyToFire::ReadyToFire(Weapon* weapon) : WeaponState(weapon) {}
+bool ReadyToFire::isValidState(BaseState* state)
+{
+	if (typeid(*state) == typeid(Discharge)
+		|| typeid(*state) == typeid(Reload))
+		return true;
+	return false;
 }

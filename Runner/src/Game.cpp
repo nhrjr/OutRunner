@@ -144,6 +144,8 @@ void Game::loadTextures() {
 	texmgr.loadTexture("survivor_feet", "textures/survivor_feet.png");
 	texmgr.loadTexture("SMG", "textures/rifle_muzzleflash.png");
 	texmgr.loadTexture("Shotgun", "textures/shotgun_muzzleflash.png");
+	texmgr.loadTexture("Railgun", "textures/rifle_muzzleflash.png");
+	texmgr.loadTexture("FlameThrower", "textures/rifle_muzzleflash.png");
 }
 
 void Game::loadTiles() {

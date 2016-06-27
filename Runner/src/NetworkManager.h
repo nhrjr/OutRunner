@@ -3,7 +3,7 @@
 #include <queue>
 #include <stack>
 #include <unordered_map>
-#include <SFML\Network.hpp>
+#include <SFML/Network.hpp>
 #include "guid.h"
 #include "SendBinary.h"
 #include "GameSettingConstants.h"

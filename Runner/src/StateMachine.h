@@ -120,7 +120,7 @@ public:
 			if (state == nullptr)
 			{
 				state = newState;
-				state->enter(nullptr);
+				state->enterState(nullptr);
 			}
 			else
 			{

@@ -7,7 +7,7 @@
 //
 //}
 
-GuiHealthbar::GuiHealthbar(std::string message, sf::Vector2f& size) : GuiBasicElement(message,size)
+GuiHealthbar::GuiHealthbar(std::string message, const sf::Vector2f& size) : GuiBasicElement(message,size)
 {
 	healthBarFull.setSize(size);
 	healthBarFull.setOutlineColor(sf::Color::Black);
@@ -20,7 +20,7 @@ GuiHealthbar::GuiHealthbar(std::string message, sf::Vector2f& size) : GuiBasicEl
 	healthBarEmpty.setOutlineThickness(-2.0f);
 }
 
-GuiHealthbar::GuiHealthbar(sf::Vector2f& size) : GuiBasicElement("healthbar", size)
+GuiHealthbar::GuiHealthbar(const sf::Vector2f& size) : GuiBasicElement("healthbar", size)
 {
 	healthBarFull.setSize(size);
 	healthBarFull.setOutlineColor(sf::Color::Black);
