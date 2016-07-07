@@ -11,7 +11,7 @@ CollisionManager::~CollisionManager()
 {
 }
 
-//void CollisionManager::Collide(float dt, IGameEntity* entity) {
+//void CollisionManager::Collide(float dt, IAtomicEntity* entity) {
 //
 //}
 

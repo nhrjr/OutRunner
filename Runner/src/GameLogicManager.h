@@ -1,6 +1,6 @@
 #pragma once
 #include "Game.h"
-#include "IGameEntity.h"
+#include "IAtomicEntity.h"
 #include "GameObjectManager.h"
 #include "CollisionManager.h"
 
@@ -36,7 +36,7 @@ public:
 	void draw(sf::RenderWindow& renderWindow);
 	void update(float dt);
 
-	std::vector<std::shared_ptr<IGameEntity>> getVisibleObjects(std::shared_ptr<IGameEntity> ent, const GameObjectManager<IGameEntity>& toCheckAgainst);
+	std::vector<std::shared_ptr<IAtomicEntity>> getVisibleObjects(std::shared_ptr<IAtomicEntity> ent, const GameObjectManager<IAtomicEntity>& toCheckAgainst);
 };
 
 

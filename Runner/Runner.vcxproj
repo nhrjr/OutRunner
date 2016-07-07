@@ -230,7 +230,7 @@
     <ClInclude Include="src\GameStatePlaying.h" />
     <ClInclude Include="src\GameStateStart.h" />
     <ClInclude Include="src\GUI.h" />
-    <ClInclude Include="src\IGameEntity.h" />
+    <ClInclude Include="src\IAtomicEntity.h" />
     <ClInclude Include="src\IGameState.h" />
     <ClInclude Include="src\IPlayerInput.h" />
     <ClInclude Include="src\Map.h" />

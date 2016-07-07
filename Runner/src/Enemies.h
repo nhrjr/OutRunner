@@ -25,7 +25,7 @@ public:
 	};
 	~Enemies();
 
-	//std::map<int, std::shared_ptr<IGameEntity>> visibleProjectiles;
+	//std::map<int, std::shared_ptr<IAtomicEntity>> visibleProjectiles;
 	std::map<int, std::shared_ptr<Player>> visibleEnemies;
 	std::shared_ptr<Player> target;
 	std::stack<std::pair<sf::Vector2f, float>> targetHistory;

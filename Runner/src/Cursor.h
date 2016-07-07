@@ -1,9 +1,9 @@
 #pragma once
-#include "IGameEntity.h"
+#include "IAtomicEntity.h"
 #include "Game.h"
 #include "IPlayerInput.h"
 class Cursor :
-	public IGameEntity
+	public IAtomicEntity
 {
 public:
 	Cursor(Game* game, IPlayerInput* playerInput);

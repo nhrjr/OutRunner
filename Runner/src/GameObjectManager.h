@@ -1,12 +1,12 @@
 #pragma once
 #include "Map.h"
-#include "IGameEntity.h"
+#include "IAtomicEntity.h"
 #include <unordered_map>
 
 template<typename T>
 class GameObjectManager
 {
-	static_assert(std::is_base_of<IGameEntity, T>::value, "GameObjectManager<T> - T must be derived from IGameEntity");
+	static_assert(std::is_base_of<IAtomicEntity, T>::value, "GameObjectManager<T> - T must be derived from IAtomicEntity");
 public:
 	GameObjectManager();
 	~GameObjectManager();
@@ -81,9 +81,10 @@ int GameObjectManager<T>::GetObjectCount() const {
 
 template<typename T>
 void GameObjectManager<T>::draw(sf::RenderWindow& renderWindow) {
-	for (auto& objects : objects)
+	for (auto& object : objects)
 	{
-		objects.second->draw(renderWindow);
+		//objects.second->draw(renderWindow);
+		renderWindow.draw(*object.second.get());
 	}
 }
 

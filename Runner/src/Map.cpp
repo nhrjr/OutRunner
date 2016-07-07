@@ -178,7 +178,7 @@ void Map::draw(sf::RenderWindow& window, float dt) {
 	{
 		for (std::unordered_set<unsigned int>::const_iterator it = set.begin(); it != set.end(); ++it)
 		{
-			hitboxes[*it].draw(window);
+			window.draw(hitboxes[*it]); // .draw(window);
 		}
 	}
 

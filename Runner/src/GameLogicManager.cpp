@@ -121,9 +121,9 @@ void GameLogicManager::update(float dt) {
 }
 
 
-std::vector<std::shared_ptr<IGameEntity>> GameLogicManager::getVisibleObjects(std::shared_ptr<IGameEntity> ent, const GameObjectManager<IGameEntity>& toCheckAgainst )
+std::vector<std::shared_ptr<IAtomicEntity>> GameLogicManager::getVisibleObjects(std::shared_ptr<IAtomicEntity> ent, const GameObjectManager<IAtomicEntity>& toCheckAgainst )
 {
-	std::vector<std::shared_ptr<IGameEntity>> returnValue;
+	std::vector<std::shared_ptr<IAtomicEntity>> returnValue;
 	for (auto& e : toCheckAgainst.objects)
 	{
 		if (V2Tools::inLineOfSight_againstPolygon(map->polygons, e.second->getPosition(), ent->getPosition()))

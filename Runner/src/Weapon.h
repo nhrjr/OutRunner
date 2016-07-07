@@ -1,5 +1,5 @@
 #pragma once
-#include "IGameEntity.h"
+#include "IAtomicEntity.h"
 #include "GameSettingConstants.h"
 #include "Projectile.h"
 #include "signal_slot.h"
@@ -17,7 +17,7 @@ namespace WEAPON
 }
 
 class Weapon :
-	public IGameEntity, public StateMachine
+	public IAtomicEntity, public StateMachine
 {
 protected:
 	Weapon(std::string name, TextureManager& t);

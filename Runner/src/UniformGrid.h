@@ -1,5 +1,5 @@
 #pragma once
-#include "IGameEntity.h"
+#include "IAtomicEntity.h"
 
 #include "stdafx.h"
 #include <math.h>
@@ -9,7 +9,6 @@
 #include "UniformGrid.h"
 #include "MapHitbox.h"
 #include "SAT.h"
-#include "IGameEntity.h"
 
 #include "V2Tools.h"
 
@@ -22,7 +21,7 @@
 template<typename T>
 class UniformGrid
 {
-	static_assert(std::is_base_of<IGameEntity, T>::value, "UniformGrid<T> - T must derive from IGameEntity");
+	static_assert(std::is_base_of<IAtomicEntity, T>::value, "UniformGrid<T> - T must derive from IAtomicEntity");
 public:
 	UniformGrid() {};
 	UniformGrid(int width, int height, std::vector<T>* o);

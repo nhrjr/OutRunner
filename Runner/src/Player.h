@@ -1,5 +1,5 @@
 #pragma once
-#include "IGameEntity.h"
+#include "IAtomicEntity.h"
 #include "GameSettingConstants.h"
 #include "Game.h"
 #include "MKInput.h"
@@ -11,7 +11,7 @@
 #include "signal_slot.h"
 
 class Player :
-	public IGameEntity, public Nano::Observer
+	public IAtomicEntity, public Nano::Observer
 {
 	Game* game;
 	IPlayerInput* playerInput;
@@ -28,11 +28,12 @@ public:
 	Player(Game* game, IPlayerInput* playerInput,const Guid& guid);
 	~Player();
 
-	virtual void draw(sf::RenderWindow& window);
-	virtual void setPosition(sf::Vector2f pos);
-	virtual sf::Vector2f getPosition() const;
+	//virtual void draw(sf::RenderWindow& window);
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	//virtual void setPosition(sf::Vector2f pos);
+	//virtual sf::Vector2f getPosition() const;
 	virtual void update(float dt);
-	void collide(IGameEntity& other, unsigned int type, float dt);
+	void collide(IAtomicEntity& other, unsigned int type, float dt);
 
 	std::vector<std::shared_ptr<Weapon>> weapons;
 
@@ -53,9 +54,9 @@ public:
 	sf::CircleShape walkingDirectionDot;
 
 private:
-	virtual sf::Vector2f getPoint(int i) const;
-	virtual unsigned int getPointCount() const;
-	virtual sf::Transform getTransform() const;
+	//virtual sf::Vector2f getPoint(int i) const;
+	//virtual unsigned int getPointCount() const;
+	//virtual sf::Transform getTransform() const;
 	virtual float getMinDistance() const;
 };
 

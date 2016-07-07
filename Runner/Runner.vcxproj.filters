@@ -155,9 +155,6 @@
     <ClInclude Include="src\guid.h">
       <Filter>Game\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\IGameEntity.h">
-      <Filter>Interfaces\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\IGameState.h">
       <Filter>Interfaces\Header Files</Filter>
     </ClInclude>
@@ -286,6 +283,9 @@
     </ClInclude>
     <ClInclude Include="src\StateMachine.h">
       <Filter>Algorithms\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\IAtomicEntity.h">
+      <Filter>Interfaces\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
