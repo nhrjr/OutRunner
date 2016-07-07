@@ -64,7 +64,7 @@ sf::Vector2f intersectionPoint(sf::Vector2f axis, float radius)
 	return axis * radius;
 }
 
-std::vector<sf::Vector2f> getPointsFromShape(const IGameEntity* entity)
+std::vector<sf::Vector2f> getPointsFromShape(const IAtomicEntity* entity)
 {
 	unsigned int numberOfPoints = entity->getPointCount();
 	std::vector<sf::Vector2f> result;
@@ -120,7 +120,7 @@ std::vector<sf::Vector2f> getAxesFromPoints(const std::vector<sf::Vector2f>& poi
 
 namespace Collision
 {
-	sf::Vector2f SATCollision(const IGameEntity* d1,const IGameEntity* d2/*, colDrawHelper& helper*/)
+	sf::Vector2f SATCollision(const IAtomicEntity* d1,const IAtomicEntity* d2/*, colDrawHelper& helper*/)
 	{
 		std::vector<sf::Vector2f> d1points = getPointsFromShape(d1);
 		std::vector<sf::Vector2f> d2points = getPointsFromShape(d2);

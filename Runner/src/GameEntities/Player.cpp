@@ -57,7 +57,7 @@ std::unordered_map<int, Animation> animationsBody{
 	std::make_pair(BODY::SHOOT, animations.b_shoot)
 };
 
-Player::Player(Game* game, IPlayerInput* playerInput,bool r) : game(game), playerInput(playerInput), remote(r),
+Player::Player(Game* game, IPlayerInput* playerInput,bool r) : IAtomicEntity(4), game(game), playerInput(playerInput), remote(r),
 	hitboxRadius(PLAYER_RADIUS), healthbar(sf::Vector2f(50,10)),
 	playerModel(SpriteDefinition(animationsFeet, sf::Vector2f(100, 70), 0.3f, this->game->texmgr.getRef("survivor_feet")),
 		SpriteDefinition(animationsBody, sf::Vector2f(100, 120), 0.3f, this->game->texmgr.getRef("survivor_rifle")))
@@ -70,15 +70,20 @@ Player::Player(Game* game, IPlayerInput* playerInput,bool r) : game(game), playe
 	weapon = weapons.begin();
 	changedWeapon.emit(weapon->get()->name);
 
-	hitbox = sf::ConvexShape(4);
-	hitbox.setPoint(0, sf::Vector2f(0, 0));
-	hitbox.setPoint(1, sf::Vector2f(0, PLAYER_RADIUS));
-	hitbox.setPoint(2, sf::Vector2f(PLAYER_RADIUS, PLAYER_RADIUS));
-	hitbox.setPoint(3, sf::Vector2f(PLAYER_RADIUS, 0));
-	hitbox.setOutlineColor(sf::Color::White);
-	hitbox.setOutlineThickness(2);
-	hitbox.setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
-	hitbox.setRotation(45);
+	//hitbox = sf::ConvexShape(4);
+	this->setPoint(0, sf::Vector2f(0, 0));
+	this->setPoint(1, sf::Vector2f(0, PLAYER_RADIUS));
+	this->setPoint(2, sf::Vector2f(PLAYER_RADIUS, PLAYER_RADIUS));
+	this->setPoint(3, sf::Vector2f(PLAYER_RADIUS, 0));
+	this->setOutlineColor(sf::Color::White);
+	this->setOutlineThickness(2);
+	this->setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
+	//this->setRotation(45);
+	facingDot.setRadius(5);
+	facingDot.setOrigin(5,5);
+	facingDot.setFillColor(sf::Color::Red);
+	facingDot.setPosition(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
+	playerModel.setPosition(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
 
 	healthbar.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
 
@@ -104,31 +109,39 @@ Player::~Player()
 {
 }
 
-void Player::draw(sf::RenderWindow& window)
-{
-	weapon->get()->draw(window);
-	
-	window.draw(playerModel);
-	//window.draw(hitbox);
-	
-	window.draw(healthbar);
+//void Player::draw(sf::RenderWindow& window)
+//{
+//	weapon->get()->draw(window);
+//	
+//	window.draw(playerModel);
+//	//window.draw(hitbox);
+//	
+//	window.draw(healthbar);
+//}
+
+void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	states.transform *= this->getTransform();
+	//target.draw(weapon->get(), states);
+	target.draw(playerModel, states);
+	target.draw(healthbar);
+	target.draw(facingDot, states);
 }
 
-void Player::setPosition(sf::Vector2f pos)
-{
-	hitbox.setPosition(pos);
+//void Player::setPosition(sf::Vector2f pos)
+//{
+//	hitbox.setPosition(pos);
+//
+//	playerModel.setPosition(pos);
+//
+//	weapon->get()->setPosition(pos);
+//
+//	healthbar.setPosition(pos);
+//}
 
-	playerModel.setPosition(pos);
-
-	weapon->get()->setPosition(pos);
-
-	healthbar.setPosition(pos);
-}
-
-sf::Vector2f Player::getPosition() const
-{
-	return playerModel.getPosition();
-}
+//sf::Vector2f Player::getPosition() const
+//{
+//	return playerModel.getPosition();
+//}
 
 void Player::update(float dt)
 {
@@ -150,20 +163,20 @@ void Player::update(float dt)
 	{
 		playerInput->getInput(dt);
 	}
-
+	
 	float angleOffset = playerInput->getAngle();
 	sf::Vector2f newPos = playerInput->getPosition(this->getPosition());
 
 	sf::Vector2f directionOffset = newPos - this->getPosition();
 	sf::Vector2f center = getPosition();
 
-	this->hitbox.setRotation(angleOffset+45);
-	this->playerModel.setRotation(angleOffset);
+	this->setRotation(angleOffset);
+	//this->playerModel.setRotation(angleOffset);
 		
-	this->hitbox.setPosition(newPos);
-	this->playerModel.setPosition(newPos);
+	this->setPosition(newPos);
+	//this->playerModel.setPosition(newPos);
 
-	this->healthbar.setPosition(newPos);
+	//this->healthbar.setPosition(newPos);
 	
 	this->attackingAngle = angleOffset;
 
@@ -302,7 +315,7 @@ void Player::update(float dt)
 	}
 }
 
-void Player::collide(IGameEntity& other, unsigned int type, float dt)
+void Player::collide(IAtomicEntity& other, unsigned int type, float dt)
 {
 	sf::Vector2f displace = Collision::SATCollision(this, &other);
 	if (displace != sf::Vector2f(0, 0))
@@ -320,8 +333,8 @@ void Player::collide(IGameEntity& other, unsigned int type, float dt)
 			float angle = atan2(displace.y, displace.x) * 180 / M_PI;
 			float length = V2Tools::length(displace);
 
-			this->hitbox.move(displace * moveBy);
-			this->playerModel.move(displace * moveBy);
+			this->move(displace * moveBy);
+			//this->playerModel.move(displace * moveBy);
 			(*weapon)->attachedMove(displace * moveBy, playerInput->getAngle());
 
 			this->healthbar.move(displace * moveBy);
@@ -342,18 +355,18 @@ void Player::prevWeapon()
 }
 
 
-sf::Vector2f Player::getPoint(int i) const
-{
-	return hitbox.getPoint(i);
-}
-unsigned int Player::getPointCount() const
-{
-	return hitbox.getPointCount();
-}
-sf::Transform Player::getTransform() const
-{
-	return hitbox.getTransform();
-}
+//sf::Vector2f Player::getPoint(int i) const
+//{
+//	return hitbox.getPoint(i);
+//}
+//unsigned int Player::getPointCount() const
+//{
+//	return hitbox.getPointCount();
+//}
+//sf::Transform Player::getTransform() const
+//{
+//	return hitbox.getTransform();
+//}
 
 float Player::getMinDistance() const
 {

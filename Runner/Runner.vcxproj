@@ -96,14 +96,15 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include;C:\Users\nhrjr\Documents\Visual Studio 2015\Projects\Runner\Runner\src</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <ShowIncludes>true</ShowIncludes>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,14 +115,15 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include;C:\Users\nhrjr\Documents\Visual Studio 2015\Projects\Runner\Runner\src</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <ShowIncludes>true</ShowIncludes>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,13 +135,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level2</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include;C:\Users\nhrjr\Documents\Visual Studio 2015\Projects\Runner\Runner\src</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -160,13 +162,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level2</WarningLevel>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Tools\SFML-2.3.2\include;C:\Users\nhrjr\Documents\Visual Studio 2015\Projects\Runner\Runner\src</AdditionalIncludeDirectories>
       <OpenMPSupport>true</OpenMPSupport>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
@@ -185,121 +187,116 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\AnimatedModel.h" />
-    <ClInclude Include="src\AnimationHandler.h" />
-    <ClInclude Include="src\AStarSearch.h" />
-    <ClInclude Include="src\Beam.h" />
-    <ClInclude Include="src\Bullet.h" />
-    <ClInclude Include="src\CycleCounter.h" />
-    <ClInclude Include="src\Flame.h" />
-    <ClInclude Include="src\FlameThrower.h" />
-    <ClInclude Include="src\function.h" />
-    <ClInclude Include="src\GuiBasicElement.h" />
-    <ClInclude Include="src\GuiElements.h" />
-    <ClInclude Include="src\GuiList.h" />
-    <ClInclude Include="src\GuiFrame.h" />
-    <ClInclude Include="src\Healthbar.h" />
-    <ClInclude Include="src\observer.h" />
-    <ClInclude Include="src\Pellet.h" />
-    <ClInclude Include="src\Projectile.h" />
-    <ClInclude Include="src\CollisionManager.h" />
-    <ClInclude Include="src\Console.h" />
-    <ClInclude Include="src\Enemies.h" />
-    <ClInclude Include="src\GameLogicManager.h" />
-    <ClInclude Include="src\GameStateLoading.h" />
-    <ClInclude Include="src\guid.h" />
-    <ClInclude Include="src\NetworkInput.h" />
-    <ClInclude Include="src\NetworkManager.h" />
-    <ClInclude Include="src\NetworkPacket.h" />
-    <ClInclude Include="src\Node.h" />
-    <ClInclude Include="src\Railgun.h" />
-    <ClInclude Include="src\SendBinary.h" />
-    <ClInclude Include="src\Shotgun.h" />
-    <ClInclude Include="src\signal_slot.h" />
-    <ClInclude Include="src\SimpleSignal.h" />
-    <ClInclude Include="src\SMG.h" />
-    <ClInclude Include="src\StateMachine.h" />
-    <ClInclude Include="src\V2Tools.h" />
-    <ClInclude Include="src\NPC.h" />
-    <ClInclude Include="src\SAT.h" />
-    <ClInclude Include="src\Cursor.h" />
-    <ClInclude Include="src\Game.h" />
-    <ClInclude Include="src\GameObjectManager.h" />
-    <ClInclude Include="src\GameSettingConstants.h" />
-    <ClInclude Include="src\GameStateEditor.h" />
-    <ClInclude Include="src\GameStatePlaying.h" />
-    <ClInclude Include="src\GameStateStart.h" />
-    <ClInclude Include="src\GUI.h" />
-    <ClInclude Include="src\IAtomicEntity.h" />
-    <ClInclude Include="src\IGameState.h" />
-    <ClInclude Include="src\IPlayerInput.h" />
-    <ClInclude Include="src\Map.h" />
-    <ClInclude Include="src\MapTools.h" />
-    <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\MKInput.h" />
-    <ClInclude Include="src\stdafx.h" />
-    <ClInclude Include="src\TextureManager.h" />
-    <ClInclude Include="src\Tile.h" />
-    <ClInclude Include="src\UniformGrid.h" />
-    <ClInclude Include="src\MapHitbox.h" />
-    <ClInclude Include="src\Weapon.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\AnimationHandler.cpp" />
-    <ClCompile Include="src\AStarSearch.cpp" />
-    <ClCompile Include="src\Beam.cpp" />
-    <ClCompile Include="src\Bullet.cpp" />
-    <ClCompile Include="src\CycleCounter.cpp" />
-    <ClCompile Include="src\Flame.cpp" />
-    <ClCompile Include="src\FlameThrower.cpp" />
-    <ClCompile Include="src\GuiBasicElement.cpp" />
-    <ClCompile Include="src\GuiElements.cpp" />
-    <ClCompile Include="src\GuiList.cpp" />
-    <ClCompile Include="src\GuiFrame.cpp" />
-    <ClCompile Include="src\Healthbar.cpp" />
-    <ClCompile Include="src\Pellet.cpp" />
-    <ClCompile Include="src\Projectile.cpp" />
-    <ClCompile Include="src\CollisionManager.cpp" />
-    <ClCompile Include="src\Console.cpp" />
-    <ClCompile Include="src\Enemies.cpp" />
-    <ClCompile Include="src\GameLogicManager.cpp" />
-    <ClCompile Include="src\GameStateLoading.cpp" />
-    <ClCompile Include="src\guid.cpp" />
-    <ClCompile Include="src\NetworkInput.cpp" />
-    <ClCompile Include="src\NetworkManager.cpp" />
-    <ClCompile Include="src\NPC.cpp" />
-    <ClCompile Include="src\Railgun.cpp" />
-    <ClCompile Include="src\SAT.cpp" />
-    <ClCompile Include="src\Cursor.cpp" />
-    <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GameStateEditor.cpp" />
-    <ClCompile Include="src\GameStatePlaying.cpp" />
-    <ClCompile Include="src\GameStateStart.cpp" />
-    <ClCompile Include="src\GUI.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="src\Map.cpp" />
-    <ClCompile Include="src\MapTools.cpp" />
-    <ClCompile Include="src\Player.cpp" />
-    <ClCompile Include="src\MKInput.cpp" />
-    <ClCompile Include="src\SendBinary.cpp" />
-    <ClCompile Include="src\Shotgun.cpp" />
-    <ClCompile Include="src\SMG.cpp" />
-    <ClCompile Include="src\StateMachine.cpp" />
-    <ClCompile Include="src\stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="src\TextureManager.cpp" />
-    <ClCompile Include="src\Tile.cpp" />
-    <ClCompile Include="src\V2Tools.cpp" />
-    <ClCompile Include="src\MapHitbox.cpp" />
-    <ClCompile Include="src\Weapon.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Algorithms\AStarSearch.cpp" />
+    <ClCompile Include="src\Algorithms\guid.cpp" />
+    <ClCompile Include="src\Algorithms\SAT.cpp" />
+    <ClCompile Include="src\Algorithms\StateMachine.cpp" />
+    <ClCompile Include="src\Algorithms\V2Tools.cpp" />
+    <ClCompile Include="src\Core\CollisionManager.cpp" />
+    <ClCompile Include="src\Core\Console.cpp" />
+    <ClCompile Include="src\Core\CycleCounter.cpp" />
+    <ClCompile Include="src\Core\Game.cpp" />
+    <ClCompile Include="src\Core\GameLogicManager.cpp" />
+    <ClCompile Include="src\Core\TextureManager.cpp" />
+    <ClCompile Include="src\GameEntities\AnimationHandler.cpp" />
+    <ClCompile Include="src\GameEntities\Enemies.cpp" />
+    <ClCompile Include="src\GameEntities\NPC.cpp" />
+    <ClCompile Include="src\GameEntities\Player.cpp" />
+    <ClCompile Include="src\GameStates\GameStateEditor.cpp" />
+    <ClCompile Include="src\GameStates\GameStateLoading.cpp" />
+    <ClCompile Include="src\GameStates\GameStatePlaying.cpp" />
+    <ClCompile Include="src\GameStates\GameStateStart.cpp" />
+    <ClCompile Include="src\Gui\Cursor.cpp" />
+    <ClCompile Include="src\Gui\GUI.cpp" />
+    <ClCompile Include="src\Gui\GuiBasicElement.cpp" />
+    <ClCompile Include="src\Gui\GuiElements.cpp" />
+    <ClCompile Include="src\Gui\GuiFrame.cpp" />
+    <ClCompile Include="src\Gui\GuiList.cpp" />
+    <ClCompile Include="src\Gui\Healthbar.cpp" />
+    <ClCompile Include="src\Input\MKInput.cpp" />
+    <ClCompile Include="src\Input\NetworkInput.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Map\Map.cpp" />
+    <ClCompile Include="src\Map\MapHitbox.cpp" />
+    <ClCompile Include="src\Map\MapTools.cpp" />
+    <ClCompile Include="src\Map\Tile.cpp" />
+    <ClCompile Include="src\Network\NetworkManager.cpp" />
+    <ClCompile Include="src\Network\SendBinary.cpp" />
+    <ClCompile Include="src\Projectiles\Beam.cpp" />
+    <ClCompile Include="src\Projectiles\Bullet.cpp" />
+    <ClCompile Include="src\Projectiles\Flame.cpp" />
+    <ClCompile Include="src\Projectiles\Pellet.cpp" />
+    <ClCompile Include="src\Projectiles\Projectile.cpp" />
+    <ClCompile Include="src\stdafx.cpp" />
+    <ClCompile Include="src\Weapons\FlameThrower.cpp" />
+    <ClCompile Include="src\Weapons\Railgun.cpp" />
+    <ClCompile Include="src\Weapons\Shotgun.cpp" />
+    <ClCompile Include="src\Weapons\SMG.cpp" />
+    <ClCompile Include="src\Weapons\Weapon.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Algorithms\AStarSearch.h" />
+    <ClInclude Include="src\Algorithms\function.h" />
+    <ClInclude Include="src\Algorithms\guid.h" />
+    <ClInclude Include="src\Algorithms\Node.h" />
+    <ClInclude Include="src\Algorithms\observer.h" />
+    <ClInclude Include="src\Algorithms\SAT.h" />
+    <ClInclude Include="src\Algorithms\signal_slot.h" />
+    <ClInclude Include="src\Algorithms\SimpleSignal.h" />
+    <ClInclude Include="src\Algorithms\StateMachine.h" />
+    <ClInclude Include="src\Algorithms\UniformGrid.h" />
+    <ClInclude Include="src\Algorithms\V2Tools.h" />
+    <ClInclude Include="src\Core\CollisionManager.h" />
+    <ClInclude Include="src\Core\Console.h" />
+    <ClInclude Include="src\Core\CycleCounter.h" />
+    <ClInclude Include="src\Core\Game.h" />
+    <ClInclude Include="src\Core\GameLogicManager.h" />
+    <ClInclude Include="src\Core\GameObjectManager.h" />
+    <ClInclude Include="src\Core\GameSettingConstants.h" />
+    <ClInclude Include="src\Core\TextureManager.h" />
+    <ClInclude Include="src\GameEntities\AnimatedModel.h" />
+    <ClInclude Include="src\GameEntities\AnimationHandler.h" />
+    <ClInclude Include="src\GameEntities\Enemies.h" />
+    <ClInclude Include="src\GameEntities\IAtomicEntity.h" />
+    <ClInclude Include="src\GameEntities\NPC.h" />
+    <ClInclude Include="src\GameEntities\Player.h" />
+    <ClInclude Include="src\GameStates\GameStateEditor.h" />
+    <ClInclude Include="src\GameStates\GameStateLoading.h" />
+    <ClInclude Include="src\GameStates\GameStatePlaying.h" />
+    <ClInclude Include="src\GameStates\GameStateStart.h" />
+    <ClInclude Include="src\GameStates\IGameState.h" />
+    <ClInclude Include="src\Gui\Cursor.h" />
+    <ClInclude Include="src\Gui\GUI.h" />
+    <ClInclude Include="src\Gui\GuiBasicElement.h" />
+    <ClInclude Include="src\Gui\GuiElements.h" />
+    <ClInclude Include="src\Gui\GuiFrame.h" />
+    <ClInclude Include="src\Gui\GuiList.h" />
+    <ClInclude Include="src\Gui\Healthbar.h" />
+    <ClInclude Include="src\Input\IPlayerInput.h" />
+    <ClInclude Include="src\Input\MKInput.h" />
+    <ClInclude Include="src\Input\NetworkInput.h" />
+    <ClInclude Include="src\Map\Map.h" />
+    <ClInclude Include="src\Map\MapHitbox.h" />
+    <ClInclude Include="src\Map\MapTools.h" />
+    <ClInclude Include="src\Map\Tile.h" />
+    <ClInclude Include="src\Network\NetworkManager.h" />
+    <ClInclude Include="src\Network\NetworkPacket.h" />
+    <ClInclude Include="src\Network\SendBinary.h" />
+    <ClInclude Include="src\Projectiles\Beam.h" />
+    <ClInclude Include="src\Projectiles\Bullet.h" />
+    <ClInclude Include="src\Projectiles\Flame.h" />
+    <ClInclude Include="src\Projectiles\Pellet.h" />
+    <ClInclude Include="src\Projectiles\Projectile.h" />
+    <ClInclude Include="src\stdafx.h" />
+    <ClInclude Include="src\Weapons\FlameThrower.h" />
+    <ClInclude Include="src\Weapons\Railgun.h" />
+    <ClInclude Include="src\Weapons\Shotgun.h" />
+    <ClInclude Include="src\Weapons\SMG.h" />
+    <ClInclude Include="src\Weapons\Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

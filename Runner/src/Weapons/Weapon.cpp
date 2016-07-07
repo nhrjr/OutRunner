@@ -1,5 +1,6 @@
 #include "stdafx.h"
-#include "Weapon.h"
+#include "Weapons/Weapon.h"
+#include "Core/Console.h"
 
 #include <cmath>
 
@@ -81,7 +82,6 @@ void Weapon::update(float dt)
 Cooldown::Cooldown(Weapon* weapon) : WeaponState(weapon), cooldownTimer(0.0f) {}
 void Cooldown::enterState(BaseState* state)
 {
-	//weapon->ready = false;
 	stateLocked = true;
 }
 void Cooldown::updateState(float dt)
@@ -161,8 +161,8 @@ bool Discharge::isValidNextState(BaseState* state)
 ReadyToFire::ReadyToFire(Weapon* weapon) : WeaponState(weapon) {}
 bool ReadyToFire::isValidNextState(BaseState* state)
 {
-	if (typeid(*state).name() == typeid(Discharge).name()
-		|| typeid(*state).name() == typeid(Reload).name())
+	if (typeid(*state) == typeid(Discharge)
+		|| typeid(*state) == typeid(Reload))
 		return true;
 	return false;
 }

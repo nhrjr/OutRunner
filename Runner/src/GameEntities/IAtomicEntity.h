@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <memory>
-#include "guid.h"
+#include "Algorithms/guid.h"
 
 class IAtomicEntity : public sf::ConvexShape
 {

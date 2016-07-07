@@ -1,435 +1,115 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Algorithms">
-      <UniqueIdentifier>{6115beef-4b8b-4029-a533-8132e3b67c43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{aec184a8-8972-4663-9325-0e8bdef3fa0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameStates">
-      <UniqueIdentifier>{9d27a795-7585-47ce-ad5c-1317128e6d70}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interfaces">
-      <UniqueIdentifier>{b59d9d1c-cca6-4c34-9ba9-dce1ca92ee05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager">
-      <UniqueIdentifier>{f851ead9-cf93-4dff-af5e-8925f94ff54d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network">
-      <UniqueIdentifier>{52ed5417-9ba5-43cc-8078-1910a65d6f12}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI">
-      <UniqueIdentifier>{358d59ad-06ea-43d1-aad4-9e0889dd3308}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Algorithms\Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Game\Source Files">
-      <UniqueIdentifier>{1fa21161-6ec5-42ff-8ee5-5e44c6578430}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Algorithms\Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Game\Header Files">
-      <UniqueIdentifier>{2cec4918-5abc-4b1e-9e7a-f221cb4dd75c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameStates\Header Files">
-      <UniqueIdentifier>{e127bad8-5947-42c6-b33a-7f83a1f2612a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\Header Files">
-      <UniqueIdentifier>{1d34b4ca-d4ba-4220-80e5-26c33c77a7ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GUI\Source Files">
-      <UniqueIdentifier>{52614396-b23a-42d9-8525-7f2b8f6a176c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Interfaces\Header Files">
-      <UniqueIdentifier>{170c6946-9dc2-4028-87de-3d76344d8e80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager\Header Files">
-      <UniqueIdentifier>{ab6d219f-146e-4f3c-9591-a8b4cb074646}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Manager\Source Files">
-      <UniqueIdentifier>{3c6ca9ee-5ebe-4187-a57a-f906dd7ae995}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Header Files">
-      <UniqueIdentifier>{db773b99-3544-4eca-945e-998e520d73b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Network\Source Files">
-      <UniqueIdentifier>{35365c07-7cf6-478b-add3-c17047154264}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="GameStates\Source Files">
-      <UniqueIdentifier>{4a62d4e7-727f-49fc-a304-7fdd1a21822f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Map">
-      <UniqueIdentifier>{ff4ad2e5-8f30-442c-9f23-df18daf1649b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Map\Header Files">
-      <UniqueIdentifier>{7e489f5b-51c1-4841-b12d-064b6c3bcfe0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Map\Source Files">
-      <UniqueIdentifier>{14d57afc-c9df-4e4c-8c74-bb678d375dcf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input">
-      <UniqueIdentifier>{9f4dc31e-5d56-4c48-b434-29510f43d901}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\Header Files">
-      <UniqueIdentifier>{1d2fffb6-efd4-4dd2-8531-22ec2502554a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\Source Files">
-      <UniqueIdentifier>{47633bee-1b2d-488a-af9b-27ef4e368003}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay">
-      <UniqueIdentifier>{c1a6adea-8b75-4e0e-a7a9-923ca7068f4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Weapons">
-      <UniqueIdentifier>{0ae3ad49-cb3d-4a88-9ef6-bb31b9e44ba4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Weapons\Header Files">
-      <UniqueIdentifier>{3b5a6fa0-b3fc-47e0-89af-e49502908c65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Weapons\Source Files">
-      <UniqueIdentifier>{89205760-5928-482c-980e-2850e39d7f8f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Humans">
-      <UniqueIdentifier>{5f9092ed-f338-4e83-9379-94bf5c0861b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Humans\Header Files">
-      <UniqueIdentifier>{7f7e226d-c045-43f2-89de-f383c130fae1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Humans\Source Files">
-      <UniqueIdentifier>{a38ef0d1-8f29-4330-a4db-4edec1b2d709}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Ammunition">
-      <UniqueIdentifier>{1620f315-db4a-4990-98cc-2d277bddc1b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Ammunition\Header Files">
-      <UniqueIdentifier>{18dd9090-07e6-4c2d-877e-3da314fd3037}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Gameplay\Ammunition\Source Files">
-      <UniqueIdentifier>{e35822ea-0f19-4ed3-85bc-f9ae9e34cd16}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\AStarSearch.h">
-      <Filter>Algorithms\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameStateStart.h">
-      <Filter>GameStates\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameStatePlaying.h">
-      <Filter>GameStates\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameStateLoading.h">
-      <Filter>GameStates\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameStateEditor.h">
-      <Filter>GameStates\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameObjectManager.h">
-      <Filter>Manager\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameLogicManager.h">
-      <Filter>Manager\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CollisionManager.h">
-      <Filter>Manager\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Console.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Enemies.h">
-      <Filter>Gameplay\Humans\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Game.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GameSettingConstants.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GUI.h">
-      <Filter>GUI\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\guid.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IGameState.h">
-      <Filter>Interfaces\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IPlayerInput.h">
-      <Filter>Interfaces\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Node.h">
-      <Filter>Algorithms\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SAT.h">
-      <Filter>Algorithms\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\V2Tools.h">
-      <Filter>Algorithms\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\UniformGrid.h">
-      <Filter>Algorithms\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Map.h">
-      <Filter>Map\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MapHitbox.h">
-      <Filter>Map\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MapTools.h">
-      <Filter>Map\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkManager.h">
-      <Filter>Network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkPacket.h">
-      <Filter>Network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Player.h">
-      <Filter>Gameplay\Humans\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NPC.h">
-      <Filter>Gameplay\Humans\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SendBinary.h">
-      <Filter>Network\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stdafx.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Tile.h">
-      <Filter>Map\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AnimationHandler.h">
-      <Filter>Map\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MKInput.h">
-      <Filter>Input\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\NetworkInput.h">
-      <Filter>Input\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Weapon.h">
-      <Filter>Gameplay\Weapons\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Cursor.h">
-      <Filter>GUI\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SMG.h">
-      <Filter>Gameplay\Weapons\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Shotgun.h">
-      <Filter>Gameplay\Weapons\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Railgun.h">
-      <Filter>Gameplay\Weapons\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Beam.h">
-      <Filter>Gameplay\Ammunition\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Bullet.h">
-      <Filter>Gameplay\Ammunition\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Flame.h">
-      <Filter>Gameplay\Ammunition\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Pellet.h">
-      <Filter>Gameplay\Ammunition\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Projectile.h">
-      <Filter>Gameplay\Ammunition\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FlameThrower.h">
-      <Filter>Gameplay\Weapons\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Healthbar.h">
-      <Filter>GUI\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CycleCounter.h">
-      <Filter>Game\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\function.h">
-      <Filter>Manager\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\observer.h">
-      <Filter>Manager\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\signal_slot.h">
-      <Filter>Manager\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TextureManager.h">
-      <Filter>Manager\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\SimpleSignal.h">
-      <Filter>Manager\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuiFrame.h">
-      <Filter>GUI\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuiList.h">
-      <Filter>GUI\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuiElements.h">
-      <Filter>GUI\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GuiBasicElement.h">
-      <Filter>GUI\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\AnimatedModel.h">
-      <Filter>Gameplay\Humans\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\StateMachine.h">
-      <Filter>Algorithms\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\IAtomicEntity.h">
-      <Filter>Interfaces\Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\AStarSearch.cpp">
-      <Filter>Algorithms\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameStateStart.cpp">
-      <Filter>GameStates\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameStatePlaying.cpp">
-      <Filter>GameStates\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameStateLoading.cpp">
-      <Filter>GameStates\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameStateEditor.cpp">
-      <Filter>GameStates\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GameLogicManager.cpp">
-      <Filter>Manager\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CollisionManager.cpp">
-      <Filter>Manager\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Console.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Enemies.cpp">
-      <Filter>Gameplay\Humans\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GUI.cpp">
-      <Filter>GUI\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\guid.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SAT.cpp">
-      <Filter>Algorithms\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\V2Tools.cpp">
-      <Filter>Algorithms\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Map.cpp">
-      <Filter>Map\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MapHitbox.cpp">
-      <Filter>Map\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MapTools.cpp">
-      <Filter>Map\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\NetworkManager.cpp">
-      <Filter>Network\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\NPC.cpp">
-      <Filter>Gameplay\Humans\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Player.cpp">
-      <Filter>Gameplay\Humans\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SendBinary.cpp">
-      <Filter>Network\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Tile.cpp">
-      <Filter>Map\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\stdafx.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\AnimationHandler.cpp">
-      <Filter>Map\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\MKInput.cpp">
-      <Filter>Input\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\NetworkInput.cpp">
-      <Filter>Input\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Cursor.cpp">
-      <Filter>GUI\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\SMG.cpp">
-      <Filter>Gameplay\Weapons\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Shotgun.cpp">
-      <Filter>Gameplay\Weapons\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Weapon.cpp">
-      <Filter>Gameplay\Weapons\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Railgun.cpp">
-      <Filter>Gameplay\Weapons\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Beam.cpp">
-      <Filter>Gameplay\Ammunition\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Bullet.cpp">
-      <Filter>Gameplay\Ammunition\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Flame.cpp">
-      <Filter>Gameplay\Ammunition\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Pellet.cpp">
-      <Filter>Gameplay\Ammunition\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Projectile.cpp">
-      <Filter>Gameplay\Ammunition\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FlameThrower.cpp">
-      <Filter>Gameplay\Weapons\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Healthbar.cpp">
-      <Filter>GUI\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CycleCounter.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TextureManager.cpp">
-      <Filter>Manager\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuiFrame.cpp">
-      <Filter>GUI\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuiList.cpp">
-      <Filter>GUI\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuiElements.cpp">
-      <Filter>GUI\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GuiBasicElement.cpp">
-      <Filter>GUI\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\StateMachine.cpp">
-      <Filter>Algorithms\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Game\Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Algorithms\AStarSearch.cpp" />
+    <ClCompile Include="src\Algorithms\guid.cpp" />
+    <ClCompile Include="src\Algorithms\SAT.cpp" />
+    <ClCompile Include="src\Algorithms\StateMachine.cpp" />
+    <ClCompile Include="src\Algorithms\V2Tools.cpp" />
+    <ClCompile Include="src\Core\CollisionManager.cpp" />
+    <ClCompile Include="src\Core\Console.cpp" />
+    <ClCompile Include="src\Core\CycleCounter.cpp" />
+    <ClCompile Include="src\Core\Game.cpp" />
+    <ClCompile Include="src\Core\GameLogicManager.cpp" />
+    <ClCompile Include="src\Core\TextureManager.cpp" />
+    <ClCompile Include="src\GameEntities\AnimationHandler.cpp" />
+    <ClCompile Include="src\GameEntities\Enemies.cpp" />
+    <ClCompile Include="src\GameEntities\NPC.cpp" />
+    <ClCompile Include="src\GameEntities\Player.cpp" />
+    <ClCompile Include="src\GameStates\GameStateEditor.cpp" />
+    <ClCompile Include="src\GameStates\GameStateLoading.cpp" />
+    <ClCompile Include="src\GameStates\GameStatePlaying.cpp" />
+    <ClCompile Include="src\GameStates\GameStateStart.cpp" />
+    <ClCompile Include="src\Gui\Cursor.cpp" />
+    <ClCompile Include="src\Gui\GUI.cpp" />
+    <ClCompile Include="src\Gui\GuiBasicElement.cpp" />
+    <ClCompile Include="src\Gui\GuiElements.cpp" />
+    <ClCompile Include="src\Gui\GuiFrame.cpp" />
+    <ClCompile Include="src\Gui\GuiList.cpp" />
+    <ClCompile Include="src\Gui\Healthbar.cpp" />
+    <ClCompile Include="src\Input\MKInput.cpp" />
+    <ClCompile Include="src\Input\NetworkInput.cpp" />
+    <ClCompile Include="src\Map\Map.cpp" />
+    <ClCompile Include="src\Map\MapHitbox.cpp" />
+    <ClCompile Include="src\Map\MapTools.cpp" />
+    <ClCompile Include="src\Map\Tile.cpp" />
+    <ClCompile Include="src\Network\NetworkManager.cpp" />
+    <ClCompile Include="src\Network\SendBinary.cpp" />
+    <ClCompile Include="src\Projectiles\Beam.cpp" />
+    <ClCompile Include="src\Projectiles\Bullet.cpp" />
+    <ClCompile Include="src\Projectiles\Flame.cpp" />
+    <ClCompile Include="src\Projectiles\Pellet.cpp" />
+    <ClCompile Include="src\Projectiles\Projectile.cpp" />
+    <ClCompile Include="src\Weapons\FlameThrower.cpp" />
+    <ClCompile Include="src\Weapons\Railgun.cpp" />
+    <ClCompile Include="src\Weapons\Shotgun.cpp" />
+    <ClCompile Include="src\Weapons\SMG.cpp" />
+    <ClCompile Include="src\Weapons\Weapon.cpp" />
+    <ClCompile Include="src\stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\Algorithms\AStarSearch.h" />
+    <ClInclude Include="src\Algorithms\function.h" />
+    <ClInclude Include="src\Algorithms\guid.h" />
+    <ClInclude Include="src\Algorithms\Node.h" />
+    <ClInclude Include="src\Algorithms\observer.h" />
+    <ClInclude Include="src\Algorithms\SAT.h" />
+    <ClInclude Include="src\Algorithms\signal_slot.h" />
+    <ClInclude Include="src\Algorithms\SimpleSignal.h" />
+    <ClInclude Include="src\Algorithms\StateMachine.h" />
+    <ClInclude Include="src\Algorithms\UniformGrid.h" />
+    <ClInclude Include="src\Algorithms\V2Tools.h" />
+    <ClInclude Include="src\Core\CollisionManager.h" />
+    <ClInclude Include="src\Core\Console.h" />
+    <ClInclude Include="src\Core\CycleCounter.h" />
+    <ClInclude Include="src\Core\Game.h" />
+    <ClInclude Include="src\Core\GameLogicManager.h" />
+    <ClInclude Include="src\Core\GameObjectManager.h" />
+    <ClInclude Include="src\Core\GameSettingConstants.h" />
+    <ClInclude Include="src\Core\TextureManager.h" />
+    <ClInclude Include="src\GameEntities\AnimatedModel.h" />
+    <ClInclude Include="src\GameEntities\AnimationHandler.h" />
+    <ClInclude Include="src\GameEntities\Enemies.h" />
+    <ClInclude Include="src\GameEntities\IAtomicEntity.h" />
+    <ClInclude Include="src\GameEntities\NPC.h" />
+    <ClInclude Include="src\GameEntities\Player.h" />
+    <ClInclude Include="src\GameStates\GameStateEditor.h" />
+    <ClInclude Include="src\GameStates\GameStateLoading.h" />
+    <ClInclude Include="src\GameStates\GameStatePlaying.h" />
+    <ClInclude Include="src\GameStates\GameStateStart.h" />
+    <ClInclude Include="src\GameStates\IGameState.h" />
+    <ClInclude Include="src\Gui\Cursor.h" />
+    <ClInclude Include="src\Gui\GUI.h" />
+    <ClInclude Include="src\Gui\GuiBasicElement.h" />
+    <ClInclude Include="src\Gui\GuiElements.h" />
+    <ClInclude Include="src\Gui\GuiFrame.h" />
+    <ClInclude Include="src\Gui\GuiList.h" />
+    <ClInclude Include="src\Gui\Healthbar.h" />
+    <ClInclude Include="src\Input\IPlayerInput.h" />
+    <ClInclude Include="src\Input\MKInput.h" />
+    <ClInclude Include="src\Input\NetworkInput.h" />
+    <ClInclude Include="src\Map\Map.h" />
+    <ClInclude Include="src\Map\MapHitbox.h" />
+    <ClInclude Include="src\Map\MapTools.h" />
+    <ClInclude Include="src\Map\Tile.h" />
+    <ClInclude Include="src\Network\NetworkManager.h" />
+    <ClInclude Include="src\Network\NetworkPacket.h" />
+    <ClInclude Include="src\Network\SendBinary.h" />
+    <ClInclude Include="src\Projectiles\Beam.h" />
+    <ClInclude Include="src\Projectiles\Bullet.h" />
+    <ClInclude Include="src\Projectiles\Flame.h" />
+    <ClInclude Include="src\Projectiles\Pellet.h" />
+    <ClInclude Include="src\Projectiles\Projectile.h" />
+    <ClInclude Include="src\Weapons\FlameThrower.h" />
+    <ClInclude Include="src\Weapons\Railgun.h" />
+    <ClInclude Include="src\Weapons\Shotgun.h" />
+    <ClInclude Include="src\Weapons\SMG.h" />
+    <ClInclude Include="src\Weapons\Weapon.h" />
+    <ClInclude Include="src\stdafx.h" />
   </ItemGroup>
 </Project>

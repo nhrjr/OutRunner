@@ -1,6 +1,6 @@
 #pragma once
 #include "Map/Map.h"
-#include "GameEntities/IGameEntity.h"
+#include "GameEntities/IAtomicEntity.h"
 
 #include <unordered_map>
 
@@ -13,7 +13,7 @@ public:
 	template<typename TypeT> 
 	void Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, Map& map);
 	template<typename TypeT>
-	void Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, std::shared_ptr<IGameEntity> entity);
+	void Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, std::shared_ptr<IAtomicEntity> entity);
 	template<typename TypeT, typename TypeU>
 	void Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, std::unordered_map<Guid, std::shared_ptr<TypeU>>& entities);
 };
@@ -36,7 +36,7 @@ void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_pt
 }
 
 template<typename TypeT>
-void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, std::shared_ptr<IGameEntity> entity) 
+void CollisionManager::Collide(float dt, std::unordered_map<Guid, std::shared_ptr<TypeT>>& objects, std::shared_ptr<IAtomicEntity> entity) 
 {
 	typename std::unordered_map < Guid, std::shared_ptr<TypeT>> ::const_iterator object = objects.begin();
 	while (object != objects.end())

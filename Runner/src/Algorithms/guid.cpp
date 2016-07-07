@@ -276,7 +276,7 @@ Guid GuidGenerator::newGuid()
 
 // obviously this is the windows version
 #ifdef GUID_WINDOWS
-Guid GuidGenerator::newGuid()
+ Guid GuidGenerator::newGuid()
 {
   GUID newId;
   CoCreateGuid(&newId);

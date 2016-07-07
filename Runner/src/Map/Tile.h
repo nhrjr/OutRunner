@@ -12,7 +12,7 @@ enum class TileType {VOID, CONCRETE, WALL, WATER, GRASS};
 std::string tileTypeToStr(TileType type);
 
 class Tile 
-	//: public IGameEntity
+	//: public IAtomicEntity
 {
 public:
 	Tile() { };

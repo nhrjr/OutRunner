@@ -1,5 +1,5 @@
 #pragma once
-#include "GameEntities/IGameEntity.h"
+#include "GameEntities/IAtomicEntity.h"
 
 #include "stdafx.h"
 #include <math.h>
@@ -9,7 +9,6 @@
 #include "Algorithms/UniformGrid.h"
 #include "Map/MapHitbox.h"
 #include "Algorithms/SAT.h"
-#include "GameEntities/IGameEntity.h"
 
 #include "Algorithms/V2Tools.h"
 
@@ -22,7 +21,7 @@
 template<typename T>
 class UniformGrid
 {
-	static_assert(std::is_base_of<IGameEntity, T>::value, "UniformGrid<T> - T must derive from IGameEntity");
+	static_assert(std::is_base_of<IAtomicEntity, T>::value, "UniformGrid<T> - T must derive from IAtomicEntity");
 public:
 	UniformGrid() {};
 	UniformGrid(int width, int height, std::vector<T>* o);
@@ -201,7 +200,7 @@ bool UniformGrid<T>::intersectObjectsSimple(const T& object, int y, int x)
 	float x_max = x_map + 1 / conversion;
 	float y_max = y_map + 1 / conversion;
 
-	sf::Vector2f p = object.hitbox.getPosition();
+	sf::Vector2f p = object.getPosition();
 	if (p.x >= x_map && p.y >= y_map && p.x < x_max && p.y < y_max)
 		return true;
 	else

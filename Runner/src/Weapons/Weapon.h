@@ -1,9 +1,10 @@
 #pragma once
-#include "GameEntities/IGameEntity.h"
+#include "GameEntities/IAtomicEntity.h"
 #include "Projectiles/Projectile.h"
 #include "Algorithms/signal_slot.h"
 #include "GameEntities/AnimatedModel.h"
 #include "Algorithms/StateMachine.h"
+
 
 namespace WEAPON
 {
@@ -14,7 +15,7 @@ namespace WEAPON
 }
 
 class Weapon :
-	public IGameEntity, public StateMachine
+	public IAtomicEntity, public StateMachine
 {
 protected:
 	Weapon(std::string name, TextureManager& t);
@@ -97,23 +98,26 @@ public:
 	Discharge(Weapon* weapon) ;
 	virtual void enterState(BaseState* state);
 
+	virtual void exitState(BaseState* state) {};
+
 	virtual void updateState(float dt);
 
-
 	virtual bool isValidNextState(BaseState* state);
-
-
 
 };
 
 class ReadyToFire : public WeaponState {
 	
 public:
-	ReadyToFire(Weapon* weapon) ;
+	ReadyToFire(Weapon* weapon);
+
+	virtual void enterState(BaseState* state) {};
+
+	virtual void exitState(BaseState* state) {};
+
+	virtual void updateState(float dt) {};
 
 	virtual bool isValidNextState(BaseState* state);
-
-
 };
 
 

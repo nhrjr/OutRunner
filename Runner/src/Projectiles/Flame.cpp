@@ -53,6 +53,11 @@ Flame::~Flame()
 //	return projectileModel.getPosition();
 //}
 
+void Flame::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+	states.transform *= this->getTransform();
+	target.draw(projectileModel, states);
+}
+
 void Flame::update(float dt)
 {
 	if (this->isDeletable == false)

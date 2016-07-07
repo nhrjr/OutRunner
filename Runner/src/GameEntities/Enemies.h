@@ -2,12 +2,12 @@
 #include "GameEntities/NPC.h"
 #include "GameEntities/Player.h"
 #include "Core/GameObjectManager.h"
-
 #include <map>
 #include <memory>
 
 class IdleState;
 class FightingState;
+//class Enemies;
 
 class Enemies :
 	public NPC
@@ -15,8 +15,8 @@ class Enemies :
 public:
 	Enemies(Game* game, sf::Vector2f pos) : NPC(game, pos)
 	{
-		this->addState<FightingState>(this);
 		this->addState<IdleState>(this);
+		this->addState<FightingState>(this);
 		this->enterState<IdleState>();
 		//this->addState<EvadingState>(this);
 		//this->addState<PursuingState>(this);
@@ -25,7 +25,7 @@ public:
 	};
 	~Enemies();
 
-	//std::map<int, std::shared_ptr<IGameEntity>> visibleProjectiles;
+	//std::map<int, std::shared_ptr<IAtomicEntity>> visibleProjectiles;
 	std::map<int, std::shared_ptr<Player>> visibleEnemies;
 	std::shared_ptr<Player> target;
 	std::stack<std::pair<sf::Vector2f, float>> targetHistory;
@@ -75,12 +75,13 @@ public:
 	using EnemyState::EnemyState;
 	virtual void updateState(float dt);
 	virtual bool isValidNextState(BaseState* state);
-
+	virtual void enterState(BaseState* previousState) {};
+	virtual void exitState(BaseState* nextState) {};
 };
 
 class FightingState : public EnemyState
 {
-	
+
 public:
 	using EnemyState::EnemyState;
 
@@ -90,5 +91,7 @@ public:
 	virtual void exitState(BaseState* nextState);
 	virtual void updateState(float dt);
 	virtual bool isValidNextState(BaseState* state);
-
 };
+
+
+
