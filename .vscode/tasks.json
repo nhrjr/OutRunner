@@ -1,0 +1,18 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "bash",
+    "isShellCommand": true,
+    //"args": ["(premake4 gmake; cd Build; make)"],
+    "args":["-c"],
+    "showOutput": "always",
+    "tasks": [
+     {
+         "taskName": "build",
+         "suppressTaskName": true,
+         "args": ["premake4 gmake && make"],
+         "isBuildCommand": true
+     }   
+    ]
+}

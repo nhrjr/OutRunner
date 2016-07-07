@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C++ Launch (GDB)",
+            "type": "cppdbg",
+            "request": "launch",
+            "launchOptionType": "Local",
+            "targetArchitecture": "x64",
+            "program": "${workspaceRoot}/Runner/runner",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/Runner",
+            "environment": [],
+            "externalConsole": true
+        },
+        {
+            "name": "C++ Attach (GDB)",
+            "type": "cppdbg",
+            "request": "launch",
+            "launchOptionType": "Local",
+            "targetArchitecture": "x64",
+            "program": "${workspaceRoot}/Runner/runner",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceRoot}/Runner",
+            "environment": [],
+            "processId": "enter program's process ID",
+            "externalConsole": false
+        }
+    ]
+}
