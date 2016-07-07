@@ -10,4 +10,6 @@
 
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
-#include "guid.h"
+#include "Algorithms/guid.h"
+#include "Core/GameSettingConstants.h"
+#include "Core/Console.h"
