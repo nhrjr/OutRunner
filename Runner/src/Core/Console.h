@@ -1,12 +1,13 @@
 #pragma once
 #include <SFML/Graphics/Drawable.hpp>
 
-#include "Core/Game.h"
+#include "Game.h"
 
 #include <unordered_map>
 #include <functional>
 #include <queue>
 #include <list>
+#include <sstream>
 
 
 template < class ContainerT >

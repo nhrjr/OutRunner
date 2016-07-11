@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "GameLogicManager.h"
 
+#include "Network/NetworkManager.h"
+
 
 GameLogicManager::GameLogicManager(Game* g) : game(g)
 {
@@ -50,7 +52,7 @@ void GameLogicManager::update(float dt) {
 	this->enemies.update(dt);
 
 	std::unordered_map<Guid, std::pair<sf::IpAddress, unsigned short>>::const_iterator remotesIt;
-	for (remotesIt = this->game->networkmgr.networkGameObjects.begin(); remotesIt != this->game->networkmgr.networkGameObjects.end(); remotesIt++)
+	for (remotesIt = this->game->networkmgr->networkGameObjects.begin(); remotesIt != this->game->networkmgr->networkGameObjects.end(); remotesIt++)
 	{
 		bool found = false;
 		for (auto& o : this->players.objects)
@@ -78,13 +80,13 @@ void GameLogicManager::update(float dt) {
 		bullets.Add(o.second->weapon->get()->spawnedEntities);
 			
 
-		auto it = this->game->networkmgr.timeOut.find(o.first);
-		if (it != this->game->networkmgr.timeOut.end() && it->second >= PLAYER_TIMEOUT)
+		auto it = this->game->networkmgr->timeOut.find(o.first);
+		if (it != this->game->networkmgr->timeOut.end() && it->second >= PLAYER_TIMEOUT)
 		{
 			o.second->isDeletable = true;
 
-			this->game->networkmgr.timeOut.erase(it);
-			this->game->networkmgr.networkGameObjects.erase(o.first);
+			this->game->networkmgr->timeOut.erase(it);
+			this->game->networkmgr->networkGameObjects.erase(o.first);
 		}
 	}
 

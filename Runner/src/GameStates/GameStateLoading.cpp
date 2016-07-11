@@ -2,6 +2,8 @@
 #include "GameStateLoading.h"
 #include "GameStatePlaying.h"
 
+#include "Network/NetworkManager.h"
+
 
 GameStateLoading::GameStateLoading(Game* g)
 {
@@ -66,23 +68,23 @@ void GameStateLoading::update(float dt) {
 	//this->guiElements.at("menu").highlight(this->guiElements.at("menu").getEntry(mousePos));
 
 	temp_FindServerTimer += dt;
-	if (this->game->networkmgr.type == "client")
+	if (this->game->networkmgr->type == "client")
 	{
-		if (this->game->networkmgr.temp_FindServerAndLoadMapState == 0)
+		if (this->game->networkmgr->temp_FindServerAndLoadMapState == 0)
 		{
 			if (temp_FindServerTimer >= 1)
 			{
-				this->game->networkmgr.findServer();
+				this->game->networkmgr->findServer();
 				temp_FindServerTimer = 0;
 			}
 			
 		}
-		if (this->game->networkmgr.temp_FindServerAndLoadMapState == 2)
+		if (this->game->networkmgr->temp_FindServerAndLoadMapState == 2)
 		{
 			//this->map.loadFromDiskPlaying(GAME_MAP_NAME_REMOTE, this->game->tileAtlas);
 			this->game->pushState(new GameStatePlaying(this->game, new MKInput(this->game)));
 			this->isDeletable = true;
-			this->game->networkmgr.temp_FindServerAndLoadMapState = 3;
+			this->game->networkmgr->temp_FindServerAndLoadMapState = 3;
 		}
 		
 	}

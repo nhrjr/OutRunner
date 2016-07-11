@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "FlameThrower.h"
 #include "Projectiles/Flame.h"
+#include "Core/TextureManager.h"
 
 static unsigned int g_seed;
 

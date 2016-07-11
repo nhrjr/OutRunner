@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Algorithms/guid.h"
+#include <SFML/Network.hpp>
 //this player is doing something
 struct NetworkPlayerEvent
 {

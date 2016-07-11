@@ -1,19 +1,20 @@
 #pragma once
-#include "stdafx.h"
-#include "GameStates/IGameState.h"
-
+// #include "GameStates/IGameState.h"
 //#include "GameObjectManager.h"
-#include "Core/GameSettingConstants.h"
+#include "GameSettingConstants.h"
 #include "Map/Tile.h"
-#include "Core/TextureManager.h"
+// #include "TextureManager.h"
 #include "Gui/GuiElements.h"
-#include "Network/NetworkManager.h"
+// #include "Network/NetworkManager.h"
 
 #include <string>
 #include <stack>
 #include <queue>
+#include <memory>
 
 class IGameState;
+class TextureManager;
+class NetworkManager;
 
 struct Switches {
 	bool showPolygon = false;
@@ -40,10 +41,12 @@ public:
 	sf::Sprite background;
 
 	//GameObjectManager objmgr;
-	TextureManager texmgr;
+	// TextureManager texmgr;
 	Switches switches;
-	NetworkManager networkmgr;
+	// NetworkManager networkmgr;
 
+	std::unique_ptr<NetworkManager> networkmgr;
+	std::unique_ptr<TextureManager> texmgr;
 	
 	std::map<std::string, Tile> tileAtlas;
 	std::map<std::string, ButtonStyle> styleSheets;

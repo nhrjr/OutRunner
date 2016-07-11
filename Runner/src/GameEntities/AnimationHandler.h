@@ -4,10 +4,6 @@
 #include <vector>
 #include "Algorithms/signal_slot.h"
 
-
-
-
-
 class Animation
 {
 public:
@@ -31,7 +27,6 @@ public:
 
 
 };
-
 
 class AnimationHandler {
 public:
@@ -63,9 +58,4 @@ public:
 private:
 
 	int currentAnim;
-
-	
-
-
-
 };

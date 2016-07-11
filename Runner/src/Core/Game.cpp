@@ -6,10 +6,12 @@
 #include "GameStates/GameStateEditor.h"
 
 #include "Core/CycleCounter.h"
+#include "Core/TextureManager.h"
+#include "Network/NetworkManager.h"
 
 //#include <Windows.h>
 
-Game::Game()
+Game::Game() : texmgr(std::make_unique<TextureManager>()), networkmgr(std::make_unique<NetworkManager>())
 {
 	this->loadTextures();
 	this->loadTiles();
@@ -18,7 +20,7 @@ Game::Game()
 	
 	this->window.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32), GAME_NAME);
 
-	this->background.setTexture(this->texmgr.getRef("background"));
+	this->background.setTexture(this->texmgr->getRef("background"));
 
 	Command c = [this](std::vector<std::string> str) -> std::string {
 		this->switches.showPath = (this->switches.showPath == true) ? false : true;
@@ -107,17 +109,17 @@ void Game::gameLoop(sf::Clock& clock) {
 
 		if (this->peekState() == nullptr) continue;
 
-		networkmgr.processSocket(dt);
+		networkmgr->processSocket(dt);
 		peekState()->handleInput();
 		peekState()->update(dt);
-		networkmgr.sendEvents();
+		networkmgr->sendEvents();
 
 		if (peekState()->end())
 		{
 			popState();
 			if (this->states.empty())
 			{
-				networkmgr.reset();
+				networkmgr->reset();
 				pushState(new GameStateStart(this));
 			}
 
@@ -135,17 +137,17 @@ void Game::gameLoop(sf::Clock& clock) {
 }
 
 void Game::loadTextures() {
-	texmgr.loadTexture("Concrete", "textures/concrete.png");
-	texmgr.loadTexture("Wall", "textures/wall.png");
-	texmgr.loadTexture("Water", "textures/water.png");
-	texmgr.loadTexture("background", "textures/background.png");
-	texmgr.loadTexture("cursor", "textures/cursor.png");
-	texmgr.loadTexture("survivor_rifle", "textures/survivor_rifle.png");
-	texmgr.loadTexture("survivor_feet", "textures/survivor_feet.png");
-	texmgr.loadTexture("SMG", "textures/rifle_muzzleflash.png");
-	texmgr.loadTexture("Shotgun", "textures/shotgun_muzzleflash.png");
-	texmgr.loadTexture("Railgun", "textures/rifle_muzzleflash.png");
-	texmgr.loadTexture("FlameThrower", "textures/rifle_muzzleflash.png");
+	texmgr->loadTexture("Concrete", "textures/concrete.png");
+	texmgr->loadTexture("Wall", "textures/wall.png");
+	texmgr->loadTexture("Water", "textures/water.png");
+	texmgr->loadTexture("background", "textures/background.png");
+	texmgr->loadTexture("cursor", "textures/cursor.png");
+	texmgr->loadTexture("survivor_rifle", "textures/survivor_rifle.png");
+	texmgr->loadTexture("survivor_feet", "textures/survivor_feet.png");
+	texmgr->loadTexture("SMG", "textures/rifle_muzzleflash.png");
+	texmgr->loadTexture("Shotgun", "textures/shotgun_muzzleflash.png");
+	texmgr->loadTexture("Railgun", "textures/rifle_muzzleflash.png");
+	texmgr->loadTexture("FlameThrower", "textures/rifle_muzzleflash.png");
 }
 
 void Game::loadTiles() {
@@ -154,9 +156,9 @@ void Game::loadTiles() {
 	Animation waterAnim(0,7,1.0f, GAME_TILESIZE, GAME_TILESIZE, true, 1);
 
 	tileAtlas.emplace("Void", Tile(GAME_TILESIZE, GAME_TILESIZE, TileType::VOID));
-	tileAtlas.emplace("Concrete",Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Concrete"), concreteAnim , TileType::CONCRETE,3));
-	tileAtlas.emplace("Wall", Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Wall"), wallAnim , TileType::WALL,2));
-	tileAtlas.emplace("Water", Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr.getRef("Water"), waterAnim, TileType::WATER,1));
+	tileAtlas.emplace("Concrete",Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr->getRef("Concrete"), concreteAnim , TileType::CONCRETE,3));
+	tileAtlas.emplace("Wall", Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr->getRef("Wall"), wallAnim , TileType::WALL,2));
+	tileAtlas.emplace("Water", Tile(GAME_TILESIZE, GAME_TILESIZE, texmgr->getRef("Water"), waterAnim, TileType::WATER,1));
 }
 
 void Game::loadFonts()

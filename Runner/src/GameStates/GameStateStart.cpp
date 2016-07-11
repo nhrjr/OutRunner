@@ -4,6 +4,8 @@
 #include "GameStatePlaying.h"
 #include "GameStateLoading.h"
 
+#include "Network/NetworkManager.h"
+
 #include <utility>
 
 
@@ -167,21 +169,21 @@ void GameStateStart::loadEditor()
 
 void GameStateStart::playGameSingle()
 {
-	this->game->networkmgr.setType("single");
+	this->game->networkmgr->setType("single");
 	this->game->pushState(new GameStatePlaying(this->game, new MKInput(this->game)));
 	this->isDeletable = true;
 }
 
 void GameStateStart::playGameServer()
 {
-	this->game->networkmgr.setType("server");	
+	this->game->networkmgr->setType("server");	
 	this->game->pushState(new GameStatePlaying(this->game, new MKInput(this->game)));
 	this->isDeletable = true;
 }
 
 void GameStateStart::playGameClient()
 {
-	this->game->networkmgr.setType("client");
+	this->game->networkmgr->setType("client");
 	this->game->pushState(new GameStateLoading(this->game));
 	//this->game->pushState(new GameStatePlaying(this->game, new MKInput(this->game)));
 	this->isDeletable = true;

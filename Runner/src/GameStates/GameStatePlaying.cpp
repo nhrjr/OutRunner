@@ -6,6 +6,7 @@
 #include <memory>
 #include <unordered_set>
 #include <omp.h>
+#include "Network/NetworkManager.h"
 
 #include "Core/CycleCounter.h"
 
@@ -17,7 +18,7 @@ GameStatePlaying::GameStatePlaying(Game* game, IPlayerInput* playerInput) : map(
 
 	this->player = std::make_shared<Player>(game, playerInput, false);
 
-	if (this->game->networkmgr.type == "client")
+	if (this->game->networkmgr->type == "client")
 	{
 		this->map.loadFromDiskPlaying(GAME_MAP_NAME_REMOTE, this->game->tileAtlas);
 	}
@@ -28,7 +29,7 @@ GameStatePlaying::GameStatePlaying(Game* game, IPlayerInput* playerInput) : map(
 
 	this->gameLogicManager.Init(player, &map);
 	
-	this->game->networkmgr.AddGameEntity(player->entityID);
+	this->game->networkmgr->AddGameEntity(player->entityID);
 	
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
 	sf::FloatRect viewRect(0, 0, static_cast<float>(this->game->window.getSize().x), static_cast<float>(this->game->window.getSize().y));
@@ -144,7 +145,7 @@ void GameStatePlaying::update(float dt) {
 	}
 	else
 	{
-		this->game->networkmgr.broadcastAlive();
+		this->game->networkmgr->broadcastAlive();
 		aliveTimer = 5;
 	}
 

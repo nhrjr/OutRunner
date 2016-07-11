@@ -1,5 +1,7 @@
 #pragma once
 #include "Weapon.h"
+
+class TextureManager;
 class FlameThrower :
 	public Weapon
 {

@@ -1,8 +1,8 @@
 #pragma once
-#include "Core/Game.h"
+#include "Game.h"
 #include "GameEntities/IAtomicEntity.h"
-#include "Core/GameObjectManager.h"
-#include "Core/CollisionManager.h"
+#include "GameObjectManager.h"
+#include "CollisionManager.h"
 
 #include "GameEntities/Player.h"
 #include "Projectiles/Projectile.h"
@@ -12,6 +12,7 @@
 
 #include <unordered_map>
 #include <memory>
+
 class GameLogicManager
 {
 public:

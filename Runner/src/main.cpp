@@ -1,5 +1,6 @@
-#include "stdafx.h"
+// #include "stdafx.h"
 #include "Core/Game.h"
+
 
 int main(int argc, char** argv)
 {

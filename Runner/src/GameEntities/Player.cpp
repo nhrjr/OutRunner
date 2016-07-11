@@ -5,6 +5,7 @@
 #include <cmath>
 #include "Algorithms/V2Tools.h"
 #include "Core/Console.h"
+#include "Network/NetworkManager.h"
 #include <string>
 #include <memory>
 
@@ -59,14 +60,14 @@ std::unordered_map<int, Animation> animationsBody{
 
 Player::Player(Game* game, IPlayerInput* playerInput,bool r) : IAtomicEntity(4), game(game), playerInput(playerInput), remote(r),
 	hitboxRadius(PLAYER_RADIUS), healthbar(sf::Vector2f(50,10)),
-	playerModel(SpriteDefinition(animationsFeet, sf::Vector2f(100, 70), 0.3f, this->game->texmgr.getRef("survivor_feet")),
-		SpriteDefinition(animationsBody, sf::Vector2f(100, 120), 0.3f, this->game->texmgr.getRef("survivor_rifle")))
+	playerModel(SpriteDefinition(animationsFeet, sf::Vector2f(100, 70), 0.3f, this->game->texmgr->getRef("survivor_feet")),
+		SpriteDefinition(animationsBody, sf::Vector2f(100, 120), 0.3f, this->game->texmgr->getRef("survivor_rifle")))
 {
 	hitpoints = 100;
-	this->weapons.emplace_back(std::make_shared<Shotgun>(this->game->texmgr));
-	this->weapons.emplace_back(std::make_shared<SMG>(this->game->texmgr));
-	this->weapons.emplace_back(std::make_shared<Railgun>(this->game->texmgr));
-	this->weapons.emplace_back(std::make_shared<FlameThrower>(this->game->texmgr));
+	this->weapons.emplace_back(std::make_shared<Shotgun>(*this->game->texmgr));
+	this->weapons.emplace_back(std::make_shared<SMG>(*this->game->texmgr));
+	this->weapons.emplace_back(std::make_shared<Railgun>(*this->game->texmgr));
+	this->weapons.emplace_back(std::make_shared<FlameThrower>(*this->game->texmgr));
 	weapon = weapons.begin();
 	changedWeapon.emit(weapon->get()->name);
 
@@ -89,9 +90,9 @@ Player::Player(Game* game, IPlayerInput* playerInput,bool r) : IAtomicEntity(4),
 	if (this->remote == false)
 	{
 		Console::Instance() << "Created player with " << entityID << std::endl;
-		if (this->game->networkmgr.type == "client")
+		if (this->game->networkmgr->type == "client")
 		{
-			this->game->networkmgr.sendInitAlive(entityID);
+			this->game->networkmgr->sendInitAlive(entityID);
 		}
 	}
 }
@@ -123,7 +124,7 @@ void Player::update(float dt)
 	if (remote == true)
 	{
 		std::stack<NetworkPlayerEvent> events;
-		events = this->game->networkmgr.getEvents(entityID);
+		events = this->game->networkmgr->getEvents(entityID);
 		if (events.size() != 0)
 		{
 			hitpoints = events.top().hitpoints;
@@ -266,7 +267,7 @@ void Player::update(float dt)
 
 	if (remote == false)
 	{
-		if (this->game->networkmgr.networkGameObjects.size() != 0)
+		if (this->game->networkmgr->networkGameObjects.size() != 0)
 		{
 			NetworkPlayerEvent event;
 			event.x = newPos.x;
@@ -278,7 +279,7 @@ void Player::update(float dt)
 			event.equippedWeapon = weapon - weapons.begin();
 			event.entityID = this->entityID;
 			
-			this->game->networkmgr.queueEvent(event);
+			this->game->networkmgr->queueEvent(event);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <stack>
+class NetworkPlayerEvent;
 class IPlayerInput {
 public:
 	virtual void getInput(float dt) {};

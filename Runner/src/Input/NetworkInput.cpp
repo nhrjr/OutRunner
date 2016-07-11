@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "NetworkInput.h"
+#include "Network/NetworkPacket.h"
 
 #include <cmath>
 

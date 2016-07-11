@@ -22,6 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 */
 
+
+
 #pragma once
 #include <functional>
 #include <iostream>
@@ -32,6 +34,14 @@ THE SOFTWARE.
 #include <iomanip>
 
 #include <SFML/Network.hpp>
+
+#ifdef _WIN32
+#define GUID_WINDOWS
+#endif
+
+#ifdef __linux__
+#define GUID_LIBUUID
+#endif
 
 #ifdef GUID_ANDROID
 #include <jni.h>

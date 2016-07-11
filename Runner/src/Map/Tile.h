@@ -35,12 +35,6 @@ public:
 	void draw(sf::RenderWindow& window);
 	void update(float dt);
 	void initialize();
-	//virtual void setPosition(sf::Vector2f position);
-	//virtual sf::Vector2f getPosition();
 
-	//virtual sf::Vector2f getPoint(int i);
-	//virtual int getPointCount();
-	//virtual sf::Transform getTransform();
-	//virtual float getMinDistance();
 };
 

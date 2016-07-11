@@ -65,8 +65,6 @@ private:
 	
 	void processPacketBody(sf::Packet& packet, PacketType& type, sf::IpAddress sender, unsigned short port);
 
-	void sendGameMap(Guid entity);
-	
-	
+	void sendGameMap(Guid entity);	
 };
 

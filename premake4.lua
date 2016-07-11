@@ -17,10 +17,13 @@ project "runner"
 
     -- pchheader "stdafx.h"
     -- pchsource "stdafx.cpp"
-    includedirs { ".", "Runner/src"}
+    includedirs {".","Runner/src"}
     targetdir "Runner"
 
-    files {"Runner/src/**.h", "Runner/src/**.cpp"}
+    files {
+        "Runner/src/**.h",
+         "Runner/src/**.cpp"
+         }
     
     links {
         "sfml-window",

@@ -3,13 +3,14 @@
 #include "Algorithms/SAT.h"
 #include "Map/MapTools.h"
 #include "Algorithms/V2Tools.h"
+#include "Network/NetworkManager.h"
 #include <cmath>
 #include <string>
 #include <memory>
 
 
 NPC::NPC(Game* game, sf::Vector2f pos) : game(game), IAtomicEntity(4),
-npcModel(PLAYER_RADIUS), npcHead(PLAYER_RADIUS / 2), isAttacking(false), hitboxRadius(PLAYER_RADIUS), healthbar(sf::Vector2f(50,10)), weapon(this->game->texmgr)
+npcModel(PLAYER_RADIUS), npcHead(PLAYER_RADIUS / 2), isAttacking(false), hitboxRadius(PLAYER_RADIUS), healthbar(sf::Vector2f(50,10)), weapon(*this->game->texmgr)
 {
 	hitpoints = 100;
 
@@ -107,7 +108,7 @@ void NPC::update(float dt)
 		event.equippedWeapon = 1;
 		event.entityID = this->entityID;
 
-		this->game->networkmgr.queueEvent(event);
+		this->game->networkmgr->queueEvent(event);
 	}
 }
 
