@@ -15,10 +15,7 @@ public:
 	explicit NPC(Game* game, sf::Vector2f pos);
 	~NPC();
 
-	//virtual void draw(sf::RenderWindow& window);
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-	//virtual void setPosition(sf::Vector2f pos);
-	//virtual sf::Vector2f getPosition() const;
 	virtual void update(float dt);
 
 	void collide(IAtomicEntity& other, unsigned int type, float dt);
@@ -43,13 +40,12 @@ public:
 	sf::CircleShape npcModel;
 	sf::CircleShape npcHead;
 
+	sf::CircleShape facingDot;
+
 	GuiHealthbar healthbar;
 
 	SMG weapon;
-
-	//virtual sf::Vector2f getPoint(int i) const;
-	//virtual unsigned int getPointCount() const;
-	//virtual sf::Transform getTransform() const;
+	
 	virtual float getMinDistance() const;
 };
 

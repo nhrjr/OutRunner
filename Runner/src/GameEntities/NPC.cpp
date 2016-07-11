@@ -13,46 +13,40 @@ npcModel(PLAYER_RADIUS), npcHead(PLAYER_RADIUS / 2), isAttacking(false), hitboxR
 {
 	hitpoints = 100;
 
-	//hitbox = sf::ConvexShape(4);
 	this->setPoint(0, sf::Vector2f(0, 0));
 	this->setPoint(1, sf::Vector2f(0, PLAYER_RADIUS));
 	this->setPoint(2, sf::Vector2f(PLAYER_RADIUS, PLAYER_RADIUS));
 	this->setPoint(3, sf::Vector2f(PLAYER_RADIUS, 0));
-	//hitbox = new sf::RectangleShape(sf::Vector2f(PLAYER_RADIUS * 2, PLAYER_RADIUS * 2));
 	this->setOutlineColor(sf::Color::White);
 	this->setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
-	//this->setRotation(45);
 
 	npcModel.setFillColor(sf::Color::Green);
 	npcModel.setOrigin(PLAYER_RADIUS, PLAYER_RADIUS);
 	npcModel.setScale(0.5, 1);
+	npcModel.setPosition(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
 
 	npcHead.setFillColor(sf::Color::Black);
 	npcHead.setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
+	npcHead.setPosition(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
 
 	healthbar.setOrigin(sf::Vector2f(25, -PLAYER_RADIUS - 10));
 	healthbar.show();
 
+	facingDot.setRadius(5);
+	facingDot.setOrigin(5, 5);
+	facingDot.setFillColor(sf::Color::Red);
+	facingDot.setPosition(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
+
 	setPosition(pos);
 
-	this->game->networkmgr.AddGameEntity(entityID);
-	this->game->networkmgr.broadcastGameObjects();
+	//this->game->networkmgr.AddGameEntity(entityID);
+	//this->game->networkmgr.broadcastGameObjects();
 }
 
 
 NPC::~NPC()
 {
 }
-
-//void NPC::draw(sf::RenderWindow& window)
-//{
-//	if (isAttacking)
-//		weapon.draw(window);
-//	window.draw(npcModel);
-//	window.draw(npcHead);
-//
-//	window.draw(healthbar);
-//}
 
 void NPC::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	states.transform *= this->getTransform();
@@ -61,26 +55,8 @@ void NPC::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(npcModel, states);
 	target.draw(npcHead, states);
 	target.draw(healthbar);
+	target.draw(facingDot, states);
 }
-
-
-
-//void NPC::setPosition(sf::Vector2f pos)
-//{
-//	hitbox.setPosition(pos);
-//
-//	npcModel.setPosition(pos);
-//	npcHead.setPosition(pos);
-//
-//	weapon.setPosition(pos);
-//
-//	healthbar.setPosition(pos);
-//}
-
-//sf::Vector2f NPC::getPosition() const
-//{
-//	return npcModel.getPosition();
-//}
 
 void NPC::moveToTarget(std::deque<sf::Vector2f> target)
 {
@@ -106,22 +82,19 @@ void NPC::update(float dt)
 	float moveBy = PLAYER_SPEED * dt;	
 	
 	this->setRotation(viewAngle);
-	//this->npcModel.setRotation(viewAngle);
-	//this->npcHead.setRotation(viewAngle);
-
+	this->healthbar.setPosition(this->getPosition());
 	sf::Vector2f directionOffset = direction * moveBy;
 	this->move(directionOffset);
-	//this->npcModel.move(directionOffset);
-	//this->npcHead.move(directionOffset);
+	
 
-	//this->healthbar.move(directionOffset);
-
-	weapon.attachedMove(directionOffset, viewAngle);
+	//weapon.attachedMove(directionOffset, viewAngle);
+	weapon.attachedSetPosition(this->getPosition(), viewAngle);
 	weapon.update(dt);
 
-	this->updateWithDeltaTime(dt);	
+	this->updateWithDeltaTime(dt);
 
-	if (this->game->networkmgr.networkGameObjects.size() != 0)
+	//if (this->game->networkmgr.networkGameObjects.size() != 0)
+	if( this->game->networkmgr.peers.size() != 0)
 	{
 		sf::Vector2f newPos = this->getPosition();
 		NetworkPlayerEvent event;
@@ -165,19 +138,6 @@ void NPC::collide(IAtomicEntity& other, unsigned int type, float dt)
 		}
 	}
 }
-
-//sf::Vector2f NPC::getPoint(int i) const
-//{
-//	return hitbox.getPoint(i);
-//}
-//unsigned int NPC::getPointCount() const
-//{
-//	return hitbox.getPointCount();
-//}
-//sf::Transform NPC::getTransform() const
-//{
-//	return hitbox.getTransform();
-//}
 
 float NPC::getMinDistance() const
 {

@@ -37,22 +37,6 @@ Flame::~Flame()
 {
 }
 
-//void Flame::draw(sf::RenderWindow& window)
-//{
-//	window.draw(projectileModel);
-//}
-
-//void Flame::setPosition(sf::Vector2f pos)
-//{
-//	projectileModel.setPosition(pos);
-//	this->setPosition(pos);
-//}
-
-//sf::Vector2f Flame::getPosition() const
-//{
-//	return projectileModel.getPosition();
-//}
-
 void Flame::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	states.transform *= this->getTransform();
 	target.draw(projectileModel, states);
@@ -65,10 +49,8 @@ void Flame::update(float dt)
 		lifeTime += dt;
 		sf::Vector2f forward = direction * BULLET_SPEED * 0.4f * dt;
 
-		//projectileModel.move(forward);
 		this->move(forward);
 
-		//projectileModel.rotate(rotationSpeed * dt);
 		this->rotate(rotationSpeed * dt);
 
 		if (lifeTime > 0.4f)

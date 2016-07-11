@@ -39,7 +39,7 @@ void GameStateStart::setGameGUI()
 	};
 	this->guiElements.emplace("menu", std::make_shared<GuiList>(menu, false));
 	this->guiElements.at("menu")->setOrigin(GAME_MENU_BUTTON_WIDTH / 2, GAME_MENU_BUTTON_HEIGHT / 2);
-	this->guiElements.at("menu")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x), static_cast<float>(this->game->window.getSize().y) * 0.5f));
+	this->guiElements.at("menu")->setPosition(sf::Vector2f(static_cast<float>(this->game->window.getSize().x * 0.5f), static_cast<float>(this->game->window.getSize().y) * 0.5f));
 	this->guiElements.at("menu")->show();
 }
 

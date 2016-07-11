@@ -7,7 +7,6 @@
 Beam::Beam(float angle, sf::Vector2f pos) : Projectile(angle, pos)
 {
 	damage = 55;
-	//hitbox = sf::ConvexShape(2);
 	this->setPoint(0, sf::Vector2f(0, 1));
 	this->setPoint(1, sf::Vector2f(2, 1));
 	this->setOrigin(1, 0.5);
@@ -16,36 +15,16 @@ Beam::Beam(float angle, sf::Vector2f pos) : Projectile(angle, pos)
 	projectileModel.setSize(sf::Vector2f(2, 2));
 	projectileModel.setFillColor(sf::Color::Green);
 
-	//projectileModel.setOrigin(1, 1);
-	//projectileModel.setRotation(angle);
-
 	direction.x = cos(angle * M_PI / 180);
 	direction.y = sin(angle * M_PI / 180);
 
 	this->setPosition(pos + sf::Vector2f(-direction.y, direction.x) + PLAYER_RADIUS * direction);
-	//projectileModel.setPosition(pos + sf::Vector2f(-direction.y, direction.x) + PLAYER_RADIUS * direction);
 }
 
 
 Beam::~Beam()
 {
 }
-
-//void Beam::draw(sf::RenderWindow& window)
-//{
-//	window.draw(projectileModel);
-//}
-
-//void Beam::setPosition(sf::Vector2f pos)
-//{
-//	projectileModel.setPosition(pos);
-//	hitbox.setPosition(pos);
-//}
-
-//sf::Vector2f Beam::getPosition() const
-//{
-//	return projectileModel.getPosition();
-//}
 
 void Beam::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	states.transform *= this->getTransform();
@@ -59,7 +38,6 @@ void Beam::update(float dt)
 		lifeTime += dt;
 		sf::Vector2f forward = direction * BULLET_SPEED * dt;
 		
-		//projectileModel.move(forward * 3.0f);
 		this->move(forward * 3.0f);
 
 		if (direction != sf::Vector2f(0, 0))

@@ -2,7 +2,6 @@
 #include "Weapon.h"
 #include "Projectiles/Pellet.h"
 
-//template<typename projT>
 class Shotgun :
 	public Weapon
 {

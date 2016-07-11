@@ -70,7 +70,6 @@ Player::Player(Game* game, IPlayerInput* playerInput,bool r) : IAtomicEntity(4),
 	weapon = weapons.begin();
 	changedWeapon.emit(weapon->get()->name);
 
-	//hitbox = sf::ConvexShape(4);
 	this->setPoint(0, sf::Vector2f(0, 0));
 	this->setPoint(1, sf::Vector2f(0, PLAYER_RADIUS));
 	this->setPoint(2, sf::Vector2f(PLAYER_RADIUS, PLAYER_RADIUS));
@@ -78,7 +77,7 @@ Player::Player(Game* game, IPlayerInput* playerInput,bool r) : IAtomicEntity(4),
 	this->setOutlineColor(sf::Color::White);
 	this->setOutlineThickness(2);
 	this->setOrigin(PLAYER_RADIUS / 2, PLAYER_RADIUS / 2);
-	//this->setRotation(45);
+
 	facingDot.setRadius(5);
 	facingDot.setOrigin(5,5);
 	facingDot.setFillColor(sf::Color::Red);
@@ -109,16 +108,6 @@ Player::~Player()
 {
 }
 
-//void Player::draw(sf::RenderWindow& window)
-//{
-//	weapon->get()->draw(window);
-//	
-//	window.draw(playerModel);
-//	//window.draw(hitbox);
-//	
-//	window.draw(healthbar);
-//}
-
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	states.transform *= this->getTransform();
 	//target.draw(weapon->get(), states);
@@ -126,22 +115,6 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(healthbar);
 	target.draw(facingDot, states);
 }
-
-//void Player::setPosition(sf::Vector2f pos)
-//{
-//	hitbox.setPosition(pos);
-//
-//	playerModel.setPosition(pos);
-//
-//	weapon->get()->setPosition(pos);
-//
-//	healthbar.setPosition(pos);
-//}
-
-//sf::Vector2f Player::getPosition() const
-//{
-//	return playerModel.getPosition();
-//}
 
 void Player::update(float dt)
 {
@@ -171,10 +144,8 @@ void Player::update(float dt)
 	sf::Vector2f center = getPosition();
 
 	this->setRotation(angleOffset);
-	//this->playerModel.setRotation(angleOffset);
 		
 	this->setPosition(newPos);
-	//this->playerModel.setPosition(newPos);
 
 	//this->healthbar.setPosition(newPos);
 	
@@ -183,10 +154,7 @@ void Player::update(float dt)
 	weapon->get()->attachedSetPosition(newPos, angleOffset);
 	weapon->get()->update(dt);
 	//weapon->get()->triggered = (this->playerInput->getAction() > 0) ? true : false;
-
 		
-	
-	
 	bool moving;
 	if (directionOffset != sf::Vector2f(0, 0)) {
 
@@ -353,20 +321,6 @@ void Player::prevWeapon()
 	if(weapon != weapons.begin())
 		weapon = std::prev(weapon);
 }
-
-
-//sf::Vector2f Player::getPoint(int i) const
-//{
-//	return hitbox.getPoint(i);
-//}
-//unsigned int Player::getPointCount() const
-//{
-//	return hitbox.getPointCount();
-//}
-//sf::Transform Player::getTransform() const
-//{
-//	return hitbox.getTransform();
-//}
 
 float Player::getMinDistance() const
 {

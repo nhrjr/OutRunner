@@ -7,7 +7,6 @@
 
 Projectile::Projectile(float angle, sf::Vector2f pos, unsigned int pointCount) : IAtomicEntity(pointCount), projectileModel(4), lifeTime(0.0f), speed(BULLET_SPEED)
 {
-	//hitbox = sf::ConvexShape(2);
 	this->setPoint(0, sf::Vector2f(0, 2));
 	this->setPoint(1, sf::Vector2f(8, 2));
 
@@ -16,52 +15,28 @@ Projectile::Projectile(float angle, sf::Vector2f pos, unsigned int pointCount) :
 
 	projectileModel.setFillColor(sf::Color::Black);
 	projectileModel.setScale(1, 0.5);
-	projectileModel.setOrigin(4, 4);
-	projectileModel.setRotation(angle);
 	
 
 	direction.x = cos(angle * M_PI / 180);
 	direction.y = sin(angle * M_PI / 180);
 
-	//hitbox.setPosition(pos + 15.0f * sf::Vector2f(-direction.y, direction.x) + 20.0f * direction);
-	//projectileModel.setPosition(pos + 15.0f * sf::Vector2f(-direction.y, direction.x) + 20.0f * direction);
 	this->setPosition(pos +  sf::Vector2f(-direction.y, direction.x) + PLAYER_RADIUS * direction);
-	//projectileModel.setPosition(pos + sf::Vector2f(-direction.y, direction.x) + PLAYER_RADIUS * direction);
 }
 
 Projectile::~Projectile()
 {
 }
 
-//void Projectile::draw(sf::RenderWindow& window)
-//{
-//	window.draw(hitbox);
-//	window.draw(projectileModel);
-//	
-//}
-
 void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	states.transform *= this->getTransform();
 	target.draw(projectileModel, states);
 }
-
-//void Projectile::setPosition(sf::Vector2f pos)
-//{
-//	projectileModel.setPosition(pos);
-//	hitbox.setPosition(pos);
-//}
-
-//sf::Vector2f Projectile::getPosition() const
-//{
-//	return projectileModel.getPosition();
-//}
 
 void Projectile::update(float dt)
 {
 	if (this->isDeletable == false)
 	{
 		sf::Vector2f forward = direction * speed * dt;
-		//projectileModel.move(forward);
 		this->move(forward);
 		lifeTime += dt;
 		if (lifeTime > 1.0f)
@@ -80,20 +55,6 @@ void Projectile::collide(IAtomicEntity& other, unsigned int type, float dt)
 		}
 	}
 }
-
-//sf::Vector2f Projectile::getPoint(int i) const
-//{
-//	return hitbox.getPoint(i);
-//}
-
-//unsigned int Projectile::getPointCount() const
-//{
-//	return hitbox.getPointCount();
-//}
-//sf::Transform Projectile::getTransform() const
-//{
-//	return hitbox.getTransform();
-//}
 
 float Projectile::getMinDistance() const
 {

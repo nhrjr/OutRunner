@@ -56,7 +56,6 @@ sf::Vector2f Weapon::getBarrelPosition() const
 
 void Weapon::draw(sf::RenderWindow& window)
 {
-	//window.draw(weaponModel);
 }
 
 void Weapon::attachedMove(sf::Vector2f directionOffset, float angleOffset)
