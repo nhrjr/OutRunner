@@ -6,11 +6,34 @@
 #include <SFML/Network.hpp>
 
 #include "Algorithms/guid.h"
+#include "Algorithms/StateMachine.h"
 
 #include "SendBinary.h"
 #include "NetworkPacket.h"
 
-class NetworkManager
+class Server : public BaseState
+{
+	virtual void enterState(BaseState* previousState);
+
+	virtual void updateState(float delta);
+
+	virtual bool isValidNextState(BaseState* state);
+
+	virtual void exitState(BaseState* nextState);
+};
+
+class Client : public BaseState
+{
+	virtual void enterState(BaseState* previousState);
+
+	virtual void updateState(float delta);
+
+	virtual bool isValidNextState(BaseState* state);
+
+	virtual void exitState(BaseState* nextState);
+};
+
+class NetworkManager : public StateMachine
 {
 
 public:

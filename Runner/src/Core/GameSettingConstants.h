@@ -5,6 +5,7 @@ const static int SCREEN_WIDTH = 1400;
 const static int SCREEN_HEIGHT = 768;
 const static std::string GAME_NAME = "Runner";
 const static unsigned int NETWORK_BINARYBUFFER_SIZE = 1200;
+const static unsigned int MSG_DATA_SIZE = 1200;
 
 const static std::string GAME_MAP_NAME = "data/map.dat";
 const static std::string GAME_MAP_NAME_REMOTE = "data/map_multiplayer.dat";
