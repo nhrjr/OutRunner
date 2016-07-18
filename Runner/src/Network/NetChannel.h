@@ -1,3 +1,4 @@
+#pragma once
 #include "Algorithms/guid.h"
 #include "NetMessage.h"
 #include "NetSocket.h"
@@ -37,10 +38,11 @@ enum class NetChannelPacketType
     rel_msg_ack,
     unrel_msg,
     unrel_msg_ack
-}
+};
 
 
-struct NetChannelHeader {
+struct NetChannelHeader
+{
     NetChannelPacketType packet_type;
     unsigned short packet_number;
 };   

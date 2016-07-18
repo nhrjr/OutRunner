@@ -1,3 +1,4 @@
+#pragma once
 #include "Algorithms/guid.h"
 #include "Core/GameSettingConstants.h"
 
@@ -43,6 +44,8 @@ class NetMessage_ClientInfo
 	unsigned short port;
 	sf::IpAddress ip;
 };
+
+
 
 class NetMessage_Binary 
 {

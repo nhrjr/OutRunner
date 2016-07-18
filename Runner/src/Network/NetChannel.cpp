@@ -49,8 +49,9 @@ void NetChannel::sendPackets()
     }
     while(outgoingPacket.getDataSize() + unreliableOutgoingBuffer.front()->len <= MSG_DATA_SIZE)
     {
-        outgoingPacket << *msg;
+        outgoingPacket << *unreliableOutgoingBuffer.front();
         unreliableOutgoingBuffer.pop();
+
     }
 }
 
