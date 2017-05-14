@@ -50,7 +50,7 @@ class GuiButtonText : public GuiBasicElement
 {
 public:
 	GuiButtonText(std::string t, sf::Vector2f d, int padding, ButtonStyle& style, std::string message) : GuiBasicElement(message, d), style(style), text(t,*style.font, static_cast<unsigned int>(d.y) - 2 * padding), shape(d) {
-		text.setColor(style.textColor);
+		text.setFillColor(style.textColor);
 		
 		shape.setFillColor(style.bodyColor);
 		shape.setOutlineColor(style.borderColor);

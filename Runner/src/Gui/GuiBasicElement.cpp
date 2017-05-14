@@ -31,13 +31,13 @@ void GuiButtonText::highlight(bool doit)
 	{
 		this->shape.setFillColor(style.bodyHighlightColor);
 		this->shape.setOutlineColor(style.borderHighlightColor);
-		this->text.setColor(style.textHighlightColor);
+		this->text.setFillColor(style.textHighlightColor);
 	}
 	else
 	{
 		this->shape.setFillColor(style.bodyColor);
 		this->shape.setOutlineColor(style.borderColor);
-		this->text.setColor(style.textColor);
+		this->text.setFillColor(style.textColor);
 	}
 }
 

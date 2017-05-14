@@ -24,12 +24,12 @@ Console::Console()
 	
 	this->outputText.setFont(font);
 	this->outputText.setCharacterSize(10);
-	this->outputText.setColor(sf::Color::Black);
+	this->outputText.setFillColor(sf::Color::Black);
 	this->outputText.setPosition(sf::Vector2f(10, 10));
 
 	this->inputText.setFont(font);
 	this->inputText.setCharacterSize(14);
-	this->inputText.setColor(sf::Color::Black);
+	this->inputText.setFillColor(sf::Color::Black);
 	this->inputText.setPosition(sf::Vector2f(10, SCREEN_HEIGHT / 2 - 16));
 }
 

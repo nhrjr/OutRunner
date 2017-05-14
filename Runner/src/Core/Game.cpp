@@ -103,7 +103,7 @@ void Game::start() {
 
 void Game::gameLoop(sf::Clock& clock) {
 	
-		while (this->window.isOpen())
+	while (this->window.isOpen())
 	{
 		float dt = clock.restart().asSeconds();
 
@@ -114,15 +114,13 @@ void Game::gameLoop(sf::Clock& clock) {
 		peekState()->update(dt);
 		networkmgr->sendEvents();
 
-		if (peekState()->end())
-		{
+		if (peekState()->end())	{
 			popState();
-			if (this->states.empty())
-			{
+			
+			if (this->states.empty()) {
 				networkmgr->reset();
 				pushState(new GameStateStart(this));
 			}
-
 		}
 		peekState()->draw(dt);		
 		this->window.display();
