@@ -95,7 +95,7 @@ void NPC::update(float dt)
 	this->updateWithDeltaTime(dt);
 
 	//if (this->game->networkmgr.networkGameObjects.size() != 0)
-	if( this->game->networkmgr.peers.size() != 0)
+	if( this->game->networkmgr->peers.size() != 0)
 	{
 		sf::Vector2f newPos = this->getPosition();
 		NetworkPlayerEvent event;
