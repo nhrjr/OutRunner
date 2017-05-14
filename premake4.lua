@@ -2,7 +2,7 @@
 
 solution "Outrunner"
     configurations {"Debug", "Release"}
-    -- location "Build"
+        location "Build"
 
     -- configuration "Debug"
     --     targetdir "Build/Debug"
@@ -10,20 +10,22 @@ solution "Outrunner"
     -- configuration "Release"
     --     targetdir "Build/Release"
 
-project "runner"
+project "Runner"
     kind "WindowedApp"
     language "C++"
     -- location "Build"
 
-    -- pchheader "stdafx.h"
-    -- pchsource "stdafx.cpp"
-    includedirs {".","Runner/src"}
+    pchheader "stdafx.h"
+    pchsource "stdafx.cpp"
+    -- includedirs {".","Runner/src"}
+    includedirs {"./**"}
     targetdir "Runner"
 
     files {
-        "Runner/src/**.h",
-         "Runner/src/**.cpp"
+        -- "Runner/src/**.h",
+        "Runner/src/**"
          }
+    -- print(project().basedir)
     
     links {
         "sfml-window",
